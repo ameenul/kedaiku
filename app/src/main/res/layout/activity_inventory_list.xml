@@ -1,161 +1,181 @@
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:padding="16dp">
+
+<!-- Header Kartu Stok -->
+<TextView
+    android:id="@+id/textViewStockTitle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Kartu Stok"
+    android:textStyle="bold"
+    android:textSize="18sp"
+    android:gravity="center"
+    android:paddingBottom="8dp" />
+
+<!-- Detail Produk -->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="16dp">
+
+    <TextView
+        android:id="@+id/textViewProductName"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="wrap_content"
+        android:text="Nama Produk: "
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
-        <!-- Header Kartu Stok -->
-        <TextView
-            android:id="@+id/textViewStockTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Kartu Stok"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:gravity="center"
-            android:paddingBottom="8dp" />
+    <TextView
+        android:id="@+id/textViewProductSKU"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SKU: "
+        android:textSize="14sp" />
 
-        <!-- Detail Produk -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="16dp">
+    <TextView
+        android:id="@+id/textViewPrimaryPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Harga Pokok: "
+        android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/textViewProductName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Nama Produk: "
-                android:textSize="16sp"
-                android:textStyle="bold" />
+    <TextView
+        android:id="@+id/textViewProductPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Harga Jual: "
+        android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/textViewProductSKU"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="SKU: "
-                android:textSize="14sp" />
+    <TextView
+        android:id="@+id/textViewProductQty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Stok: "
+        android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/textViewPrimaryPrice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Harga Pokok: "
-                android:textSize="14sp" />
+    <TextView
+        android:id="@+id/textViewProductUnit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Satuan: "
+        android:textSize="14sp" />
+</LinearLayout>
 
-            <TextView
-                android:id="@+id/textViewProductPrice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Harga Jual: "
-                android:textSize="14sp" />
+<!-- Filter Dropdown dan Tombol Export CSV -->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginBottom="8dp">
 
-            <TextView
-                android:id="@+id/textViewProductQty"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Stok: "
-                android:textSize="14sp" />
+    <!-- Filter Dropdown -->
+    <Spinner
+        android:id="@+id/spinnerFilter"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:entries="@array/filter_options"
+        android:minHeight="48dp"
+        android:spinnerMode="dropdown" />
 
-            <TextView
-                android:id="@+id/textViewProductUnit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Satuan: "
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <!-- Filter Dropdown -->
-        <Spinner
-            android:id="@+id/spinnerFilter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:entries="@array/filter_options"
-            android:minHeight="48dp"
-            android:spinnerMode="dropdown" />
-
-        <!-- TextView untuk menampilkan tanggal terpilih -->
-        <TextView
-            android:id="@+id/textViewSelectedDates"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tanggal Terpilih: Semua Waktu"
-            android:textSize="14sp"
-            android:textColor="#FFFFFF"
-            android:paddingBottom="8dp" />
-
-        <!-- Tabel Header -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="#3F51B5"
-            android:padding="8dp"
-            android:layout_marginBottom="4dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="Deskripsi"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Masuk"
-                android:textColor="#FFFFFF"
-                android:textAlignment="textEnd"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Keluar"
-                android:textColor="#FFFFFF"
-                android:textAlignment="textEnd"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Saldo"
-                android:textColor="#FFFFFF"
-                android:textAlignment="textEnd"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <!-- RecyclerView -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewInventory"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="72dp"
-            android:clipToPadding="false"
-            />
-    </LinearLayout>
-
-    <!-- Floating Action Button -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAddStock"
+    <!-- Tombol Export CSV -->
+    <Button
+        android:id="@+id/buttonExportCsv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
-        android:contentDescription="Tambah/Kurangi Stok"
-        android:src="@drawable/ic_add" />
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        android:text="Export CSV"
+        android:layout_marginStart="8dp"
+        android:contentDescription="Export CSV" />
+</LinearLayout>
+
+<!-- TextView untuk menampilkan tanggal terpilih -->
+<TextView
+    android:id="@+id/textViewSelectedDates"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Tanggal Terpilih: Semua Waktu"
+    android:textSize="14sp"
+    android:textColor="#FFFFFF"
+    android:paddingBottom="8dp" />
+
+<!-- Tabel Header -->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="#3F51B5"
+    android:padding="8dp"
+    android:layout_marginBottom="4dp">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:text="Deskripsi"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:textSize="14sp" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Masuk"
+        android:textColor="#FFFFFF"
+        android:textAlignment="textEnd"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Keluar"
+        android:textColor="#FFFFFF"
+        android:textAlignment="textEnd"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Saldo"
+        android:textColor="#FFFFFF"
+        android:textAlignment="textEnd"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+</LinearLayout>
+
+<!-- RecyclerView -->
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/recyclerViewInventory"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:paddingBottom="72dp"
+    android:clipToPadding="false" />
+</LinearLayout>
+
+    <!-- Floating Action Button -->
+<com.google.android.material.floatingactionbutton.FloatingActionButton
+android:id="@+id/fabAddStock"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_gravity="end|bottom"
+android:layout_margin="16dp"
+android:contentDescription="Tambah/Kurangi Stok"
+android:src="@drawable/ic_add" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
