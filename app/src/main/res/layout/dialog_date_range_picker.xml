@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <!-- Label Tanggal Awal -->
+    <TextView
+        android:id="@+id/textViewStartDateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tanggal Awal"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <!-- Tombol untuk Memilih Tanggal Awal -->
+    <Button
+        android:id="@+id/buttonStartDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pilih Tanggal Awal"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp" />
+
+    <!-- Label Tanggal Akhir -->
+    <TextView
+        android:id="@+id/textViewEndDateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tanggal Akhir"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp" />
+
+    <!-- Tombol untuk Memilih Tanggal Akhir -->
+    <Button
+        android:id="@+id/buttonEndDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pilih Tanggal Akhir"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp" />
+
+</LinearLayout>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/textViewGroupName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nama Group"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewGroupId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ID Group"
+        android:textSize="14sp" />
+
+    <!-- Icon titik tiga untuk menu -->
+    <ImageView
+        android:id="@+id/imageViewGroupOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:contentDescription="Options"
+        android:src="@android:drawable/ic_menu_more" />
+
+</LinearLayout>

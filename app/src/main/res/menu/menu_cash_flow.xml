@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/action_filter_today" android:title="Hari Ini" />
+    <item android:id="@+id/action_filter_yesterday" android:title="Kemarin" />
+    <item android:id="@+id/action_filter_this_month" android:title="Bulan Ini" />
+    <item android:id="@+id/action_filter_last_month" android:title="Bulan Lalu" />
+    <item android:id="@+id/action_filter_all_time" android:title="Semua Waktu" />
+    <item android:id="@+id/action_filter_custom" android:title="Pilih Tanggal" />
+</menu>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Konten Utama -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Filter Dropdown -->
+        <Spinner
+            android:id="@+id/spinnerFilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:entries="@array/filter_options"
+            android:minHeight="48dp"
+            android:spinnerMode="dropdown" />
+
+        <!-- EditText Pencarian -->
+        <EditText
+            android:id="@+id/editTextSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:hint="Cari Produk"
+            android:inputType="text"
+            android:minHeight="48dp" />
+
+        <!-- Tanggal Terpilih -->
+        <TextView
+            android:id="@+id/textViewSelectedDates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="Tanggal Terpilih: Semua Waktu"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            android:textColor="#FFFFFF" />
+
+        <!-- Header Tabel -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#3F51B5"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Produk"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Stok Masuk"
+                android:textAlignment="textEnd"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Stok Keluar"
+                android:textAlignment="textEnd"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Stok Akhir"
+                android:textAlignment="textEnd"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+
+        <!-- RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewStockProduct"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingBottom="72dp"
+            android:clipToPadding="false" />
+    </LinearLayout>
+
+    <!-- FloatingActionButton untuk Ekspor CSV -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabExportCsv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Ekspor CSV"
+        android:src="@drawable/ic_csv"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

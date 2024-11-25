@@ -1,0 +1,75 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:background="?android:attr/selectableItemBackground">
+
+    <!-- Nama Produk -->
+    <TextView
+        android:id="@+id/textViewProductName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nama Produk"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- SKU -->
+    <TextView
+        android:id="@+id/textViewProductSKU"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SKU: "
+        android:textSize="14sp"
+        android:paddingTop="4dp" />
+
+    <!-- Harga Pokok -->
+    <TextView
+        android:id="@+id/textViewProductPrimaryPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Harga Pokok: "
+        android:textSize="14sp"
+        android:paddingTop="4dp"
+        android:textColor="@android:color/holo_blue_light" />
+
+    <!-- Harga Jual -->
+    <TextView
+        android:id="@+id/textViewProductPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Harga Jual: "
+        android:textSize="14sp"
+        android:paddingTop="4dp"
+        android:textColor="@android:color/holo_green_dark" />
+
+    <!-- Laba -->
+    <TextView
+        android:id="@+id/textViewProductProfit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Laba: "
+        android:textSize="14sp"
+        android:paddingTop="4dp" />
+
+    <!-- Jumlah Stok -->
+    <TextView
+        android:id="@+id/textViewProductStock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Stok: "
+        android:textSize="14sp"
+        android:paddingTop="4dp"
+        />
+
+    <!-- Menu Opsi -->
+    <ImageView
+        android:id="@+id/imageViewOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_menu_more"
+        android:contentDescription="Menu Opsi"
+        android:layout_gravity="end"
+        android:padding="4dp" />
+</LinearLayout>

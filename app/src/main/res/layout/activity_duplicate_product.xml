@@ -1,0 +1,157 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Nama Produk -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nama Produk"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/editTextProductName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Masukkan nama produk"
+            android:inputType="text"
+            android:textSize="24sp" />
+
+        <!-- Deskripsi Produk -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Deskripsi Produk"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/editTextProductDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Masukkan deskripsi produk"
+            android:inputType="text"
+            android:textSize="24sp" />
+
+        <!-- SKU Produk -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SKU Produk"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/editTextProductSKU"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Masukkan SKU produk"
+            android:inputType="text"
+            android:textSize="24sp" />
+
+        <!-- Harga Pokok -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Harga Pokok"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/editTextProductPrimaryPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Masukkan harga pokok"
+            android:inputType="numberDecimal"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/textViewPrimaryPricePreview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Rp 0"
+            android:textSize="16sp"
+            android:textColor="#FF0000"
+            android:layout_marginTop="4dp" />
+
+        <!-- Harga Jual -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Harga Jual"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/editTextProductPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Masukkan harga jual"
+            android:inputType="numberDecimal"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/textViewPricePreview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Rp 0"
+            android:textSize="16sp"
+            android:textColor="#FF0000"
+            android:layout_marginTop="4dp" />
+
+        <!-- Jumlah Stok -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jumlah Stok"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/editTextProductQty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Masukkan jumlah stok"
+            android:inputType="numberDecimal"
+            android:textSize="24sp" />
+
+        <!-- Unit -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Unit"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/editTextProductUnit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Masukkan unit (pcs, kg, dll)"
+            android:inputType="text"
+            android:textSize="24sp" />
+
+        <!-- Tombol Tambah Produk -->
+        <Button
+            android:id="@+id/buttonAddProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Tambah Produk"
+            android:textSize="24sp" />
+    </LinearLayout>
+</ScrollView>

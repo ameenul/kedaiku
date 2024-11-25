@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">kedaiku</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="filter_options">
+        <item>Pilih Salah Satu :</item>
+        <item>Hari Ini</item>
+        <item>Kemarin</item>
+        <item>Bulan Ini</item>
+        <item>Bulan Lalu</item>
+        <item>Semua Waktu</item>
+        <item>Pilih Tanggal</item>
+
+    </string-array>
+
+</resources>

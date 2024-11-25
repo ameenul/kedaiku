@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/textViewCustomerName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nama Pelanggan"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewCustomerPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nomor Telepon"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/textViewCustomerGroupId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Group ID"
+        android:textSize="14sp" />
+
+    <!-- Icon titik tiga untuk menu -->
+    <ImageView
+        android:id="@+id/imageViewOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:contentDescription="Options"
+        android:src="@android:drawable/ic_menu_more" />
+
+</LinearLayout>

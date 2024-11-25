@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- EditText untuk pencarian -->
+    <EditText
+        android:id="@+id/editTextSearchProduct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Cari produk atau SKU"
+        android:padding="16dp" />
+
+    <!-- RecyclerView untuk menampilkan daftar produk -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewProducts"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Floating Action Button untuk menambah produk -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_add"
+        android:contentDescription = "add product"
+        />
+</LinearLayout>

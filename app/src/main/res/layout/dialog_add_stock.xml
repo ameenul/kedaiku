@@ -1,0 +1,21 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/editTextStockAmount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Jumlah Stok"
+        android:inputType="numberDecimal"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/buttonAddStock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tambahkan Stok"
+        android:layout_marginTop="16dp" />
+</LinearLayout>

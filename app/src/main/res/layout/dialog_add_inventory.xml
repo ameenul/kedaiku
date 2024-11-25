@@ -1,0 +1,92 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tambah Data"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:paddingBottom="8dp" />
+
+    <!-- Label untuk Jumlah -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Jumlah"
+        android:textSize="14sp"
+        android:paddingBottom="4dp" />
+
+    <EditText
+        android:id="@+id/editTextQuantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Masukkan jumlah"
+        android:inputType="numberDecimal"
+        android:textSize="20sp" />
+
+    <!-- Label untuk Deskripsi -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Deskripsi"
+        android:textSize="14sp"
+        android:paddingTop="8dp"
+        android:paddingBottom="4dp" />
+
+    <EditText
+        android:id="@+id/editTextDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Masukkan deskripsi"
+        android:inputType="text"
+        android:textSize="20sp" />
+
+    <!-- RadioGroup untuk Transaksi -->
+    <RadioGroup
+        android:id="@+id/radioGroupTransaction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="8dp">
+
+        <RadioButton
+            android:id="@+id/radioStockIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Masuk" />
+
+        <RadioButton
+            android:id="@+id/radioStockOut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Keluar" />
+    </RadioGroup>
+
+    <!-- Tombol Aksi -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="6dp"
+            android:text="Batal" />
+
+        <Button
+            android:id="@+id/buttonSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="12dp"
+            android:text="Simpan" />
+    </LinearLayout>
+</LinearLayout>
