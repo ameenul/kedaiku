@@ -74,17 +74,7 @@ public class CashFlowActivity extends AppCompatActivity {
         loadCashFlowData();
     }
 
-//    private void loadCashFlowData() {
-//        if (startDateInMillis > 0 && endDateInMillis > 0) {
-//            cashFlowViewModel.getCashFlowByCashIdAndDateRange(cashId, startDateInMillis, endDateInMillis).observe(this, cashFlows -> {
-//                updateUI(cashFlows);
-//            });
-//        } else {
-//            cashFlowViewModel.getCashFlowByCashId(cashId).observe(this, cashFlows -> {
-//                updateUI(cashFlows);
-//            });
-//        }
-//    }
+
 
     private void loadCashFlowData() {
         if (startDateInMillis > 0 && endDateInMillis > 0) {
@@ -107,27 +97,7 @@ public class CashFlowActivity extends AppCompatActivity {
         }
     }
 
-//    private void updateUI(List<CashFlow> cashFlows) {
-//        if (cashFlows != null) {
-//            Log.d("CashFlowActivity", "Number of cash flows: " + cashFlows.size());
-//            for (CashFlow cf : cashFlows) {
-//                Log.d("CashFlowActivity", "CashFlow: " + cf.toString());
-//            }
-//        } else {
-//            Log.d("CashFlowActivity", "cashFlows is null");
-//        }
-//
-//        if (cashFlows == null || cashFlows.isEmpty()) {
-//            // Tampilkan pesan kosong
-//            textViewEmptyMessage.setVisibility(View.VISIBLE);
-//            recyclerView.setVisibility(View.GONE);
-//        } else {
-//            // Sembunyikan pesan kosong
-//            textViewEmptyMessage.setVisibility(View.GONE);
-//            recyclerView.setVisibility(View.VISIBLE);
-//            adapter.setCashFlowList(cashFlows);
-//        }
-//    }
+
 
     private void updateUI(List<CashFlow> cashFlows) {
         if (cashFlows == null || cashFlows.isEmpty()) {
@@ -148,121 +118,6 @@ public class CashFlowActivity extends AppCompatActivity {
     }
 
 
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        Calendar calendar = Calendar.getInstance();
-//        if (item.getItemId() == R.id.action_filter_today) {
-//            calendar.set(Calendar.HOUR_OF_DAY, 0);
-//            calendar.set(Calendar.MINUTE, 0);
-//            calendar.set(Calendar.SECOND, 0);
-//            startDateInMillis = calendar.getTimeInMillis();
-//
-//            calendar.add(Calendar.DAY_OF_MONTH, 1);
-//            endDateInMillis = calendar.getTimeInMillis();
-//
-//            loadCashFlowData();
-//            return true;
-//        } else if (item.getItemId() == R.id.action_filter_yesterday) {
-//            calendar.add(Calendar.DAY_OF_MONTH, -1);
-//            calendar.set(Calendar.HOUR_OF_DAY, 0);
-//            calendar.set(Calendar.MINUTE, 0);
-//            calendar.set(Calendar.SECOND, 0);
-//            startDateInMillis = calendar.getTimeInMillis();
-//
-//            calendar.add(Calendar.DAY_OF_MONTH, 1);
-//            endDateInMillis = calendar.getTimeInMillis();
-//
-//            loadCashFlowData();
-//            return true;
-//        } else if (item.getItemId() == R.id.action_filter_this_month) {
-//            calendar.set(Calendar.DAY_OF_MONTH, 1);
-//            calendar.set(Calendar.HOUR_OF_DAY, 0);
-//            calendar.set(Calendar.MINUTE, 0);
-//            calendar.set(Calendar.SECOND, 0);
-//            startDateInMillis = calendar.getTimeInMillis();
-//
-//            calendar.add(Calendar.MONTH, 1);
-//            endDateInMillis = calendar.getTimeInMillis();
-//
-//            loadCashFlowData();
-//            return true;
-//        } else if (item.getItemId() == R.id.action_filter_last_month) {
-//            calendar.add(Calendar.MONTH, -1);
-//            calendar.set(Calendar.DAY_OF_MONTH, 1);
-//            calendar.set(Calendar.HOUR_OF_DAY, 0);
-//            calendar.set(Calendar.MINUTE, 0);
-//            calendar.set(Calendar.SECOND, 0);
-//            startDateInMillis = calendar.getTimeInMillis();
-//
-//            calendar.add(Calendar.MONTH, 1);
-//            endDateInMillis = calendar.getTimeInMillis();
-//
-//            loadCashFlowData();
-//            return true;
-//        } else if (item.getItemId() == R.id.action_filter_all_time) {
-//            startDateInMillis = 0;
-//            endDateInMillis = 0;
-//            loadCashFlowData();
-//            return true;
-//        } else if (item.getItemId() == R.id.action_filter_custom) {
-//            showDateRangeDialog();
-//            return true;
-//        } else {
-//            return super.onOptionsItemSelected(item);
-//        }
-//    }
-
-//    private void showDateRangePicker() {
-//        // Implementasi DatePickerDialog untuk memilih tanggal awal dan akhir
-//        final Calendar startCalendar = Calendar.getInstance();
-//        final Calendar endCalendar = Calendar.getInstance();
-//
-//        DatePickerDialog startDatePicker = new DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
-//            startCalendar.set(year, month, dayOfMonth, 0, 0, 0);
-//            startDateInMillis = startCalendar.getTimeInMillis();
-//
-//            DatePickerDialog endDatePicker = new DatePickerDialog(this, (view1, year1, month1, dayOfMonth1) -> {
-//                endCalendar.set(year1, month1, dayOfMonth1, 23, 59, 59);
-//                endDateInMillis = endCalendar.getTimeInMillis();
-//
-//                loadCashFlowData();
-//            }, endCalendar.get(Calendar.YEAR), endCalendar.get(Calendar.MONTH), endCalendar.get(Calendar.DAY_OF_MONTH));
-//
-//            endDatePicker.show();
-//        }, startCalendar.get(Calendar.YEAR), startCalendar.get(Calendar.MONTH), startCalendar.get(Calendar.DAY_OF_MONTH));
-//
-//        startDatePicker.show();
-//    }
-
-//    private void showDateRangePickerDialog() {
-//        final Calendar startCalendar = Calendar.getInstance();
-//        final Calendar endCalendar = Calendar.getInstance();
-//
-//        // DatePickerDialog untuk tanggal awal
-//        DatePickerDialog startDatePicker = new DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
-//            startCalendar.set(year, month, dayOfMonth, 0, 0, 0);
-//
-//            // Setelah memilih tanggal awal, tampilkan DatePickerDialog untuk tanggal akhir
-//            DatePickerDialog endDatePicker = new DatePickerDialog(this, (view1, year1, month1, dayOfMonth1) -> {
-//                endCalendar.set(year1, month1, dayOfMonth1, 23, 59, 59);
-//
-//                // Validasi apakah tanggal akhir setelah atau sama dengan tanggal awal
-//                if (endCalendar.getTimeInMillis() >= startCalendar.getTimeInMillis()) {
-//                    startDateInMillis = startCalendar.getTimeInMillis();
-//                    endDateInMillis = endCalendar.getTimeInMillis();
-//
-//                    loadCashFlowData();
-//                } else {
-//                    Toast.makeText(this, "Tanggal akhir harus setelah tanggal awal", Toast.LENGTH_SHORT).show();
-//                }
-//            }, endCalendar.get(Calendar.YEAR), endCalendar.get(Calendar.MONTH), endCalendar.get(Calendar.DAY_OF_MONTH));
-//
-//            endDatePicker.setTitle("Pilih Tanggal Akhir");
-//            endDatePicker.show();
-//        }, startCalendar.get(Calendar.YEAR), startCalendar.get(Calendar.MONTH), startCalendar.get(Calendar.DAY_OF_MONTH));
-//
-//        startDatePicker.setTitle("Pilih Tanggal Awal");
-//        startDatePicker.show();
-//    }
 
 
     public boolean onOptionsItemSelected(MenuItem item) {

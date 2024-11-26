@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "41686f0bf454e14c571630fddf1f185f",
+    "identityHash": "34cb89774e5535eca367119c99abed61",
     "entities": [
       {
         "tableName": "table_product",
@@ -360,7 +360,7 @@
       },
       {
         "tableName": "table_sale",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `sale_date` TEXT NOT NULL, `sale_transaction_name` TEXT NOT NULL, `sale_customer_id` INTEGER NOT NULL, `sale_detail_id` INTEGER NOT NULL, `sale_payment_type` INTEGER NOT NULL, `sale_total` REAL NOT NULL, `sale_cash_id` INTEGER NOT NULL, `sale_hpp` REAL NOT NULL, `sale_discount` REAL NOT NULL, `sale_ship` REAL NOT NULL, `promo_id` INTEGER NOT NULL, `sale_paid` REAL NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `sale_date` INTEGER NOT NULL, `promo_id` INTEGER NOT NULL, `sale_detail_id` INTEGER NOT NULL, `sale_transaction_name` TEXT NOT NULL, `sale_customer_id` INTEGER NOT NULL, `sale_payment_type` INTEGER NOT NULL, `sale_total` REAL NOT NULL, `sale_cash_id` INTEGER NOT NULL, `sale_hpp` REAL NOT NULL, `sale_discount` REAL NOT NULL, `sale_ship` REAL NOT NULL, `sale_paid` REAL NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -371,7 +371,19 @@
           {
             "fieldPath": "sale_date",
             "columnName": "sale_date",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "promo_id",
+            "columnName": "promo_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sale_detail_id",
+            "columnName": "sale_detail_id",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -383,12 +395,6 @@
           {
             "fieldPath": "sale_customer_id",
             "columnName": "sale_customer_id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "sale_detail_id",
-            "columnName": "sale_detail_id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -426,12 +432,6 @@
             "fieldPath": "sale_ship",
             "columnName": "sale_ship",
             "affinity": "REAL",
-            "notNull": true
-          },
-          {
-            "fieldPath": "promo_id",
-            "columnName": "promo_id",
-            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -794,7 +794,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '41686f0bf454e14c571630fddf1f185f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '34cb89774e5535eca367119c99abed61')"
     ]
   }
 }

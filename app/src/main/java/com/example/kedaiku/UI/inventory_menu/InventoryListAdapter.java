@@ -20,6 +20,10 @@ public class InventoryListAdapter extends RecyclerView.Adapter<InventoryListAdap
 
     private List<Inventory> inventoryList;
 
+    public List<Inventory> getInventoryList() {
+        return inventoryList;
+    }
+
     public void submitList(List<Inventory> list) {
         this.inventoryList = list;
         Log.d("masuk sini", "submitList: "+list.size());
@@ -38,7 +42,7 @@ public class InventoryListAdapter extends RecyclerView.Adapter<InventoryListAdap
         Inventory inventory = inventoryList.get(position);
 
         // Format Date
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm:ss", Locale.getDefault());
         String formattedDate = dateFormat.format(inventory.getStock_date());
 
         holder.description.setText(formattedDate + "\n" + inventory.getStock_note());

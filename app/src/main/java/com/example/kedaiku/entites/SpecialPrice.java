@@ -7,16 +7,16 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "table_special_price")
 public class SpecialPrice {
     @PrimaryKey(autoGenerate = true)
-    private int _id;
+    private long _id;
     @NonNull
     private String name;
-    private int product_id;
+    private long product_id;
     private int group_id;
     private double precent;
     private int status;
 
-    public SpecialPrice(int _id, @NonNull String name, int product_id, int group_id, double precent, int status) {
-        this._id = _id;
+    public SpecialPrice( @NonNull String name, long product_id, int group_id, double precent, int status) {
+
         this.name = name;
         this.product_id = product_id;
         this.group_id = group_id;
@@ -24,11 +24,13 @@ public class SpecialPrice {
         this.status = status;
     }
 
-    public int get_id() {
+
+
+    public long get_id() {
         return _id;
     }
 
-    public void set_id(int _id) {
+    public void set_id(long _id) {
         this._id = _id;
     }
 
@@ -41,11 +43,11 @@ public class SpecialPrice {
         this.name = name;
     }
 
-    public int getProduct_id() {
+    public long getProduct_id() {
         return product_id;
     }
 
-    public void setProduct_id(int product_id) {
+    public void setProduct_id(long product_id) {
         this.product_id = product_id;
     }
 

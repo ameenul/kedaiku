@@ -7,27 +7,29 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "table_purchase")
 public class Purchase {
     @PrimaryKey(autoGenerate = true)
-    private int _id;
+    private long _id;
     @NonNull
     private String date;
-    private int product_id;
+    private long product_id;
     private int cash_id;
     @NonNull
     private String purchase_detail;
 
-    public Purchase(int _id, @NonNull String date, int product_id, int cash_id, @NonNull String purchase_detail) {
-        this._id = _id;
+
+
+    public Purchase( @NonNull String date, long product_id, int cash_id, @NonNull String purchase_detail) {
+
         this.date = date;
         this.product_id = product_id;
         this.cash_id = cash_id;
         this.purchase_detail = purchase_detail;
     }
 
-    public int get_id() {
+    public long get_id() {
         return _id;
     }
 
-    public void set_id(int _id) {
+    public void set_id(long _id) {
         this._id = _id;
     }
 
@@ -40,11 +42,11 @@ public class Purchase {
         this.date = date;
     }
 
-    public int getProduct_id() {
+    public long getProduct_id() {
         return product_id;
     }
 
-    public void setProduct_id(int product_id) {
+    public void setProduct_id(long product_id) {
         this.product_id = product_id;
     }
 

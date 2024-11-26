@@ -9,28 +9,31 @@ public class Sale {
     @PrimaryKey(autoGenerate = true)
     private long id;
 
-    @NonNull
-    private String sale_date;
+
+    private long sale_date;
+    private long promo_id;
+    private long sale_detail_id;
 
     @NonNull
     private String sale_transaction_name;
 
     private int sale_customer_id;
-    private int sale_detail_id;
+
     private int sale_payment_type;
     private double sale_total;
     private int sale_cash_id;
     private double sale_hpp;
     private double sale_discount;
     private double sale_ship;
-    private int promo_id;
+
     private double sale_paid;
 
     // Constructor
 
 
-    public Sale(long id, @NonNull String sale_date, @NonNull String sale_transaction_name, int sale_customer_id, int sale_detail_id, int sale_payment_type, double sale_total, int sale_cash_id, double sale_hpp, double sale_discount, double sale_ship, int promo_id, double sale_paid) {
-        this.id = id;
+    public Sale(  long sale_date, @NonNull String sale_transaction_name, int sale_customer_id,
+                  long sale_detail_id, int sale_payment_type, double sale_total, int sale_cash_id, double sale_hpp, double sale_discount, double sale_ship, long promo_id, double sale_paid) {
+
         this.sale_date = sale_date;
         this.sale_transaction_name = sale_transaction_name;
         this.sale_customer_id = sale_customer_id;
@@ -54,12 +57,12 @@ public class Sale {
         this.id = id;
     }
 
-    @NonNull
-    public String getSale_date() {
+
+    public long getSale_date() {
         return sale_date;
     }
 
-    public void setSale_date(@NonNull String sale_date) {
+    public void setSale_date( long sale_date) {
         this.sale_date = sale_date;
     }
 
@@ -80,11 +83,11 @@ public class Sale {
         this.sale_customer_id = sale_customer_id;
     }
 
-    public int getSale_detail_id() {
+    public long getSale_detail_id() {
         return sale_detail_id;
     }
 
-    public void setSale_detail_id(int sale_detail_id) {
+    public void setSale_detail_id(long sale_detail_id) {
         this.sale_detail_id = sale_detail_id;
     }
 
@@ -136,11 +139,11 @@ public class Sale {
         this.sale_ship = sale_ship;
     }
 
-    public int getPromo_id() {
+    public long getPromo_id() {
         return promo_id;
     }
 
-    public void setPromo_id(int promo_id) {
+    public void setPromo_id(long promo_id) {
         this.promo_id = promo_id;
     }
 

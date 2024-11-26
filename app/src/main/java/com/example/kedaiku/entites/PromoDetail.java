@@ -6,27 +6,27 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "table_promo_detail")
 public class PromoDetail {
     @PrimaryKey(autoGenerate = true)
-    private int _id;
-    private int detail;
+    private long _id;
+    private long detail;
 
-    public PromoDetail(int _id, int detail) {
-        this._id = _id;
+    public PromoDetail( long detail) {
+
         this.detail = detail;
     }
 
-    public int get_id() {
+    public long get_id() {
         return _id;
     }
 
-    public void set_id(int _id) {
+    public void set_id(long _id) {
         this._id = _id;
     }
 
-    public int getDetail() {
+    public long getDetail() {
         return detail;
     }
 
-    public void setDetail(int detail) {
+    public void setDetail(long detail) {
         this.detail = detail;
     }
 // Getters and setters

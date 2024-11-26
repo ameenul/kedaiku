@@ -1,4 +1,5 @@
 package com.example.kedaiku.entites;
+
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -7,11 +8,11 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "table_product_sold")
 public class ProductSold {
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private long id;
 
 
-    @NonNull
-    private int product_id;
+
+    private long product_id;
 
     @NonNull
     private String product_name;
@@ -25,17 +26,19 @@ public class ProductSold {
     // Constructor
 
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
 
-    public ProductSold(int id, int product_id, @NonNull String product_name, double price, double qty, @NonNull String unit) {
-        this.id = id;
+
+
+    public ProductSold( long product_id, @NonNull String product_name, double price, double qty, @NonNull String unit) {
+
         this.product_id = product_id;
         this.product_name = product_name;
         this.price = price;
@@ -44,11 +47,11 @@ public class ProductSold {
     }
 
     // Getters and Setters
-    public int getProduct_id() {
+    public long getProduct_id() {
         return product_id;
     }
 
-    public void setProduct_id(int product_id) {
+    public void setProduct_id(long product_id) {
         this.product_id = product_id;
     }
 

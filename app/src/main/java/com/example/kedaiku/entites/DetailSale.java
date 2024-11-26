@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "table_detail_sale")
 public class DetailSale {
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private long id;
 
     @NonNull
     private String sale_detail;
@@ -21,11 +21,11 @@ public class DetailSale {
     }
 
     // Getters and Setters
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
