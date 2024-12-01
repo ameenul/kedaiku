@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "34cb89774e5535eca367119c99abed61",
+    "identityHash": "c649c9dd8369c42cba896987c674a846",
     "entities": [
       {
         "tableName": "table_product",
@@ -360,7 +360,7 @@
       },
       {
         "tableName": "table_sale",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `sale_date` INTEGER NOT NULL, `promo_id` INTEGER NOT NULL, `sale_detail_id` INTEGER NOT NULL, `sale_transaction_name` TEXT NOT NULL, `sale_customer_id` INTEGER NOT NULL, `sale_payment_type` INTEGER NOT NULL, `sale_total` REAL NOT NULL, `sale_cash_id` INTEGER NOT NULL, `sale_hpp` REAL NOT NULL, `sale_discount` REAL NOT NULL, `sale_ship` REAL NOT NULL, `sale_paid` REAL NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `sale_date` INTEGER NOT NULL, `promo_id` INTEGER NOT NULL, `sale_detail_id` INTEGER NOT NULL, `sale_customer_id` INTEGER NOT NULL, `sale_cash_id` INTEGER NOT NULL, `sale_payment_type` INTEGER NOT NULL, `sale_transaction_name` TEXT NOT NULL, `sale_total` REAL NOT NULL, `sale_hpp` REAL NOT NULL, `sale_discount` REAL NOT NULL, `sale_ship` REAL NOT NULL, `sale_paid` REAL NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -387,14 +387,14 @@
             "notNull": true
           },
           {
-            "fieldPath": "sale_transaction_name",
-            "columnName": "sale_transaction_name",
-            "affinity": "TEXT",
+            "fieldPath": "sale_customer_id",
+            "columnName": "sale_customer_id",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "sale_customer_id",
-            "columnName": "sale_customer_id",
+            "fieldPath": "sale_cash_id",
+            "columnName": "sale_cash_id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -405,15 +405,15 @@
             "notNull": true
           },
           {
-            "fieldPath": "sale_total",
-            "columnName": "sale_total",
-            "affinity": "REAL",
+            "fieldPath": "sale_transaction_name",
+            "columnName": "sale_transaction_name",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "sale_cash_id",
-            "columnName": "sale_cash_id",
-            "affinity": "INTEGER",
+            "fieldPath": "sale_total",
+            "columnName": "sale_total",
+            "affinity": "REAL",
             "notNull": true
           },
           {
@@ -610,7 +610,7 @@
       },
       {
         "tableName": "table_purchase",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `date` TEXT NOT NULL, `product_id` INTEGER NOT NULL, `cash_id` INTEGER NOT NULL, `purchase_detail` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `date` INTEGER NOT NULL, `product_id` INTEGER NOT NULL, `cash_id` INTEGER NOT NULL, `purchase_detail` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "_id",
@@ -621,7 +621,7 @@
           {
             "fieldPath": "date",
             "columnName": "date",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -794,7 +794,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '34cb89774e5535eca367119c99abed61')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c649c9dd8369c42cba896987c674a846')"
     ]
   }
 }

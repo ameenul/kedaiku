@@ -9,15 +9,15 @@ public class Purchase {
     @PrimaryKey(autoGenerate = true)
     private long _id;
     @NonNull
-    private String date;
+    private long date;
     private long product_id;
-    private int cash_id;
+    private long cash_id;
     @NonNull
     private String purchase_detail;
 
 
 
-    public Purchase( @NonNull String date, long product_id, int cash_id, @NonNull String purchase_detail) {
+    public Purchase(@NonNull long date, long product_id, long cash_id, @NonNull String purchase_detail) {
 
         this.date = date;
         this.product_id = product_id;
@@ -34,11 +34,11 @@ public class Purchase {
     }
 
     @NonNull
-    public String getDate() {
+    public long getDate() {
         return date;
     }
 
-    public void setDate(@NonNull String date) {
+    public void setDate(@NonNull long date) {
         this.date = date;
     }
 
@@ -50,11 +50,11 @@ public class Purchase {
         this.product_id = product_id;
     }
 
-    public int getCash_id() {
+    public long getCash_id() {
         return cash_id;
     }
 
-    public void setCash_id(int cash_id) {
+    public void setCash_id(long cash_id) {
         this.cash_id = cash_id;
     }
 

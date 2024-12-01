@@ -1,9 +1,12 @@
 package com.example.kedaiku.UI.product_menu;
 
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +18,7 @@ import com.example.kedaiku.entites.Product;
 import com.example.kedaiku.viewmodel.InventoryViewModel;
 import com.example.kedaiku.viewmodel.ProductViewModel;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -26,11 +30,15 @@ public class UpdateProductActivity extends AppCompatActivity {
     private ProductViewModel productViewModel;
   //  private InventoryViewModel inventoryViewModel;
     private Product product;
-
+    private NumberFormat currencyFormat;
+    private TextView textViewFormattedPrimaryPrice, textViewFormattedPrice;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_product);
+
+        // Initialize currency format for Rupiah
+        currencyFormat = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
 
         // Inisialisasi ViewModel
         productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
@@ -44,6 +52,9 @@ public class UpdateProductActivity extends AppCompatActivity {
         editTextProductPrice = findViewById(R.id.editTextProductPrice);
         editTextProductQty = findViewById(R.id.editTextProductQty);
         editTextProductUnit = findViewById(R.id.editTextProductUnit);
+        textViewFormattedPrimaryPrice = findViewById(R.id.textViewPrimaryPricePreview);
+        textViewFormattedPrice = findViewById(R.id.textViewPricePreview);
+
         Button buttonUpdateProduct = findViewById(R.id.buttonUpdateProduct);
 
         // Ambil data produk dari intent
@@ -60,6 +71,30 @@ public class UpdateProductActivity extends AppCompatActivity {
                 product = fetchedProduct;
                 populateFields(product);
             }
+        });
+
+        // TextWatcher for Harga Pokok
+        editTextProductPrimaryPrice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                updateFormattedPrice(s.toString(), textViewFormattedPrimaryPrice);
+            }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
+
+        // TextWatcher for Harga Jual
+        editTextProductPrice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                updateFormattedPrice(s.toString(), textViewFormattedPrice);
+            }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
 
         // Tombol Update Produk
@@ -114,36 +149,21 @@ public class UpdateProductActivity extends AppCompatActivity {
 
         productViewModel.updateProductWithInventory(product,oldQty);
 
-//        productViewModel.update(product);
-//
-//        // Jika stok berubah, catat di tabel inventory
-//        if (newQty != oldQty) {
-//            double stockChange = newQty - oldQty;
-//            String stockNote = "Update jumlah barang dari " + oldQty + " ke " + newQty;
-//            addInventoryRecord(product.getId(), stockChange, stockNote);
-//        }
-//
-//        Toast.makeText(this, "Produk berhasil diperbarui", Toast.LENGTH_SHORT).show();
+
         finish();
     }
+    private void updateFormattedPrice(String priceString, TextView textView) {
+        if (!priceString.isEmpty()) {
+            try {
+                double price = Double.parseDouble(priceString);
+                String formattedPrice = currencyFormat.format(price);
+                textView.setText(formattedPrice);
+            } catch (NumberFormatException e) {
+                textView.setText("Rp0");
+            }
+        } else {
+            textView.setText("Rp0");
+        }
+    }
 
-//    private void addInventoryRecord(long productId, double stockChange, String note) {
-//       // long stockDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-//        long stockDate = System.currentTimeMillis();
-//        double stockIn = stockChange > 0 ? stockChange : 0;
-//        double stockOut = stockChange < 0 ? Math.abs(stockChange) : 0;
-//        double stockBalance = product.getProduct_qty();
-//
-//        Inventory inventory = new Inventory(
-//                 // Auto-generated ID
-//                stockDate,
-//                productId,
-//                note,
-//                stockIn,
-//                stockOut,
-//                stockBalance
-//        );
-//
-//        inventoryViewModel.insert(inventory);
-//    }
 }

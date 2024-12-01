@@ -1,5 +1,55 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:id="@+id/activity_customer_list"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent">-->
+
+<!--    &lt;!&ndash; EditText untuk Pencarian &ndash;&gt;-->
+<!--    <EditText-->
+<!--        android:id="@+id/editTextSearchCustomer"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="8dp"-->
+<!--        android:hint="Cari pelanggan..."-->
+<!--        android:padding="8dp"-->
+<!--        android:textSize="24sp" />-->
+
+<!--    &lt;!&ndash; RecyclerView untuk menampilkan daftar pelanggan &ndash;&gt;-->
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/recyclerViewCustomer"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_below="@id/editTextSearchCustomer"-->
+<!--        android:clipToPadding="false"-->
+<!--        android:paddingBottom="80dp"-->
+<!--        android:scrollbars="vertical"-->
+<!--        />-->
+
+<!--    &lt;!&ndash; FloatingActionButton untuk menambah pelanggan &ndash;&gt;-->
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/fabAddCustomer"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:src="@drawable/ic_add"-->
+<!--        android:contentDescription="Tambah Pelanggan"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_margin="16dp" />-->
+
+<!--    &lt;!&ndash; Button untuk Kelola Group &ndash;&gt;-->
+<!--    <Button-->
+<!--        android:id="@+id/buttonManageGroup"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Kelola Group"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_margin="16dp" />-->
+
+<!--</RelativeLayout>-->
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_customer_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -7,39 +57,62 @@
     <!-- EditText untuk Pencarian -->
     <EditText
         android:id="@+id/editTextSearchCustomer"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:layout_toStartOf="@id/csv"
+        android:layout_alignParentStart="true"
         android:hint="Cari pelanggan..."
         android:padding="8dp"
         android:textSize="24sp" />
+
+    <!-- Icon untuk Export CSV -->
+    <ImageView
+        android:id="@+id/csv"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="8dp"
+        android:contentDescription="Export CSV"
+        android:padding="8dp"
+        android:src="@drawable/ic_csv"
+        app:tint="@color/white"
+        android:background="@color/purple_material"
+        />
 
     <!-- RecyclerView untuk menampilkan daftar pelanggan -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewCustomer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/editTextSearchCustomer" />
+        android:layout_below="@id/editTextSearchCustomer"
+        android:clipToPadding="false"
+        android:paddingBottom="80dp"
+        android:scrollbars="vertical" />
 
     <!-- FloatingActionButton untuk menambah pelanggan -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddCustomer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_add"
-        android:contentDescription="Tambah Pelanggan"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="16dp" />
+        android:layout_margin="16dp"
+        android:contentDescription="Tambah Pelanggan"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/purple_material" />
 
     <!-- Button untuk Kelola Group -->
     <Button
         android:id="@+id/buttonManageGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Kelola Group"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="16dp" />
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/purple_material"
+
+        android:text="Kelola Group"
+        android:textColor="@color/white" />
 
 </RelativeLayout>

@@ -6,26 +6,26 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "table_debt")
 public class Debt {
     @PrimaryKey(autoGenerate = true)
-    private int _id;
-    private int creditor_id;
+    private long _id;
+    private long creditor_id;
     private double debt_quantity;
     private double debt_paid;
     private String debt_history_paid;
     private String debt_note;
 
-    public int get_id() {
+    public long get_id() {
         return _id;
     }
 
-    public void set_id(int _id) {
+    public void set_id(long _id) {
         this._id = _id;
     }
 
-    public int getCreditor_id() {
+    public long getCreditor_id() {
         return creditor_id;
     }
 
-    public void setCreditor_id(int creditor_id) {
+    public void setCreditor_id(long creditor_id) {
         this.creditor_id = creditor_id;
     }
 
@@ -61,8 +61,8 @@ public class Debt {
         this.debt_note = debt_note;
     }
 
-    public Debt(int _id, int creditor_id, double debt_quantity, double debt_paid, String debt_history_paid, String debt_note) {
-        this._id = _id;
+    public Debt( long creditor_id, double debt_quantity, double debt_paid, String debt_history_paid, String debt_note) {
+
         this.creditor_id = creditor_id;
         this.debt_quantity = debt_quantity;
         this.debt_paid = debt_paid;

@@ -27,5 +27,5 @@ public interface CustomerGroupDao {
     LiveData<List<CustomerGroup>> getAllGroups();
 
     @Query("SELECT * FROM table_customer_group WHERE id = :groupId")
-    LiveData<CustomerGroup> getGroupById(int groupId);
+    LiveData<CustomerGroup> getGroupById(long groupId);
 }

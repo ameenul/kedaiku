@@ -43,6 +43,7 @@ dependencies {
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
     kapt libs.room.compiler
+    implementation 'androidx.core:core-splashscreen:1.0.1'
 
 
 }

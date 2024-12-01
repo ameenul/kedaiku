@@ -45,7 +45,7 @@ public class CustomerRepository {
         return customerDao.searchCustomers(searchQuery);
     }
 
-    public LiveData<List<Customer>> getCustomersByGroupId(int groupId) {
+    public LiveData<List<Customer>> getCustomersByGroupId(long groupId) {
         return customerDao.getCustomersByGroupId(groupId);
     }
 
@@ -53,11 +53,11 @@ public class CustomerRepository {
         return customerDao.getCustomersWithoutGroup();
     }
 
-    public LiveData<Customer> getCustomerById(int customerId) {
+    public LiveData<Customer> getCustomerById(long customerId) {
         return customerDao.getCustomerById(customerId);
     }
 
-    public void deleteGroupAndUpdateCustomers(int groupId) {
+    public void deleteGroupAndUpdateCustomers(long groupId) {
         executorService.execute(() -> {
             customerDao.deleteGroupAndUpdateCustomers(groupId);
         });

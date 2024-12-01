@@ -1,31 +1,70 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:orientation="vertical"-->
+<!--    android:padding="8dp">-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/textViewAmount"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Rp 0"-->
+<!--        android:textSize="16sp"-->
+<!--        android:textStyle="bold" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/textViewDescription"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:paddingTop="4dp"-->
+<!--        android:text="Deskripsi"-->
+<!--        android:textSize="14sp" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/textViewDate"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:paddingTop="2dp"-->
+<!--        android:text="Tanggal"-->
+<!--        android:textSize="12sp" />-->
+<!--</LinearLayout>-->
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:layout_marginBottom="8dp"
+    android:background="#FFFFFF">
+    <!-- TextView untuk jumlah (Amount) -->
+<TextView
+android:id="@+id/textViewAmount"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Rp 0"
+android:textSize="16sp"
+android:textStyle="bold"
+android:textColor="#000000" /> <!-- Warna teks kontras -->
 
-    <TextView
-        android:id="@+id/textViewAmount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Rp 0"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+    <!-- TextView untuk deskripsi -->
+<TextView
+android:id="@+id/textViewDescription"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:paddingTop="4dp"
+android:text="Deskripsi"
+android:textSize="14sp"
+android:textColor="#616161" /> <!-- Warna teks abu-abu gelap -->
 
-    <TextView
-        android:id="@+id/textViewDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="4dp"
-        android:text="Deskripsi"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/textViewDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="2dp"
-        android:text="Tanggal"
-        android:textSize="12sp" />
-</LinearLayout>
+    <!-- TextView untuk tanggal -->
+<TextView
+android:id="@+id/textViewDate"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:paddingTop="2dp"
+android:text="Tanggal"
+android:textSize="12sp"
+android:textColor="#757575" /> <!-- Warna teks abu-abu lebih terang -->
+    </LinearLayout>

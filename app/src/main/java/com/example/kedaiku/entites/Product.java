@@ -108,4 +108,10 @@ public class Product {
     public void setProduct_qty(double product_qty) {
         this.product_qty = product_qty;
     }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return product_name;
+    }
 }

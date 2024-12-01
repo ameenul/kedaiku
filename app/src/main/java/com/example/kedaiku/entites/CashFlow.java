@@ -13,51 +13,52 @@ import androidx.room.PrimaryKey;
                 onDelete = ForeignKey.CASCADE))
 public class CashFlow {
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private long id;
 
-    private int cash_id;
+    private long cash_id;
 
-    @NonNull
+
     private long cash_date;
 
     @NonNull
-    private String cash_description;
+    private String cash_description = "";
 
     private double cash_value;
 
     // Constructor, Getter dan Setter
 
 
-    public CashFlow(int cash_id, @NonNull long cash_date, @NonNull String cash_description, double cash_value) {
+    public CashFlow(long cash_id, long cash_date, @NonNull String cash_description, double cash_value) {
 
         this.setCash_id(cash_id);
         this.setCash_date(cash_date);
         this.setCash_description(cash_description);
         this.setCash_value(cash_value);
+
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getCash_id() {
+    public long getCash_id() {
         return cash_id;
     }
 
-    public void setCash_id(int cash_id) {
+    public void setCash_id(long cash_id) {
         this.cash_id = cash_id;
     }
 
-    @NonNull
+
     public long getCash_date() {
         return cash_date;
     }
 
-    public void setCash_date(@NonNull long cash_date) {
+    public void setCash_date(long cash_date) {
         this.cash_date = cash_date;
     }
 

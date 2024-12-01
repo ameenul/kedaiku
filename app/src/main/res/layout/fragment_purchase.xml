@@ -1,4 +1,99 @@
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/recyclerViewPurchase"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="match_parent">
+
+    <!-- LinearLayout Utama -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- LinearLayout untuk Spinner dan Tombol Export CSV -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <!-- Spinner Filter -->
+            <Spinner
+                android:id="@+id/spinnerFilter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:entries="@array/filter_options"
+                android:minHeight="48dp"
+                android:spinnerMode="dropdown" />
+
+            <!-- Tombol Export CSV -->
+            <Button
+                android:id="@+id/buttonExportCsv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Export CSV"
+                android:layout_marginStart="8dp"
+                android:contentDescription="Export CSV" />
+        </LinearLayout>
+
+        <!-- Header Tabel -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#3F51B5"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="ID"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Produk"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Total"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#FFFFFF"
+                android:textAlignment="textEnd" />
+        </LinearLayout>
+
+        <!-- RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewPurchase"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingBottom="72dp"
+            android:clipToPadding="false" />
+    </LinearLayout>
+
+    <!-- FloatingActionButton untuk Tambah Pembelian -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddPurchase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Tambah Pembelian"
+        android:src="@drawable/ic_add"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

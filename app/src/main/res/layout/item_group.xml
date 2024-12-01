@@ -1,32 +1,39 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:layout_marginBottom="8dp"
+    android:background="#FFFFFF"> <!-- Latar belakang putih -->
 
+    <!-- Nama Group -->
     <TextView
         android:id="@+id/textViewGroupName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Nama Group"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="#000000" /> <!-- Warna teks hitam untuk kontras -->
 
+    <!-- ID Group -->
     <TextView
         android:id="@+id/textViewGroupId"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/textViewGroupName"
         android:text="ID Group"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:textColor="#616161" /> <!-- Warna teks abu-abu gelap -->
 
-    <!-- Icon titik tiga untuk menu -->
+    <!-- ImageView untuk menu -->
     <ImageView
         android:id="@+id/imageViewGroupOptions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
+        android:layout_alignBottom="@id/textViewGroupId"
+        android:layout_alignParentEnd="true"
         android:contentDescription="Options"
-        android:src="@android:drawable/ic_menu_more" />
-
-</LinearLayout>
+        android:src="@android:drawable/ic_menu_more"
+        app:tint="#616161" /> <!-- Warna ikon abu-abu gelap -->
+    </RelativeLayout>

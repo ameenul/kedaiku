@@ -41,7 +41,7 @@ public class CustomerGroupRepository {
         return allGroups;
     }
 
-    public LiveData<CustomerGroup> getGroupById(int groupId) {
+    public LiveData<CustomerGroup> getGroupById(long groupId) {
         return groupDao.getGroupById(groupId);
     }
 }

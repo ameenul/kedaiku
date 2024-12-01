@@ -30,17 +30,21 @@ public interface CashDao {
     LiveData<List<Cash>> getAllCash();
 
     @Query("UPDATE table_cash SET cash_value = cash_value + :amount WHERE id = :cashId")
-    void updateCashValue(long cashId, int amount);
+    void updateCashValue(long cashId, double amount);
 
     @Insert
     void insertCashFlow(CashFlow cashFlow);
 
     // Metode baru untuk mengambil objek Cash berdasarkan ID
     @Query("SELECT * FROM table_cash WHERE id = :cashId")
-    Cash getCashById(long cashId);
+    LiveData<Cash> getCashById(long cashId);
+
+    @Query("SELECT * FROM table_cash WHERE id = :cashId LIMIT 1")
+    Cash getCashByIdSync(long cashId);
+
 
     @Transaction
-    default void updateCashWithTransaction(int cashId, int amount, String description) {
+    default void updateCashWithTransaction(long cashId, double amount, String description) {
         updateCashValue(cashId, amount);
 //        Date dt = new Date();
 //        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy-hh:mm");
@@ -50,12 +54,12 @@ public interface CashDao {
     }
 
     @Transaction
-    default void transferCash(int sourceCashId, int targetCashId, int amount, String description) {
+    default void transferCash(long sourceCashId, long targetCashId, double amount, String description) {
 //        Date dt = new Date();
 //        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy-hh:mm");
         // Ambil objek Cash untuk sumber dan tujuan
-        Cash sourceCash = getCashById(sourceCashId);
-        Cash targetCash = getCashById(targetCashId);
+        Cash sourceCash = getCashByIdSync(sourceCashId);
+        Cash targetCash = getCashByIdSync(targetCashId);
 
         // Ambil nama kas
         String sourceCashName = sourceCash.getCash_name();

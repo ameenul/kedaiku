@@ -32,18 +32,18 @@ public interface CustomerDao {
     LiveData<List<Customer>> searchCustomers(String searchQuery);
 
     @Query("SELECT * FROM table_customer WHERE customer_group_id = :groupId ORDER BY customer_name ASC")
-    LiveData<List<Customer>> getCustomersByGroupId(int groupId);
+    LiveData<List<Customer>> getCustomersByGroupId(long groupId);
 
     @Query("SELECT * FROM table_customer WHERE customer_group_id = 0 ORDER BY customer_name ASC")
     LiveData<List<Customer>> getCustomersWithoutGroup();
 
     @Query("SELECT * FROM table_customer WHERE id = :customerId LIMIT 1")
-    LiveData<Customer> getCustomerById(int customerId);
+    LiveData<Customer> getCustomerById(long customerId);
     @Update
     void updateCustomers(List<Customer> customers);
 
     @Transaction
-    default void deleteGroupAndUpdateCustomers(int groupId) {
+    default void deleteGroupAndUpdateCustomers(long groupId) {
         // Perbarui customer_group_id menjadi 0 untuk anggota grup
         List<Customer> customers = getCustomersByGroupIdSync(groupId);
         for (Customer customer : customers) {
@@ -56,10 +56,10 @@ public interface CustomerDao {
     }
 
     @Query("SELECT * FROM table_customer WHERE customer_group_id = :groupId")
-    List<Customer> getCustomersByGroupIdSync(int groupId);
+    List<Customer> getCustomersByGroupIdSync(long groupId);
 
     @Query("DELETE FROM table_customer_group WHERE id = :groupId")
-    void deleteGroupById(int groupId);
+    void deleteGroupById(long groupId);
 
 
 }

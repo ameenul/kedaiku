@@ -20,7 +20,7 @@ public class CustomerDetailActivity extends AppCompatActivity {
     private EditText editTextName, editTextAddress, editTextPhoneNumber, editTextEmail;
     private Button buttonUpdate, buttonCall, buttonWhatsApp;
     private CustomerViewModel customerViewModel;
-    private int customerId;
+    private long customerId;
     private Customer customer;
 
     @Override
@@ -28,7 +28,7 @@ public class CustomerDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_detail);
 
-        customerId = getIntent().getIntExtra("customer_id", -1);
+        customerId = getIntent().getLongExtra("customer_id", -1);
 
         editTextName = findViewById(R.id.editTextName);
         editTextAddress = findViewById(R.id.editTextAddress);

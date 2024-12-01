@@ -19,7 +19,7 @@ public interface InventoryDao {
     void insert(Inventory inventory);
 
     @Query("SELECT * FROM table_inventory WHERE stock_product_id = :productId ORDER BY stock_date DESC")
-    LiveData<List<Inventory>> getInventoryForProduct(int productId);
+    LiveData<List<Inventory>> getInventoryForProduct(long productId);
 
 
 

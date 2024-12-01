@@ -1,31 +1,55 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <!-- EditText untuk pencarian -->
-    <EditText
-        android:id="@+id/editTextSearchProduct"
+    <!-- Layout untuk pencarian dan ikon CSV -->
+    <LinearLayout
+        android:id="@+id/layoutSearchAndCsv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Cari produk atau SKU"
-        android:padding="16dp" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:layout_marginBottom="8dp"> <!-- Tambahkan margin bawah untuk memisahkan dari RecyclerView -->
+
+        <!-- EditText untuk pencarian -->
+        <EditText
+            android:id="@+id/editTextSearchProduct"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Cari produk atau SKU"
+            android:padding="16dp" />
+
+        <!-- Ikon CSV -->
+        <ImageView
+            android:id="@+id/imageViewExportCsv"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="Export to CSV"
+            android:padding="8dp"
+            android:src="@drawable/ic_csv"
+            app:tint="@android:color/holo_blue_dark" />
+    </LinearLayout>
 
     <!-- RecyclerView untuk menampilkan daftar produk -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewProducts"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="72dp"
+    android:clipToPadding="false"
+    android:paddingBottom="80dp"
+    />
 
     <!-- Floating Action Button untuk menambah produk -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
+        android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         android:src="@drawable/ic_add"
-        android:contentDescription = "add product"
-        />
-</LinearLayout>
+        android:contentDescription="Tambah Produk" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

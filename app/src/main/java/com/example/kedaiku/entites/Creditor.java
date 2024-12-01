@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "table_creditor")
 public class Creditor {
     @PrimaryKey(autoGenerate = true)
-    private int _id;
+    private long _id;
     @NonNull
     private String creditor_name;
     @NonNull
@@ -17,11 +17,11 @@ public class Creditor {
     @NonNull
     private String creditor_phone;
 
-    public int get_id() {
+    public long get_id() {
         return _id;
     }
 
-    public void set_id(int _id) {
+    public void set_id(long _id) {
         this._id = _id;
     }
 
@@ -61,8 +61,8 @@ public class Creditor {
         this.creditor_phone = creditor_phone;
     }
 
-    public Creditor(int _id, @NonNull String creditor_name, @NonNull String creditor_address, @NonNull String creditor_email, @NonNull String creditor_phone) {
-        this._id = _id;
+    public Creditor( @NonNull String creditor_name, @NonNull String creditor_address, @NonNull String creditor_email, @NonNull String creditor_phone) {
+        
         this.creditor_name = creditor_name;
         this.creditor_address = creditor_address;
         this.creditor_email = creditor_email;

@@ -131,9 +131,9 @@ public class DuplicateProductActivity extends AppCompatActivity {
 
 
     private void populateFields(Product product) {
-        editTextProductName.setText(product.getProduct_name());
+        editTextProductName.setText(product.getProduct_name()+ " Duplicate");
         editTextProductDescription.setText(product.getProduct_description());
-        editTextProductSKU.setText(product.getProduct_sku());
+        editTextProductSKU.setText(product.getProduct_sku()+" Duplicate");
         editTextProductPrimaryPrice.setText(String.valueOf(product.getProduct_primary_price()));
         editTextProductPrice.setText(String.valueOf(product.getProduct_price()));
         editTextProductQty.setText(String.valueOf(product.getProduct_qty()));

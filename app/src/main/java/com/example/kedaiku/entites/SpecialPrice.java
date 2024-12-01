@@ -11,11 +11,11 @@ public class SpecialPrice {
     @NonNull
     private String name;
     private long product_id;
-    private int group_id;
+    private long group_id;
     private double precent;
     private int status;
 
-    public SpecialPrice( @NonNull String name, long product_id, int group_id, double precent, int status) {
+    public SpecialPrice( @NonNull String name, long product_id, long group_id, double precent, int status) {
 
         this.name = name;
         this.product_id = product_id;
@@ -51,11 +51,11 @@ public class SpecialPrice {
         this.product_id = product_id;
     }
 
-    public int getGroup_id() {
+    public long getGroup_id() {
         return group_id;
     }
 
-    public void setGroup_id(int group_id) {
+    public void setGroup_id(long group_id) {
         this.group_id = group_id;
     }
 

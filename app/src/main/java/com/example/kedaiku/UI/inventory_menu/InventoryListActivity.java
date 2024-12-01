@@ -148,7 +148,7 @@ public class InventoryListActivity extends AppCompatActivity {
         spinnerFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("masuk sini", "onItemSelected: ");
+               // Log.d("masuk sini", "onItemSelected: ");
                 filter = getResources().getStringArray(R.array.filter_options)[position];
                 if ("Pilih Tanggal".equals(filter)) {
                     lastFilter = filter;

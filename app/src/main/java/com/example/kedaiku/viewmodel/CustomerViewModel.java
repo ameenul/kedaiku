@@ -56,7 +56,7 @@ public class CustomerViewModel extends AndroidViewModel {
         repository.delete(customer);
     }
 
-    public LiveData<Customer> getCustomerById(int customerId) {
+    public LiveData<Customer> getCustomerById(long customerId) {
         return repository.getCustomerById(customerId);
     }
 
@@ -64,11 +64,11 @@ public class CustomerViewModel extends AndroidViewModel {
         return repository.getCustomersWithoutGroup();
     }
 
-    public LiveData<List<Customer>> getCustomersByGroupId(int groupId) {
+    public LiveData<List<Customer>> getCustomersByGroupId(long groupId) {
         return repository.getCustomersByGroupId(groupId);
     }
 
-    public void deleteGroupAndUpdateCustomers(int groupId) {
+    public void deleteGroupAndUpdateCustomers(long groupId) {
         repository.deleteGroupAndUpdateCustomers(groupId);
     }
 }

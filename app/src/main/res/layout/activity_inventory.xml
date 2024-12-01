@@ -19,13 +19,4 @@
         android:layout_weight="1" />
 
     <!-- FloatingActionButton -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAddPurchase"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_add"
-        android:contentDescription="Tambah Pembelian"
-        android:layout_gravity="end|bottom"
-        android:visibility="gone" />
 </LinearLayout>

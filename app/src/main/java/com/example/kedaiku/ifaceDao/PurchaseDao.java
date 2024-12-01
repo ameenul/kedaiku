@@ -15,7 +15,8 @@ import java.util.List;
 public interface PurchaseDao {
     @Insert
     void insert(Purchase purchase);
-
+    @Insert
+    long insertPurchaseAndGetId(Purchase purchase);
     @Update
     void update(Purchase purchase);
 

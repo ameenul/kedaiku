@@ -1,0 +1,30 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <RadioGroup
+        android:id="@+id/radioGroupPriceOptions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/radioNewPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gunakan Harga Baru" />
+
+        <RadioButton
+            android:id="@+id/radioOldPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gunakan Harga Lama" />
+
+        <RadioButton
+            android:id="@+id/radioAveragePrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gunakan Harga Rata-Rata" />
+    </RadioGroup>
+</LinearLayout>

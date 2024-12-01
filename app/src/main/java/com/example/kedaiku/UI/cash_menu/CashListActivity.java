@@ -161,6 +161,7 @@ public class CashListActivity extends AppCompatActivity implements CashListAdapt
         Intent intent = new Intent(this, CashFlowActivity.class);
         intent.putExtra("cash_id", cash.getId());
         intent.putExtra("cash_name", cash.getCash_name()); // Tambahkan nama kas
+        intent.putExtra("cash_saldo", cash.getCash_value());
 
         startActivity(intent);
 
@@ -235,25 +236,6 @@ public class CashListActivity extends AppCompatActivity implements CashListAdapt
                     textViewFormattedAmount.setText("Rp 0");
                 }
 
-//                if (!s.toString().equals(current)) {
-//                    editTextAmount.removeTextChangedListener(this);
-//
-//                    String cleanString = s.toString().replaceAll("[Rp.,\\s]", "");
-//                    if (!cleanString.isEmpty()) {
-//                        try {
-//                            long parsed = Long.parseLong(cleanString);
-//                            String formatted = NumberFormat.getCurrencyInstance(new Locale("id", "ID")).format(parsed);
-//                            current = formatted;
-//                            editTextAmount.setText(formatted);
-//                            editTextAmount.setSelection(formatted.length());
-//                            textViewFormattedAmount.setText(formatted);
-//                        } catch (NumberFormatException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//
-//                    editTextAmount.addTextChangedListener(this);
-//                }
             }
         });
 
@@ -277,7 +259,7 @@ public class CashListActivity extends AppCompatActivity implements CashListAdapt
                     return;
                 }
 
-                int amount = Integer.parseInt(amountStr);
+                double amount = Integer.parseInt(amountStr);
                 if (!isIncrease) {
                     amount = -amount;
                 }
@@ -357,25 +339,7 @@ public class CashListActivity extends AppCompatActivity implements CashListAdapt
                 }
 
 
-//                if (!s.toString().equals(current)) {
-//                    editTextAmount.removeTextChangedListener(this);
-//
-//                    String cleanString = s.toString().replaceAll("[Rp.,\\s]", "");
-//                    if (!cleanString.isEmpty()) {
-//                        try {
-//                            long parsed = Long.parseLong(cleanString);
-//                            String formatted = NumberFormat.getCurrencyInstance(new Locale("id", "ID")).format(parsed);
-//                            current = formatted;
-//                            editTextAmount.setText(formatted);
-//                            editTextAmount.setSelection(formatted.length());
-//                            textViewFormattedAmount.setText(formatted);
-//                        } catch (NumberFormatException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//
-//                    editTextAmount.addTextChangedListener(this);
-//                }
+
             }
         });
 
@@ -405,7 +369,7 @@ public class CashListActivity extends AppCompatActivity implements CashListAdapt
                     return;
                 }
 
-                int amount = Integer.parseInt(amountStr);
+                double amount = Integer.parseInt(amountStr);
 
                 // Transfer kas antara sumber dan tujuan, update cash_flow dalam satu transaksi
                 cashViewModel.transferCash(sourceCash, targetCash, amount, description);

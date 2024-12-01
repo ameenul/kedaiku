@@ -37,7 +37,7 @@ public  class DateHelper {
     }
 
     // Helper methods untuk mendapatkan waktu tertentu
-    private static long getStartOfDay() {
+    public static long getStartOfDay() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
@@ -46,7 +46,7 @@ public  class DateHelper {
         return calendar.getTimeInMillis();
     }
 
-    private static long getStartOfYesterday() {
+    public static long getStartOfYesterday() {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, -1);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -56,7 +56,7 @@ public  class DateHelper {
         return calendar.getTimeInMillis();
     }
 
-    private static long getStartOfMonth() {
+    public static long getStartOfMonth() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_MONTH, 1);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -66,7 +66,7 @@ public  class DateHelper {
         return calendar.getTimeInMillis();
     }
 
-    private static long getStartOfLastMonth() {
+    public static long getStartOfLastMonth() {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MONTH, -1);
         calendar.set(Calendar.DAY_OF_MONTH, 1);
@@ -77,7 +77,7 @@ public  class DateHelper {
         return calendar.getTimeInMillis();
     }
 
-    private static long getEndOfDay() {
+    public static long getEndOfDay() {
 
         Calendar day = Calendar.getInstance();
         day.set(Calendar.HOUR_OF_DAY, 23);
@@ -85,6 +85,25 @@ public  class DateHelper {
         day.set(Calendar.SECOND, 59);
         day.set(Calendar.MILLISECOND, 999);
         return day.getTimeInMillis();
+    }
+
+
+    public static long[] fixmmssRange(Calendar start,Calendar end)
+    {
+        start.set(Calendar.HOUR_OF_DAY, 0);
+        start.set(Calendar.MINUTE, 0);
+        start.set(Calendar.SECOND, 0);
+        start.set(Calendar.MILLISECOND, 0);
+
+        end.set(Calendar.HOUR_OF_DAY, 23);
+        end.set(Calendar.MINUTE, 59);
+        end.set(Calendar.SECOND, 59);
+        end.set(Calendar.MILLISECOND, 999);
+
+                    long startDate = start.getTimeInMillis();
+                    long endDate = end.getTimeInMillis();
+        return new long[]{startDate, endDate};
+
     }
 
     public static String getDescDate(long date)

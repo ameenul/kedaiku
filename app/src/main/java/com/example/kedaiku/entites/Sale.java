@@ -13,15 +13,16 @@ public class Sale {
     private long sale_date;
     private long promo_id;
     private long sale_detail_id;
+    private long sale_customer_id;
+    private long sale_cash_id;
+    private long sale_payment_type;
 
     @NonNull
     private String sale_transaction_name;
 
-    private int sale_customer_id;
 
-    private int sale_payment_type;
     private double sale_total;
-    private int sale_cash_id;
+
     private double sale_hpp;
     private double sale_discount;
     private double sale_ship;
@@ -31,8 +32,8 @@ public class Sale {
     // Constructor
 
 
-    public Sale(  long sale_date, @NonNull String sale_transaction_name, int sale_customer_id,
-                  long sale_detail_id, int sale_payment_type, double sale_total, int sale_cash_id, double sale_hpp, double sale_discount, double sale_ship, long promo_id, double sale_paid) {
+    public Sale(  long sale_date, @NonNull String sale_transaction_name, long sale_customer_id,
+                  long sale_detail_id, long sale_payment_type, double sale_total, long sale_cash_id, double sale_hpp, double sale_discount, double sale_ship, long promo_id, double sale_paid) {
 
         this.sale_date = sale_date;
         this.sale_transaction_name = sale_transaction_name;
@@ -75,11 +76,11 @@ public class Sale {
         this.sale_transaction_name = sale_transaction_name;
     }
 
-    public int getSale_customer_id() {
+    public long getSale_customer_id() {
         return sale_customer_id;
     }
 
-    public void setSale_customer_id(int sale_customer_id) {
+    public void setSale_customer_id(long sale_customer_id) {
         this.sale_customer_id = sale_customer_id;
     }
 
@@ -91,11 +92,11 @@ public class Sale {
         this.sale_detail_id = sale_detail_id;
     }
 
-    public int getSale_payment_type() {
+    public long getSale_payment_type() {
         return sale_payment_type;
     }
 
-    public void setSale_payment_type(int sale_payment_type) {
+    public void setSale_payment_type(long sale_payment_type) {
         this.sale_payment_type = sale_payment_type;
     }
 
@@ -107,11 +108,11 @@ public class Sale {
         this.sale_total = sale_total;
     }
 
-    public int getSale_cash_id() {
+    public long getSale_cash_id() {
         return sale_cash_id;
     }
 
-    public void setSale_cash_id(int sale_cash_id) {
+    public void setSale_cash_id(long sale_cash_id) {
         this.sale_cash_id = sale_cash_id;
     }
 

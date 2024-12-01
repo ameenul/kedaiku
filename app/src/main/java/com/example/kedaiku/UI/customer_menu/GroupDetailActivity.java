@@ -23,7 +23,7 @@ public class GroupDetailActivity extends AppCompatActivity {
 
     private CustomerGroupViewModel groupViewModel;
     private CustomerViewModel customerViewModel;
-    private int groupId;
+    private long groupId;
     private TextView textViewGroupName;
     private CustomerAdapter adapter;
     private List<Customer> customersWithoutGroup = new ArrayList<>();
@@ -33,7 +33,7 @@ public class GroupDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_detail);
 
-        groupId = getIntent().getIntExtra("group_id", -1);
+        groupId = getIntent().getLongExtra("group_id", -1);
 
         textViewGroupName = findViewById(R.id.textViewGroupName);
         androidx.recyclerview.widget.RecyclerView recyclerView = findViewById(R.id.recyclerViewGroupMembers);

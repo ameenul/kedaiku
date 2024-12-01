@@ -1,7 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Kedaiku" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="windowSplashScreenBackground">@color/black</item> <!-- Latar belakang putih -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/store_logo</item> <!-- Logo aplikasi -->
+        <item name="windowSplashScreenAnimationDuration">500</item> <!-- Durasi animasi -->
+        <item name="postSplashScreenTheme">@style/Base.Theme.Kedaiku</item> <!-- Tema utama -->
+
     </style>
+
+
 </resources>

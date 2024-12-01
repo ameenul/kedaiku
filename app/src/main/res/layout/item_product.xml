@@ -1,10 +1,86 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<!--<LinearLayout-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:orientation="vertical"-->
+<!--    android:padding="8dp"-->
+<!--    android:background="?android:attr/selectableItemBackground">-->
+
+<!--    &lt;!&ndash; Nama Produk &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/textViewProductName"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Nama Produk"-->
+<!--        android:textSize="18sp"-->
+<!--        android:textStyle="bold" />-->
+
+<!--    &lt;!&ndash; SKU &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/textViewProductSKU"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="SKU: "-->
+<!--        android:textSize="14sp"-->
+<!--        android:paddingTop="4dp" />-->
+
+<!--    &lt;!&ndash; Harga Pokok &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/textViewProductPrimaryPrice"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Harga Pokok: "-->
+<!--        android:textSize="14sp"-->
+<!--        android:paddingTop="4dp"-->
+<!--        android:textColor="@android:color/holo_blue_light" />-->
+
+<!--    &lt;!&ndash; Harga Jual &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/textViewProductPrice"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Harga Jual: "-->
+<!--        android:textSize="14sp"-->
+<!--        android:paddingTop="4dp"-->
+<!--        android:textColor="@android:color/holo_green_dark" />-->
+
+<!--    &lt;!&ndash; Laba &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/textViewProductProfit"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Laba: "-->
+<!--        android:textSize="14sp"-->
+<!--        android:paddingTop="4dp" />-->
+
+<!--    &lt;!&ndash; Jumlah Stok &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/textViewProductStock"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Stok: "-->
+<!--        android:textSize="14sp"-->
+<!--        android:paddingTop="4dp"-->
+<!--        />-->
+
+<!--    &lt;!&ndash; Menu Opsi &ndash;&gt;-->
+<!--    <ImageView-->
+<!--        android:id="@+id/imageViewOptions"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:src="@android:drawable/ic_menu_more"-->
+<!--        android:contentDescription="Menu Opsi"-->
+<!--        android:layout_gravity="end"-->
+<!--        android:padding="4dp" />-->
+<!--</LinearLayout>-->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:padding="8dp"
-    android:background="?android:attr/selectableItemBackground">
+    android:layout_marginBottom="8dp"
+    android:background="#FFFFFF"> <!-- Latar belakang putih -->
 
     <!-- Nama Produk -->
     <TextView
@@ -13,63 +89,71 @@
         android:layout_height="wrap_content"
         android:text="Nama Produk"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="#000000" /> <!-- Teks hitam untuk kontras -->
 
     <!-- SKU -->
     <TextView
         android:id="@+id/textViewProductSKU"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/textViewProductName"
         android:text="SKU: "
         android:textSize="14sp"
-        android:paddingTop="4dp" />
+        android:textColor="#616161" /> <!-- Teks abu-abu gelap -->
 
     <!-- Harga Pokok -->
     <TextView
         android:id="@+id/textViewProductPrimaryPrice"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/textViewProductSKU"
         android:text="Harga Pokok: "
         android:textSize="14sp"
-        android:paddingTop="4dp"
-        android:textColor="@android:color/holo_blue_light" />
+        android:textColor="@android:color/holo_blue_light" /> <!-- Warna biru terang -->
 
     <!-- Harga Jual -->
     <TextView
         android:id="@+id/textViewProductPrice"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/textViewProductSKU"
+        android:layout_toEndOf="@id/textViewProductPrimaryPrice"
+        android:layout_marginStart="16dp"
         android:text="Harga Jual: "
         android:textSize="14sp"
-        android:paddingTop="4dp"
-        android:textColor="@android:color/holo_green_dark" />
+        android:textColor="@android:color/holo_green_dark" /> <!-- Warna hijau gelap -->
 
-    <!-- Laba -->
+    <!-- Profit -->
     <TextView
         android:id="@+id/textViewProductProfit"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/textViewProductPrimaryPrice"
+        android:layout_marginTop="4dp"
         android:text="Laba: "
         android:textSize="14sp"
-        android:paddingTop="4dp" />
+        android:textColor="@android:color/holo_orange_dark" /> <!-- Warna oranye gelap -->
 
-    <!-- Jumlah Stok -->
+    <!-- Stok -->
     <TextView
         android:id="@+id/textViewProductStock"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/textViewProductProfit"
+        android:layout_marginTop="4dp"
         android:text="Stok: "
         android:textSize="14sp"
-        android:paddingTop="4dp"
-        />
+        android:textColor="#000000" /> <!-- Teks hitam -->
 
     <!-- Menu Opsi -->
     <ImageView
         android:id="@+id/imageViewOptions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_menu_more"
+        android:layout_alignBottom="@id/textViewProductStock"
+        android:layout_alignParentEnd="true"
         android:contentDescription="Menu Opsi"
-        android:layout_gravity="end"
-        android:padding="4dp" />
-</LinearLayout>
+        android:src="@android:drawable/ic_menu_more"
+        app:tint="#616161" /> <!-- Warna ikon abu-abu gelap -->
+</RelativeLayout>

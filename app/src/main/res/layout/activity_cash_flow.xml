@@ -1,19 +1,39 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/activity_cash_flow"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- TextView untuk pesan kosong -->
-    <TextView
-        android:id="@+id/textViewEmptyMessage"
+    <!-- Container untuk saldo dan tombol export -->
+    <LinearLayout
+        android:id="@+id/linearLayoutSaldoExport"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Cash flow masih kosong"
-        android:textSize="18sp"
-        android:gravity="center"
-        android:visibility="gone"
-        android:layout_centerInParent="true" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:background="#E0E0E0">
+
+        <!-- TextView untuk saldo -->
+        <TextView
+            android:id="@+id/textViewSaldo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Saldo: Rp 0"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#000000" />
+
+        <!-- Tombol Export CSV -->
+        <Button
+            android:id="@+id/buttonExportCsv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Export CSV"
+            android:textSize="16sp"
+            android:backgroundTint="@color/purple_material"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
 
     <!-- TextView untuk rentang tanggal yang dipilih -->
     <TextView
@@ -26,13 +46,25 @@
         android:visibility="gone"
         android:background="#E0E0E0"
         android:textStyle="bold"
-        android:textColor="#000000" />
+        android:textColor="#000000"
+        android:layout_below="@id/linearLayoutSaldoExport" />
+
+    <!-- TextView untuk pesan kosong -->
+    <TextView
+        android:id="@+id/textViewEmptyMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cash flow masih kosong"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_centerInParent="true" />
 
     <!-- RecyclerView untuk menampilkan cash flow -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewCashFlow"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/textViewSelectedDateRange" />
-
+        android:layout_below="@id/textViewSelectedDateRange"
+        android:layout_marginTop="8dp" />
 </RelativeLayout>

@@ -131,4 +131,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             imageViewOptions = itemView.findViewById(R.id.imageViewOptions);
         }
     }
+    public List<Product> getProductList() {
+        return productList;
+    }
 }

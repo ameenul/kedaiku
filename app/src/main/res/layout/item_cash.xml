@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@color/purple_fab_dark"
+    android:layout_marginBottom="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,15 +20,17 @@
             android:text="Cash Name"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:textColor="@color/white" />
 
         <ImageButton
             android:id="@+id/buttonMoreOptions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_more"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="More Options"
-            android:background="?attr/selectableItemBackgroundBorderless" />
+            android:src="@android:drawable/ic_menu_more"
+            app:tint="@color/white" />
     </LinearLayout>
 
     <TextView
@@ -34,5 +39,6 @@
         android:layout_height="wrap_content"
         android:text="Rp 0"
         android:textSize="14sp"
-        android:paddingTop="4dp" />
+        android:paddingTop="4dp"
+        android:textColor="@color/white"/>
 </LinearLayout>

@@ -37,7 +37,7 @@ public class CustomerGroupViewModel extends AndroidViewModel {
         return allGroups;
     }
 
-    public LiveData<CustomerGroup> getGroupById(int groupId) {
+    public LiveData<CustomerGroup> getGroupById(long groupId) {
         return repository.getGroupById(groupId);
     }
 }

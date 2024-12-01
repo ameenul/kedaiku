@@ -2,6 +2,7 @@ package com.example.kedaiku.UI.cash_menu;
 
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,11 @@ public class CashFlowAdapter extends RecyclerView.Adapter<CashFlowAdapter.CashFl
         notifyDataSetChanged();
     }
 
+    public List<CashFlow> getCashFlowList() {
+        return cashFlowList; // cashFlowList adalah data internal adapter
+    }
+
+
     @NonNull
     @Override
     public CashFlowViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -46,10 +52,10 @@ public class CashFlowAdapter extends RecyclerView.Adapter<CashFlowAdapter.CashFl
         String formattedAmount = formatCurrency(Math.abs(amount));
 
         if (amount > 0) {
-            holder.textViewAmount.setTextColor(Color.GREEN);
+            holder.textViewAmount.setTextColor(Color.parseColor("#388E3C"));
             holder.textViewAmount.setText("+ " + formattedAmount);
         } else if (amount < 0) {
-            holder.textViewAmount.setTextColor(Color.RED);
+            holder.textViewAmount.setTextColor(Color.parseColor("#D32F2F"));
             holder.textViewAmount.setText("- " + formattedAmount);
         } else {
             holder.textViewAmount.setTextColor(Color.BLUE);

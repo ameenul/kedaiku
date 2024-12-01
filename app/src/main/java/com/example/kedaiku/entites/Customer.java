@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "table_customer")
 public class Customer {
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private long id;
 
     @NonNull
     private String customer_name;
@@ -21,12 +21,12 @@ public class Customer {
     @NonNull
     private String customer_phone;
 
-    private int customer_group_id; // Foreign key to Customer Group
+    private long customer_group_id; // Foreign key to Customer Group
 
     // Constructor, Getter, dan Setter
 
 
-    public Customer(@NonNull String customer_name, @NonNull String customer_address, String customer_email, @NonNull String customer_phone, int customer_group_id) {
+    public Customer(@NonNull String customer_name, @NonNull String customer_address, String customer_email, @NonNull String customer_phone, long customer_group_id) {
 
         this.setCustomer_name(customer_name);
         this.setCustomer_address(customer_address);
@@ -35,11 +35,11 @@ public class Customer {
         this.setCustomer_group_id(customer_group_id);
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -79,11 +79,11 @@ public class Customer {
         this.customer_phone = customer_phone;
     }
 
-    public int getCustomer_group_id() {
+    public long getCustomer_group_id() {
         return customer_group_id;
     }
 
-    public void setCustomer_group_id(int customer_group_id) {
+    public void setCustomer_group_id(long customer_group_id) {
         this.customer_group_id = customer_group_id;
     }
 }

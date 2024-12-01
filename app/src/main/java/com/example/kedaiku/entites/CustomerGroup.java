@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "table_customer_group")
 public class CustomerGroup {
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private long id;
 
     @NonNull
     private String name;
@@ -17,11 +17,11 @@ public class CustomerGroup {
                this.setName(name);
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

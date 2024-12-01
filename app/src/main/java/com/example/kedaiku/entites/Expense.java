@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "table_expense")
 public class Expense {
     @PrimaryKey(autoGenerate = true)
-    private int _id;
+    private long _id;
     @NonNull
     private String expense_date;
     @NonNull
@@ -15,19 +15,19 @@ public class Expense {
     private int expense_cash_id;
     private double expense_amount;
 
-    public Expense(int _id, @NonNull String expense_date, @NonNull String expense_name, int expense_cash_id, double expense_amount) {
-        this._id = _id;
+    public Expense( @NonNull String expense_date, @NonNull String expense_name, int expense_cash_id, double expense_amount) {
+
         this.expense_date = expense_date;
         this.expense_name = expense_name;
         this.expense_cash_id = expense_cash_id;
         this.expense_amount = expense_amount;
     }
 
-    public int get_id() {
+    public long get_id() {
         return _id;
     }
 
-    public void set_id(int _id) {
+    public void set_id(long _id) {
         this._id = _id;
     }
 

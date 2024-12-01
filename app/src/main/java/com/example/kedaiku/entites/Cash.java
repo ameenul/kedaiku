@@ -7,10 +7,10 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "table_cash")
 public class Cash {
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private long id;
 
     @NonNull
-    private String cash_name;
+    private String cash_name = "";
 
     private double cash_value;
 
@@ -22,11 +22,11 @@ public class Cash {
         this.setCash_value(cash_value);
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -47,6 +47,7 @@ public class Cash {
         this.cash_value = cash_value;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return cash_name;

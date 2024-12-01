@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
+        android:theme="@style/Base.Theme.Kedaiku"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -19,14 +20,11 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Kedaiku"
         tools:targetApi="31">
         <activity
             android:name=".UI.inventory_menu.InventoryListActivity"
             android:exported="false" />
-        <activity
-            android:name=".UI.inventory_menu.AddPurchaseActivity"
-            android:exported="false" />
+
         <activity
             android:name=".UI.inventory_menu.InventoryActivity"
             android:exported="false" />
@@ -70,7 +68,8 @@
             android:exported="false" />
         <activity
             android:name=".UI.SplashActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Base.Theme.Kedaiku">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -41,11 +41,15 @@ public class CashViewModel extends AndroidViewModel {
         executorService.execute(() -> cashRepository.delete(cash));
     }
 
-    public void updateCashWithTransaction(Cash cash, int amount, String description) {
+    public void updateCashWithTransaction(Cash cash, double amount, String description) {
         executorService.execute(() -> cashRepository.updateCashWithTransaction(cash, amount, description));
     }
 
-    public void transferCash(Cash sourceCash, Cash targetCash, int amount, String description) {
+    public void transferCash(Cash sourceCash, Cash targetCash, double amount, String description) {
         executorService.execute(() -> cashRepository.transferCash(sourceCash, targetCash, amount, description));
+    }
+
+    public LiveData<Cash> getCashById(long cashId) {
+        return cashRepository.getCashById(cashId);
     }
 }

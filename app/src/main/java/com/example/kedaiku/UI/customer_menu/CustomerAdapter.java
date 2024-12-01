@@ -34,6 +34,11 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
         notifyDataSetChanged();
     }
 
+    public List<Customer> getCustomerList() {
+        return customerList; // customerList adalah data internal adapter
+    }
+
+
     public interface OnItemClickListener {
         void onEditClicked(Customer customer);
         void onDeleteClicked(Customer customer);
