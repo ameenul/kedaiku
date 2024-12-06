@@ -2,40 +2,69 @@ package com.example.kedaiku.viewmodel;
 
 import android.app.Application;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 
-import com.example.kedaiku.database.AppDatabase;
 import com.example.kedaiku.entites.Wholesale;
-import com.example.kedaiku.ifaceDao.WholesaleDao;
+import com.example.kedaiku.entites.WholesaleWithProduct;
+import com.example.kedaiku.repository.WholesaleRepository;
 
 import java.util.List;
 
 public class WholesaleViewModel extends AndroidViewModel {
-    private WholesaleDao wholesaleDao;
-    private LiveData<List<Wholesale>> allWholesales;
 
-    public WholesaleViewModel(@NonNull Application application) {
+    private final WholesaleRepository repository;
+
+    // MutableLiveData to hold the search keyword
+    private final MutableLiveData<String> searchKeyword = new MutableLiveData<>();
+
+    // Transformed LiveData for search results
+    private final LiveData<List<WholesaleWithProduct>> filteredWholesales;
+
+    // LiveData for all wholesales
+    private final LiveData<List<Wholesale>> allWholesales;
+
+    public WholesaleViewModel(Application application) {
         super(application);
-        AppDatabase db = AppDatabase.getDatabase(application);
-        wholesaleDao = db.wholesaleDao();
-        allWholesales = wholesaleDao.getAllWholesales();
+        repository = new WholesaleRepository(application);
+
+        // Get all wholesales
+        allWholesales = repository.getAllWholesales();
+
+        // Transform searchKeyword into search results
+        filteredWholesales = Transformations.switchMap(searchKeyword, keyword ->
+                repository.getWholesaleWithProductLike(keyword));
     }
 
+    // Insert
+    public void insert(Wholesale wholesale) {
+        repository.insert(wholesale);
+    }
+
+    // Update
+    public void update(Wholesale wholesale) {
+        repository.update(wholesale);
+    }
+
+    // Delete
+    public void delete(Wholesale wholesale) {
+        repository.delete(wholesale);
+    }
+
+    // Get all wholesales
     public LiveData<List<Wholesale>> getAllWholesales() {
         return allWholesales;
     }
 
-    public void insert(Wholesale wholesale) {
-        AppDatabase.databaseWriteExecutor.execute(() -> wholesaleDao.insert(wholesale));
+    // Set the search keyword
+    public void setSearchKeyword(String keyword) {
+        searchKeyword.setValue(keyword);
     }
 
-    public void update(Wholesale wholesale) {
-        AppDatabase.databaseWriteExecutor.execute(() -> wholesaleDao.update(wholesale));
-    }
-
-    public void delete(Wholesale wholesale) {
-        AppDatabase.databaseWriteExecutor.execute(() -> wholesaleDao.delete(wholesale));
+    // Get the filtered results
+    public LiveData<List<WholesaleWithProduct>> getFilteredWholesales() {
+        return filteredWholesales;
     }
 }

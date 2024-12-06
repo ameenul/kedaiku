@@ -23,11 +23,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kedaiku.R;
 import com.example.kedaiku.entites.Purchase;
 import com.example.kedaiku.entites.Product;
+import com.example.kedaiku.entites.PurchaseWithProduct;
+import com.example.kedaiku.helper.DateHelper;
+import com.example.kedaiku.helper.FormatHelper;
 import com.example.kedaiku.repository.ProductRepository;
 import com.example.kedaiku.viewmodel.PurchaseViewModel;
 import com.example.kedaiku.viewmodel.ProductViewModel;
@@ -50,9 +54,13 @@ public class PurchaseFragment extends Fragment {
     private Spinner spinnerFilter;
     private Button buttonExportCsv;
     private FloatingActionButton fabAddPurchase;
+    private TextView textViewSelectedDates;
+
 
     private ActivityResultLauncher<Intent> createFileLauncher;
     private String csvData;
+    private String dateRange;
+    private String lastFilter = "Semua Waktu";
 
     private List<Product> productList;
 
@@ -65,10 +73,16 @@ public class PurchaseFragment extends Fragment {
 
         adapter = new PurchaseAdapter();
 
+        adapter.setOnItemClickListener(purchaseWithProduct -> {
+            // Tampilkan dialog detail
+            showDetailDialog(purchaseWithProduct);
+        });
+
+
         adapter.setOnDeleteClickListener(purchase -> {
             new AlertDialog.Builder(getContext())
                     .setTitle("Konfirmasi Hapus")
-                    .setMessage("Apakah Anda yakin ingin membatalkan pembelian ini?")
+                    .setMessage("Apakah Anda yakin ingin membatalkan pembelian ini? Cash Akan dikembalikan dan Stock akan berkurang")
                     .setPositiveButton("Ya", (dialog, which) -> {
                         productViewModel.deletePurchaseTransaction(purchase, new ProductRepository.OnTransactionCompleteListener() {
                             @Override
@@ -94,19 +108,17 @@ public class PurchaseFragment extends Fragment {
         spinnerFilter = view.findViewById(R.id.spinnerFilter);
         buttonExportCsv = view.findViewById(R.id.buttonExportCsv);
         fabAddPurchase = view.findViewById(R.id.fabAddPurchase);
+        textViewSelectedDates = view.findViewById(R.id.textViewSelectedDates);
 
+        lastFilter="Semua Waktu";
         setupSpinner();
 
-        // Mengambil daftar produk untuk digunakan dalam adapter
-        productViewModel.getAllProducts().observe(getViewLifecycleOwner(), products -> {
-            productList = products;
-            adapter.setProductList(products);
+        purchaseViewModel.getFilteredPurchasesWithProductName().observe(getViewLifecycleOwner(), purchaseWithProducts -> {
+            // Pastikan adapter Anda memiliki metode untuk mengatur data dari PurchaseWithProduct
+            // Misalnya, buat metode setPurchaseWithProductList(purchaseWithProducts)
+            adapter.setPurchaseWithProductList(purchaseWithProducts);
         });
 
-        // Mengambil daftar pembelian dan menampilkannya
-        purchaseViewModel.getAllPurchases().observe(getViewLifecycleOwner(), purchases -> {
-            adapter.setPurchaseList(purchases);
-        });
 
         // Inisialisasi ActivityResultLauncher untuk ekspor CSV
         createFileLauncher = registerForActivityResult(
@@ -140,18 +152,21 @@ public class PurchaseFragment extends Fragment {
         adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerFilter.setAdapter(adapterSpinner);
 
-        spinnerFilter.setSelection(0);
+
 
         spinnerFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,int position,long id) {
-                String filter = getResources().getStringArray(R.array.filter_options)[position];
-                if ("Pilih Tanggal".equals(filter)) {
+                lastFilter = getResources().getStringArray(R.array.filter_options)[position];
+                if ("Pilih Tanggal".equals(lastFilter)) {
                     showDateRangePicker();
+                }  else if(position==0) {
+
                 } else {
-                    // Implementasikan fungsi filter sesuai kebutuhan
-                    // Misalnya, filter berdasarkan hari ini, minggu ini, bulan ini, dll.
-                    Toast.makeText(getContext(), "Filter: " + filter, Toast.LENGTH_SHORT).show();
+                    // Jika user pilih "Semua Waktu"
+                    purchaseViewModel.setFilter(lastFilter);
+
+                    textViewSelectedDates.setText("Tanggal Terpilih: "+lastFilter);
                 }
             }
 
@@ -179,8 +194,20 @@ public class PurchaseFragment extends Fragment {
                                 endCalendar.set(Calendar.MILLISECOND, 999);
                                 long endDate = endCalendar.getTimeInMillis();
 
-                                // Implementasikan filter berdasarkan rentang tanggal
-                                Toast.makeText(getContext(), "Filter dari " + startDate + " sampai " + endDate, Toast.LENGTH_SHORT).show();
+                                purchaseViewModel.setDateRangeFilter(startDate, endDate);
+
+                                // Format rentang tanggal
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm:ss", Locale.getDefault());
+                                String dateRangeText = "Tanggal Terpilih: " +
+                                        dateFormat.format(startCalendar.getTime()) + " - " +
+                                        dateFormat.format(endCalendar.getTime());
+                                dateRange = dateFormat.format(startCalendar.getTime()) + " - " +
+                                        dateFormat.format(endCalendar.getTime());
+                                textViewSelectedDates.setText(dateRangeText);
+
+                                // Setelah memilih rentang tanggal, kembali ke "Semua Waktu"
+                                spinnerFilter.setSelection(0);
+                                lastFilter = "Pilih Tanggal";
 
                             },
                             calendar.get(Calendar.YEAR),
@@ -201,7 +228,7 @@ public class PurchaseFragment extends Fragment {
     }
 
     private void exportDataToCsv() {
-        List<Purchase> dataToExport = adapter.getPurchaseList();
+        List<PurchaseWithProduct> dataToExport = adapter.getPurchaseWithProductList();
         if (dataToExport == null || dataToExport.isEmpty()) {
             Toast.makeText(getContext(), "Tidak ada data untuk diekspor", Toast.LENGTH_SHORT).show();
             return;
@@ -209,20 +236,33 @@ public class PurchaseFragment extends Fragment {
 
         // Siapkan data CSV
         StringBuilder data = new StringBuilder();
+
+        // Tentukan judul berdasarkan filter
+        if (!"Pilih Tanggal".equals(lastFilter) && !"Semua Waktu".equals(lastFilter)) {
+            // Jika filter bukan "Semua Waktu" dan bukan "Pilih Tanggal"
+            long[] dateRangeArr = DateHelper.calculateDateRange(lastFilter);
+            data.append("Purchases_").append(DateHelper.getDescStartEndDate(dateRangeArr)).append(" \n");
+        } else if ("Pilih Tanggal".equals(lastFilter)) {
+            data.append("Purchases_").append(dateRange).append("\n");
+        } else {
+            // Semua Waktu
+            data.append("Purchases - Semua Waktu\n");
+        }
+
+        data.append("\n");
         data.append("ID,Produk,Total\n");
 
-        for (Purchase item : dataToExport) {
-            String productName = adapter.getProductNameById(item.getProduct_id());
-
-            // Hitung total dari data JSON
+        for (PurchaseWithProduct item : dataToExport) {
+            // Ambil nama produk langsung dari item.product_name
+            // Hitung total dari JSON di purchase_detail
             try {
-                JSONObject jsonObject = new JSONObject(item.getPurchase_detail());
+                JSONObject jsonObject = new JSONObject(item.purchase_detail);
                 double price = jsonObject.getDouble("product_price");
                 double qty = jsonObject.getDouble("product_qty");
                 double total = price * qty;
 
-                data.append(item.get_id()).append(",");
-                data.append(productName).append(",");
+                data.append(item._id).append(",");
+                data.append(item.product_name).append(",");
                 data.append(total).append("\n");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -257,4 +297,46 @@ public class PurchaseFragment extends Fragment {
         AddPurchaseDialogFragment dialogFragment = new AddPurchaseDialogFragment();
         dialogFragment.show(getChildFragmentManager(), "AddPurchaseDialog");
     }
+
+    private void showDetailDialog(PurchaseWithProduct purchaseWithProduct) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Detail Pembelian");
+
+        // Buat tampilan custom untuk dialog
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_purchase_detail, null);
+        builder.setView(dialogView);
+
+        TextView textViewId = dialogView.findViewById(R.id.textViewDetailId);
+        TextView textViewProductName = dialogView.findViewById(R.id.textViewDetailProductName);
+        TextView textViewPrice = dialogView.findViewById(R.id.textViewDetailPrice);
+        TextView textViewQuantity = dialogView.findViewById(R.id.textViewDetailQuantity);
+        TextView textViewTotal = dialogView.findViewById(R.id.textViewDetailTotal);
+        TextView textViewCash = dialogView.findViewById(R.id.textViewDetailCash);
+
+        // Ambil data dari purchaseWithProduct
+        textViewId.setText("ID: " + purchaseWithProduct._id);
+        textViewProductName.setText("Produk: " + purchaseWithProduct.product_name);
+
+        double price = 0;
+        double qty = 0;
+        String cashname="";
+        try {
+            JSONObject jsonObject = new JSONObject(purchaseWithProduct.purchase_detail);
+            price = jsonObject.getDouble("product_price");
+            qty = jsonObject.getDouble("product_qty");
+            cashname = jsonObject.getString("cash_name");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        double total = price * qty;
+        textViewPrice.setText("Harga: " + FormatHelper.formatCurrency(price));
+        textViewQuantity.setText("Jumlah: " + qty);
+        textViewTotal.setText("Total: " + FormatHelper.formatCurrency(total));
+        textViewCash.setText("Kas: " + cashname); // Atau jika butuh nama kas, ubah logika sesuai data kas
+
+        builder.setPositiveButton("Tutup", (dialog, which) -> dialog.dismiss());
+        builder.show();
+    }
+
 }

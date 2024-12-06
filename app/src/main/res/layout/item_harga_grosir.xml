@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <!-- Nama Produk -->
+        <TextView
+            android:id="@+id/textViewProductName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama Produk"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black" />
+
+        <!-- Nama Grosir -->
+        <TextView
+            android:id="@+id/textViewWholesaleName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama Grosir"
+            android:textColor="@android:color/darker_gray"
+            android:textStyle="italic" />
+
+        <!-- HPP -->
+        <TextView
+            android:id="@+id/textViewHpp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="HPP: 0"
+            android:textColor="@android:color/holo_red_dark" />
+
+        <!-- Baris untuk Harga Normal, Harga Grosir, dan Min Qty -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <!-- Harga Normal -->
+            <TextView
+                android:id="@+id/textViewProductPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Harga Normal: 0"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+
+            <!-- Harga Grosir -->
+            <TextView
+                android:id="@+id/textViewWholesalePrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Harga Grosir: 0"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+
+            <!-- Min Qty -->
+            <TextView
+                android:id="@+id/textViewMinQty"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Min Qty: 0"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

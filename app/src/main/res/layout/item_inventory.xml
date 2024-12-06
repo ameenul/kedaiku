@@ -1,8 +1,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#FFFFFF"
     android:orientation="horizontal"
-    android:padding="8dp">
+
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+
+
+    android:padding="8dp"
+    >
 
     <TextView
         android:id="@+id/textViewDescription"
@@ -10,7 +17,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="2"
         android:text="Deskripsi"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:textColor="#000000" />
 
     <TextView
         android:id="@+id/textViewStockIn"
@@ -19,7 +27,9 @@
         android:layout_weight="1"
         android:text="0.00"
         android:textAlignment="textEnd"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:textColor="#4CAF50"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textViewStockOut"
@@ -28,7 +38,9 @@
         android:layout_weight="1"
         android:text="0.00"
         android:textAlignment="textEnd"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:textColor="#F44336"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textViewStockBalance"
@@ -37,5 +49,8 @@
         android:layout_weight="1"
         android:text="0.00"
         android:textAlignment="textEnd"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:textColor="#000000"
+        android:textStyle="bold"/>
+
 </LinearLayout>

@@ -2,7 +2,6 @@ package com.example.kedaiku.UI.inventory_menu;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,7 +23,6 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -33,11 +31,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kedaiku.R;
 import com.example.kedaiku.entites.ProductInventory;
-import com.example.kedaiku.viewmodel.ProductViewModel;
+import com.example.kedaiku.helper.DateHelper;
+import com.example.kedaiku.viewmodel.ProductInventoryViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,7 +49,7 @@ import java.util.concurrent.Future;
 public class StockProductFragment extends Fragment {
 
     private StockProductAdapter adapter;
-    private ProductViewModel productViewModel;
+    private ProductInventoryViewModel productInventoryViewModel;
     private Spinner spinnerFilter;
     private TextView textViewSelectedDates;
     private EditText editTextSearch;
@@ -65,6 +62,9 @@ public class StockProductFragment extends Fragment {
 
     private ActivityResultLauncher<Intent> createFileLauncher;
     private String csvData;
+    String currentFilterDate;
+    String currentFilterSearch;
+    private String dateRange;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -94,7 +94,7 @@ public class StockProductFragment extends Fragment {
         adapter = new StockProductAdapter(requireContext());
         recyclerView.setAdapter(adapter);
 
-        productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
+        productInventoryViewModel = new ViewModelProvider(this).get(ProductInventoryViewModel.class);
 
         executorService = Executors.newSingleThreadExecutor();
 
@@ -103,7 +103,9 @@ public class StockProductFragment extends Fragment {
         observeFilteredProductInventory();
 
         // Set filter awal
-        productViewModel.setFilter("Semua Waktu");
+        currentFilterDate = "Semua Waktu";
+        currentFilterSearch = "";
+        productInventoryViewModel.setFilter(currentFilterDate,currentFilterSearch);
         textViewSelectedDates.setText("Tanggal Terpilih: Semua Waktu (Klik Tiap Item Untuk Detail)");
 
         // Set up FAB click listener
@@ -133,19 +135,25 @@ public class StockProductFragment extends Fragment {
         spinnerFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,int position,long id) {
-                String filter = getResources().getStringArray(R.array.filter_options)[position];
-                if ("Pilih Tanggal".equals(filter)) {
+                currentFilterDate = getResources().getStringArray(R.array.filter_options)[position];
+                if ("Pilih Tanggal".equals(currentFilterDate)) {
                     showDateRangePicker();
-                } else {
-                    productViewModel.setFilter(filter);
-                    textViewSelectedDates.setText("Tanggal Terpilih: " + filter + " (Klik Tiap Item Untuk Detail)");
-                    // spinnerFilter.setSelection(0); // Remove or comment this line if not needed
+                }
+                else if(position==0) {
+
+                }
+                else {
+                    productInventoryViewModel.setFilter(currentFilterDate,currentFilterSearch);
+                    textViewSelectedDates.setText("Tanggal Terpilih: " + currentFilterDate + " (Klik Tiap Item Untuk Detail)");
+
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                productViewModel.setFilter("Semua Waktu");
+                currentFilterDate = "Semua Waktu";
+                currentFilterSearch = "";
+                productInventoryViewModel.setFilter(currentFilterDate,currentFilterSearch);
                 textViewSelectedDates.setText("Tanggal Terpilih: Semua Waktu (Klik Tiap Item Untuk Detail)");
             }
         });
@@ -160,7 +168,9 @@ public class StockProductFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s,int start,int before,int count) {
-                filterAndDisplayProducts(s.toString());
+                currentFilterSearch=s.toString();
+                productInventoryViewModel.setFilter(currentFilterDate,currentFilterSearch);
+               // filterAndDisplayProducts(s.toString());
             }
 
             @Override
@@ -170,53 +180,19 @@ public class StockProductFragment extends Fragment {
         });
     }
 
-    private void filterAndDisplayProducts(String query) {
-        // Cancel any ongoing search task
-        if (searchTask != null && !searchTask.isDone()) {
-            searchTask.cancel(true);
-        }
 
-        // Start a new search task
-        searchTask = executorService.submit(() -> {
-            List<ProductInventory> filteredList = new ArrayList<>();
-
-            if (fullProductInventoryList == null) {
-                fullProductInventoryList = new ArrayList<>();
-            }
-
-            if (query == null || query.isEmpty()) {
-                filteredList = new ArrayList<>(fullProductInventoryList);
-            } else {
-                String lowerCaseQuery = query.toLowerCase(Locale.getDefault());
-                for (ProductInventory item : fullProductInventoryList) {
-                    if (Thread.currentThread().isInterrupted()) {
-                        // Task was cancelled
-                        return;
-                    }
-                    String productName = item.getProductName();
-                    if (productName != null && productName.toLowerCase(Locale.getDefault()).contains(lowerCaseQuery)) {
-                        filteredList.add(item);
-                    }
-                }
-            }
-
-            // Update the adapter on the main thread
-            List<ProductInventory> finalFilteredList = filteredList;
-            requireActivity().runOnUiThread(() -> {
-                adapter.submitList(finalFilteredList);
-            });
-        });
-    }
 
     private void observeFilteredProductInventory() {
-        productViewModel.getFilteredProductInventory().observe(getViewLifecycleOwner(), inventoryItems -> {
+        productInventoryViewModel.getFilteredProductInventory().observe(getViewLifecycleOwner(), inventoryItems -> {
             if (inventoryItems != null) {
                 fullProductInventoryList = inventoryItems; // Save full data
-                filterAndDisplayProducts(editTextSearch.getText().toString()); // Apply current search query
+//                filterAndDisplayProducts(editTextSearch.getText().toString()); // Apply current search query
                 Log.d("StockProductFragment", "Products loaded: " + inventoryItems.size());
+                adapter.submitList(fullProductInventoryList);
             } else {
                 fullProductInventoryList = new ArrayList<>();
-                filterAndDisplayProducts(editTextSearch.getText().toString());
+                adapter.submitList(fullProductInventoryList);
+              //  filterAndDisplayProducts(editTextSearch.getText().toString());
                 Log.d("StockProductFragment", "No products available.");
             }
         });
@@ -250,11 +226,18 @@ public class StockProductFragment extends Fragment {
                                 String dateRangeText = "Tanggal Terpilih: " +
                                         dateFormat.format(startCalendar.getTime()) + " - " +
                                         dateFormat.format(endCalendar.getTime()) + "  (Klik Tiap Item Untuk Detail)";
+
+                                //buat csv
+                                dateRange = dateFormat.format(startCalendar.getTime()) + " - " +
+                                        dateFormat.format(endCalendar.getTime());
+                                //
+
+
                                 textViewSelectedDates.setText(dateRangeText);
                                 spinnerFilter.setSelection(0);
 
                                 // Set custom date range in ViewModel
-                                productViewModel.setCustomDateRange(startDate, endDate);
+                                productInventoryViewModel.setCustomDateRange(startDate, endDate,currentFilterSearch);
                             },
                             calendar.get(Calendar.YEAR),
                             calendar.get(Calendar.MONTH),
@@ -282,6 +265,21 @@ public class StockProductFragment extends Fragment {
 
         // Prepare the CSV data
         StringBuilder data = new StringBuilder();
+
+        // Prepare the CSV data
+
+        if(!currentFilterDate.equals("Pilih Tanggal")) {
+            data.append("Inventory_"+ DateHelper.getDescStartEndDate(DateHelper.calculateDateRange(currentFilterDate))+" : "+currentFilterSearch+ " \n");
+
+        }
+        else{
+            data.append("Inventory_"+dateRange +" : "+currentFilterSearch+ " \n");
+
+        }
+        data.append("\n");
+
+
+
         data.append("Produk_ID,Produk,Stok Masuk,Stok Keluar,Stok Akhir\n");
 
         for (ProductInventory item : dataToExport) {
@@ -315,3 +313,4 @@ public class StockProductFragment extends Fragment {
         }
     }
 }
+

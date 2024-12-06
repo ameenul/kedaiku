@@ -8,6 +8,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.kedaiku.entites.Wholesale;
+import com.example.kedaiku.entites.WholesaleWithProduct;
 
 import java.util.List;
 
@@ -24,4 +25,16 @@ public interface WholesaleDao {
 
     @Query("SELECT * FROM table_wholesale")
     LiveData<List<Wholesale>> getAllWholesales();
+
+
+    @Query("SELECT w.*, p.product_name, p.product_price, p.product_primary_price " +
+            "FROM table_wholesale w " +
+            "JOIN table_product p ON w.product_id = p.id " +
+            "WHERE p.product_name LIKE '%' || :searchKeyword || '%'")
+    List<WholesaleWithProduct> getWholesaleWithProductLike(String searchKeyword);
+
+
+
+
+
 }

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@android:color/white">
+
+    <!-- Nama Produk -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nama Produk"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp" />
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteProductName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Pilih nama produk"
+        android:inputType="text"
+        android:padding="8dp"
+        android:background="@android:color/white"
+        android:elevation="2dp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Nama Grosir -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nama Grosir"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp" />
+
+    <EditText
+        android:id="@+id/editTextWholesaleName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Masukkan nama grosir"
+        android:inputType="text"
+        android:padding="8dp"
+        android:background="@android:color/white"
+        android:elevation="2dp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Harga Normal -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Harga Normal"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp" />
+
+    <TextView
+        android:id="@+id/textViewProductPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="0.00"
+        android:padding="8dp"
+        android:background="@android:color/transparent"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="16dp" />
+
+    <!-- HPP -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="HPP (Harga Pokok Penjualan)"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp" />
+
+    <TextView
+        android:id="@+id/textViewHpp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="0.00"
+        android:padding="8dp"
+        android:background="@android:color/transparent"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Harga Grosir -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Harga Grosir"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp" />
+
+    <EditText
+        android:id="@+id/editTextWholesalePrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Masukkan harga grosir"
+        android:inputType="numberDecimal"
+        android:padding="8dp"
+        android:background="@android:color/white"
+        android:elevation="2dp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Min Qty -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Minimum Quantity"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp" />
+
+    <EditText
+        android:id="@+id/editTextMinQty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Masukkan jumlah minimum"
+        android:inputType="number"
+        android:padding="8dp"
+        android:background="@android:color/white"
+        android:elevation="2dp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Tombol Simpan -->
+    <Button
+        android:id="@+id/buttonSaveHargaGrosir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Simpan"
+        android:backgroundTint="@android:color/holo_blue_dark"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="16dp" />
+</LinearLayout>

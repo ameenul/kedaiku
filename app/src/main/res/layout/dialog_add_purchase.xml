@@ -20,47 +20,99 @@
             android:gravity="center"
             android:paddingBottom="16dp" />
 
+        <!-- Label Tanggal -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tanggal"
+            android:textSize="16sp"
+            android:paddingTop="8dp"/>
+
         <!-- Input Tanggal -->
         <EditText
             android:id="@+id/editTextDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
-
             android:focusable="false"
-            android:hint="Tanggal"
+            android:hint="Pilih tanggal"
             android:inputType="none"
-            android:textSize="24sp" />
+            android:textSize="20sp"
+            android:padding="8dp"/>
+
+        <!-- Label Produk -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Produk"
+            android:textSize="16sp"
+            android:paddingTop="8dp"/>
 
         <!-- Input Produk -->
         <AutoCompleteTextView
             android:id="@+id/autoCompleteProduct"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Produk"
+            android:hint="Nama produk"
             android:inputType="text"
             android:minHeight="48dp"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:padding="8dp" />
+
+        <!-- Label Harga -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Harga"
+            android:textSize="16sp"
+            android:paddingTop="8dp"/>
 
         <!-- Input Harga -->
         <EditText
             android:id="@+id/editTextPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Harga"
+            android:hint="Masukkan harga"
             android:inputType="numberDecimal"
             android:minHeight="48dp"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:padding="8dp" />
+
+        <!-- TextView Format Rupiah di bawah input harga -->
+        <TextView
+            android:id="@+id/textViewRupiahFormat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:text="Rp. ,-"
+            android:textSize="14sp" />
+
+        <!-- Label Jumlah -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jumlah"
+            android:textSize="16sp"
+            android:paddingTop="8dp"/>
 
         <!-- Input Jumlah -->
         <EditText
             android:id="@+id/editTextQuantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Jumlah"
+            android:hint="Masukkan jumlah"
             android:inputType="numberDecimal"
             android:minHeight="48dp"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:padding="8dp" />
+
+        <!-- Label Kas -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kas"
+            android:textSize="16sp"
+            android:paddingTop="8dp"/>
 
         <!-- Spinner Cash -->
         <Spinner

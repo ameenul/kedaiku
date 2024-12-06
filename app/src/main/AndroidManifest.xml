@@ -11,7 +11,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:theme="@style/Base.Theme.Kedaiku"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -20,11 +19,17 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:theme="@style/Base.Theme.Kedaiku"
         tools:targetApi="31">
+        <activity
+            android:name=".UI.promo_menu.AddHargaGrosirActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.promo_menu.PromoActivity"
+            android:exported="false" />
         <activity
             android:name=".UI.inventory_menu.InventoryListActivity"
             android:exported="false" />
-
         <activity
             android:name=".UI.inventory_menu.InventoryActivity"
             android:exported="false" />
@@ -79,6 +84,7 @@
         <activity
             android:name=".UI.MainActivity"
             android:exported="false" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.kedaiku.fileprovider"
@@ -88,8 +94,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
-
     </application>
 
 </manifest>

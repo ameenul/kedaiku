@@ -78,6 +78,10 @@ public class ProductRepository {
         return productDao.getFilteredProductInventory(startDate, endDate);
     }
 
+    public LiveData<List<ProductInventory>> getFilteredProductInventory(long startDate, long endDate, String name) {
+        return productDao.getFilteredProductInventory(startDate, endDate,name);
+    }
+
     public void processPurchase(
             Purchase purchase,
             double selectedPrice,

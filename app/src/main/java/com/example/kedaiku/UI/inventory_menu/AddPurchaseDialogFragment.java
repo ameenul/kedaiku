@@ -2,7 +2,9 @@ package com.example.kedaiku.UI.inventory_menu;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,15 +31,13 @@ import com.example.kedaiku.entites.Cash;
 import com.example.kedaiku.entites.Inventory;
 import com.example.kedaiku.entites.Purchase;
 import com.example.kedaiku.entites.Product;
-import com.example.kedaiku.ifaceDao.CashDao;
-import com.example.kedaiku.ifaceDao.ProductDao;
 import com.example.kedaiku.repository.ProductRepository;
 import com.example.kedaiku.viewmodel.CashViewModel;
-import com.example.kedaiku.viewmodel.PurchaseViewModel;
 import com.example.kedaiku.viewmodel.ProductViewModel;
 
 import org.json.JSONObject;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -51,17 +52,18 @@ public class AddPurchaseDialogFragment extends DialogFragment {
     private Spinner spinnerCash;
     private Button buttonSave, buttonCancel;
 
-    private PurchaseViewModel purchaseViewModel;
+   // private PurchaseViewModel purchaseViewModel;
     private ProductViewModel productViewModel;
 
     private List<Product> productList;
     private Product selectedProduct;
     private long selectedDate; // String date as per Purchase entity
     private long selectedCashId;
+    private String selectedCashName;
 
     private List<String> cashOptions; // Daftar pilihan dari table_cash
     private CashViewModel cashViewModel;
-
+    private TextView textViewRupiahFormat;
 
 
     @Nullable
@@ -76,8 +78,9 @@ public class AddPurchaseDialogFragment extends DialogFragment {
         spinnerCash = view.findViewById(R.id.spinnerCash);
         buttonSave = view.findViewById(R.id.buttonSave);
         buttonCancel = view.findViewById(R.id.buttonCancel);
+        textViewRupiahFormat = view.findViewById(R.id.textViewRupiahFormat);
 
-        purchaseViewModel = new ViewModelProvider(this).get(PurchaseViewModel.class);
+      //  purchaseViewModel = new ViewModelProvider(this).get(PurchaseViewModel.class);
         productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
         cashViewModel = new ViewModelProvider(this).get(CashViewModel.class);
 
@@ -105,9 +108,8 @@ public class AddPurchaseDialogFragment extends DialogFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectedProduct =  (Product)parent.getAdapter().getItem(position);
-                long productId = selectedProduct.getId();
 
-            if (selectedProduct != null) {
+                if (selectedProduct != null) {
                 editTextPrice.setText(String.valueOf(selectedProduct.getProduct_primary_price()));
             }
             }
@@ -125,7 +127,7 @@ public class AddPurchaseDialogFragment extends DialogFragment {
             cashOptions = cashNames;
 
             ArrayAdapter<String> cashAdapter = new ArrayAdapter<>(
-                    getContext(),
+                    requireContext(),
                     android.R.layout.simple_spinner_item,
                     cashOptions
             );
@@ -136,6 +138,7 @@ public class AddPurchaseDialogFragment extends DialogFragment {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     selectedCashId = cashList.get(position).getId();
+                    selectedCashName = cashList.get(position).getCash_name();
                 }
 
                 @Override
@@ -146,6 +149,34 @@ public class AddPurchaseDialogFragment extends DialogFragment {
         });
         buttonSave.setOnClickListener(v -> savePurchase());
         buttonCancel.setOnClickListener(v -> dismiss());
+
+
+        editTextPrice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String input = s.toString().replaceAll("[^\\d.]", "");
+               // String input = s.toString().replaceAll("[^\\d.,]", "");
+
+                if (!input.isEmpty()) {
+                    try {
+                        double parsed = Double.parseDouble(input);
+                        String formatted = NumberFormat.getCurrencyInstance(new Locale("id", "ID")).format(parsed);
+                        textViewRupiahFormat.setText(formatted);
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                        textViewRupiahFormat.setText("Rp 0");
+                    }
+                } else {
+                    textViewRupiahFormat.setText("Rp 0");
+                }
+            }
+        });
 
         return view;
     }
@@ -188,6 +219,11 @@ public class AddPurchaseDialogFragment extends DialogFragment {
 
         if (selectedProduct == null) {
             Toast.makeText(getContext(), "Pilih produk yang valid.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (selectedCashId == 0) {
+            Toast.makeText(getContext(), "Pilih cash yang valid.", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -260,6 +296,7 @@ public class AddPurchaseDialogFragment extends DialogFragment {
         try {
             jsonObject.put("product_price", finalPrice);
             jsonObject.put("product_qty", quantity);
+            jsonObject.put("cash_name", selectedCashName);
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(getContext(), "Gagal membuat data produk.", Toast.LENGTH_SHORT).show();
@@ -286,14 +323,14 @@ public class AddPurchaseDialogFragment extends DialogFragment {
         );
 
         // Execute the transaction
-        executeTransaction(purchase, inventory, finalPrice, quantity, purchaseAmount);
+        executeTransaction(purchase, inventory, finalPrice,  purchaseAmount);
     }
 
     private void executeTransaction(
             Purchase purchase,
             Inventory inventory,
             double finalPrice,
-            double quantity,
+
             double purchaseAmount
     ) {
         productViewModel.processPurchase(

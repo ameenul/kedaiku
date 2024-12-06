@@ -93,10 +93,6 @@ public class InventoryRepository {
         executorService = Executors.newFixedThreadPool(3);
     }
 
-    // Mendapatkan semua inventaris
-    public LiveData<List<Inventory>> getAllInventories() {
-        return inventoryDao.getAllInventories();
-    }
 
     // Menambahkan inventaris baru
     public void insert(Inventory inventory) {
@@ -113,37 +109,31 @@ public class InventoryRepository {
         executorService.execute(() -> inventoryDao.delete(inventory));
     }
 
-    // Mendapatkan inventaris berdasarkan produk
-    public LiveData<List<Inventory>> getInventoriesByStockProductId(long productId) {
-        return inventoryDao.getInventoriesByStockProductId(productId);
-    }
-
-    // Mendapatkan inventaris berdasarkan rentang tanggal
-    public LiveData<List<Inventory>> getInventoriesByDateRange(String startDate, String endDate) {
-        return inventoryDao.getInventoriesByDateRange(startDate, endDate);
-    }
-
     // Mendapatkan inventaris berdasarkan ID produk dan rentang tanggal
     public LiveData<List<Inventory>> getFilteredInventoryByStockProductId(long stockProductId, long startDate, long endDate) {
         return inventoryDao.getFilteredInventoryByStockProductId(stockProductId, startDate, endDate);
     }
-    public LiveData<List<Inventory>> getFilteredInventoryByDateRange(long startDate, long endDate) {
-        return inventoryDao.getFilteredInventoryByDateRange(startDate, endDate);
-    }
 
-
-//    // Mendapatkan data inventaris dengan agregasi produk
-//    public LiveData<List<ProductInventory>> getFilteredProductInventory(long startDate, long endDate) {
-//        return inventoryDao.getFilteredProductInventory(startDate, endDate);
+//    // Mendapatkan semua inventaris
+//    public LiveData<List<Inventory>> getAllInventories() {
+//        return inventoryDao.getAllInventories();
 //    }
 
-    // Metode sinkron untuk pengambilan data tanpa LiveData
-//    public void getFilteredInventorySync(long stockProductId, long startDate, long endDate, MutableLiveData<List<Inventory>> liveData) {
-//        executorService.execute(() -> {
-//            List<Inventory> data = inventoryDao.getFilteredInventoryByStockProductIdSync(stockProductId, startDate, endDate);
-//            liveData.postValue(data);
-//        });
+//    // Mendapatkan inventaris berdasarkan produk
+//    public LiveData<List<Inventory>> getInventoriesByStockProductId(long productId) {
+//        return inventoryDao.getInventoriesByStockProductId(productId);
 //    }
+
+//    // Mendapatkan inventaris berdasarkan rentang tanggal
+//    public LiveData<List<Inventory>> getInventoriesByDateRange(String startDate, String endDate) {
+//        return inventoryDao.getInventoriesByDateRange(startDate, endDate);
+//    }
+
+//    public LiveData<List<Inventory>> getFilteredInventoryByDateRange(long startDate, long endDate) {
+//        return inventoryDao.getFilteredInventoryByDateRange(startDate, endDate);
+//    }
+
+
 
 
 

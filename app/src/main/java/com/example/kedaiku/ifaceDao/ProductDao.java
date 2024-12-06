@@ -68,13 +68,11 @@ public interface ProductDao {
         double changeInQty = product.getProduct_qty() - oldQty;
 
         if (changeInQty != 0) {
-            // String note = (changeInQty > 0 ? "Tambah Stok: " : "Kurangi Stok: ") + Math.abs(changeInQty);
-            String note = stock_note;
 
             Inventory inventory = new Inventory(
                     System.currentTimeMillis(),
                     product.getId(),
-                    note,
+                    stock_note,
                     Math.max(0, changeInQty),  // stock_in
                     Math.abs(Math.min(0, changeInQty)),  // stock_out
                     product.getProduct_qty()
@@ -84,38 +82,6 @@ public interface ProductDao {
     }
 
 
-//    @Transaction
-//    default void processPurchase(
-//            Purchase purchase,
-//            double selectedPrice,
-//            Inventory inventory,
-//            Product product,
-//            long cashId,
-//            double purchaseAmount,
-//            String cashFlowDescription,
-//            InventoryDao inventoryDao,
-//            CashDao cashDao,
-//            PurchaseDao purchaseDao
-//    ) {
-//        // Insert the purchase and get its ID
-//        long purchaseId = purchaseDao.insertPurchaseAndGetId(purchase);
-//
-//        // Update cash value and insert cash flow
-//        String purchaseDescription = cashFlowDescription + " id_purchase: " + purchaseId;
-//        cashDao.updateCashValue(cashId, -purchaseAmount);
-//        cashDao.insertCashFlow(new CashFlow(cashId, System.currentTimeMillis(), purchaseDescription, -purchaseAmount));
-//
-//        // Update product details
-//        double oldQty = product.getProduct_qty();
-//        product.setProduct_primary_price(selectedPrice);
-//        product.setProduct_qty(oldQty + inventory.getStock_in());
-//        update(product);
-//
-//        // Insert inventory record
-//        inventory.setStock_product_id(product.getId());
-//        inventory.setStock_note(purchaseDescription);
-//        inventoryDao.insert(inventory);
-//    }
 
     @Transaction
     default void processPurchase(
@@ -165,9 +131,6 @@ public interface ProductDao {
     }
 
 
-
-
-
     @Delete
     void delete(Product product);
 
@@ -185,8 +148,6 @@ public interface ProductDao {
             "GROUP BY i.stock_product_id, p.product_name, p.id")
     LiveData<List<ProductInventory>> getFilteredProductInventory(long startDate, long endDate);
 
-
-
     @Query("SELECT p.id AS productId, " +
             "p.product_name AS productName, " +
             "SUM(i.stock_in) AS stockIn, " +
@@ -194,14 +155,15 @@ public interface ProductDao {
             "(SELECT stock_balance FROM table_inventory WHERE stock_product_id = i.stock_product_id ORDER BY stock_date DESC LIMIT 1) AS stockBalance " +
             "FROM table_inventory i " +
             "JOIN table_product p ON i.stock_product_id = p.id " +
-            "GROUP BY i.stock_product_id, p.id, p.product_name")
-    LiveData<List<ProductInventory>> getAllProductInventory();
+            "WHERE i.stock_date BETWEEN :startDate AND :endDate " +
+            "AND p.product_name LIKE '%' || :productNameFilter || '%' " +
+            "GROUP BY i.stock_product_id, p.product_name, p.id")
+    LiveData<List<ProductInventory>> getFilteredProductInventory(long startDate, long endDate, String productNameFilter);
+
 
 
     @Query("SELECT * FROM table_product WHERE product_name LIKE '%' || :query || '%' OR product_sku LIKE '%' || :query || '%'")
     LiveData<List<Product>> searchProducts(String query);
-
-
 
     @Query("SELECT * FROM table_product WHERE id = :productId LIMIT 1")
     LiveData<Product> getProductById(long productId);
@@ -216,7 +178,8 @@ public interface ProductDao {
             InventoryDao inventoryDao,
             ProductDao productDao,
             PurchaseDao purchaseDao
-    ) {
+    )
+    {
         // Fetch cash synchronously
         Cash cash = cashDao.getCashByIdSync(purchase.getCash_id());
         if (cash == null) {
@@ -264,6 +227,20 @@ public interface ProductDao {
         purchaseDao.delete(purchase);
     }
 
+
+
+
+
+//
+//    @Query("SELECT p.id AS productId, " +
+//            "p.product_name AS productName, " +
+//            "SUM(i.stock_in) AS stockIn, " +
+//            "SUM(i.stock_out) AS stockOut, " +
+//            "(SELECT stock_balance FROM table_inventory WHERE stock_product_id = i.stock_product_id ORDER BY stock_date DESC LIMIT 1) AS stockBalance " +
+//            "FROM table_inventory i " +
+//            "JOIN table_product p ON i.stock_product_id = p.id " +
+//            "GROUP BY i.stock_product_id, p.id, p.product_name")
+//    LiveData<List<ProductInventory>> getAllProductInventory();
 
 
 }

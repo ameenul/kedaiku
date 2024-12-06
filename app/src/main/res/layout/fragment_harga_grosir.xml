@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinatorLayoutHargaGrosir"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- LinearLayout untuk Search dan Export CSV -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:gravity="center_vertical"
+
+        android:elevation="4dp">
+
+        <!-- EditText Cari Produk -->
+        <EditText
+            android:id="@+id/editTextSearchProduk"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="Cari Produk"
+            android:inputType="text"
+            android:padding="8dp"
+
+            android:textColor="@android:color/black"
+            android:textColorHint="@android:color/darker_gray" />
+
+        <!-- Tombol Export CSV -->
+        <ImageView
+            android:id="@+id/buttonExportCsvHargaGrosir"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="Export to CSV"
+            android:padding="8dp"
+            android:src="@drawable/ic_csv"
+            app:tint="@android:color/holo_blue_dark" />
+    </LinearLayout>
+
+    <!-- RecyclerView untuk daftar Harga Grosir -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewHargaGrosir"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
+        android:padding="8dp"
+        android:paddingBottom="80dp"
+    android:clipToPadding="false" />
+
+    <!-- FloatingActionButton untuk menambah Harga Grosir -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddHargaGrosir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add"
+        android:contentDescription="Tambah Harga Grosir"
+        app:layout_anchor="@id/recyclerViewHargaGrosir"
+        app:layout_anchorGravity="bottom|end"
+        android:layout_margin="16dp"
+        android:tint="@android:color/white"
+        app:backgroundTint="@android:color/holo_blue_dark" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

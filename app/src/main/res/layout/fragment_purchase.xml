@@ -40,6 +40,16 @@
                 android:contentDescription="Export CSV" />
         </LinearLayout>
 
+        <!-- TextView untuk menampilkan tanggal terpilih -->
+        <TextView
+            android:id="@+id/textViewSelectedDates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tanggal Terpilih: Semua Waktu"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
         <!-- Header Tabel -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -70,11 +80,29 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Total"
+                android:text="Tanggal"
                 android:textStyle="bold"
                 android:textSize="14sp"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Total"
+                android:textAlignment="textEnd"
                 android:textColor="#FFFFFF"
-                android:textAlignment="textEnd" />
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  ...  "
+                android:textAlignment="textEnd"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <!-- RecyclerView -->
@@ -87,7 +115,7 @@
             android:clipToPadding="false" />
     </LinearLayout>
 
-    <!-- FloatingActionButton untuk Tambah Pembelian -->
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddPurchase"
         android:layout_width="wrap_content"
@@ -96,4 +124,5 @@
         android:src="@drawable/ic_add"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

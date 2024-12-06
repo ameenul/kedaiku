@@ -12,6 +12,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import com.example.kedaiku.entites.Inventory;
+import com.example.kedaiku.helper.DateHelper;
 import com.example.kedaiku.repository.InventoryRepository;
 
 import java.util.Calendar;
@@ -61,7 +62,7 @@ public class InventoryViewModel extends AndroidViewModel {
                 startDate = params.startDate;
                 endDate = params.endDate;
             } else if (params.filterName != null) {
-                long[] dateRange = calculateDateRange(params.filterName);
+                long[] dateRange = DateHelper.calculateDateRange(params.filterName);
                 startDate = dateRange[0];
                 endDate = dateRange[1];
             } else {
@@ -113,85 +114,6 @@ public class InventoryViewModel extends AndroidViewModel {
         currentFilterParams.setValue(params);
     }
 
-    private long getEndOfDay() {
 
-        Calendar day = Calendar.getInstance();
-        day.set(Calendar.HOUR_OF_DAY, 23);
-        day.set(Calendar.MINUTE, 59);
-        day.set(Calendar.SECOND, 59);
-        day.set(Calendar.MILLISECOND, 999);
-        return day.getTimeInMillis();
-    }
-
-    private long[] calculateDateRange(String filterName) {
-        long startDate, endDate;
-
-        switch (filterName) {
-            case "Hari Ini":
-                startDate = getStartOfDay();
-                endDate = getEndOfDay();//
-                break;
-            case "Kemarin":
-                startDate = getStartOfYesterday();
-                endDate = getStartOfDay();
-                break;
-            case "Bulan Ini":
-                startDate = getStartOfMonth();
-                endDate = getEndOfDay();//
-                break;
-            case "Bulan Lalu":
-                startDate = getStartOfLastMonth();
-                endDate = getStartOfMonth();
-                break;
-            default:
-                startDate = 0;
-                endDate = getEndOfDay();//
-                break;
-        }
-
-        return new long[]{startDate, endDate};
-    }
-
-
-    // Helper methods untuk mendapatkan waktu tertentu
-    private long getStartOfDay() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        return calendar.getTimeInMillis();
-    }
-
-    private long getStartOfYesterday() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, -1);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        return calendar.getTimeInMillis();
-    }
-
-    private long getStartOfMonth() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        return calendar.getTimeInMillis();
-    }
-
-    private long getStartOfLastMonth() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MONTH, -1);
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        return calendar.getTimeInMillis();
-    }
 }
 
