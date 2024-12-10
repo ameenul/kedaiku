@@ -32,6 +32,7 @@ public class WholesaleViewModel extends AndroidViewModel {
 
         // Get all wholesales
         allWholesales = repository.getAllWholesales();
+        searchKeyword.setValue("");
 
         // Transform searchKeyword into search results
         filteredWholesales = Transformations.switchMap(searchKeyword, keyword ->

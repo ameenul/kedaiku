@@ -32,19 +32,19 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nama Grosir"
+            android:layout_marginBottom="4dp"
+            android:text="Nama Harga Khusus"
             android:textSize="14sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="4dp" />
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/editTextWholesaleName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Masukkan nama grosir"
+            android:layout_marginBottom="16dp"
+            android:hint="Masukkan nama harga husus"
             android:inputType="text"
-            android:padding="8dp"
-            android:layout_marginBottom="16dp" />
+            android:padding="8dp" />
 
         <!-- Harga Normal -->
         <TextView
@@ -80,47 +80,62 @@
             android:padding="8dp"
             android:layout_marginBottom="16dp" />
 
-        <!-- Harga Grosir -->
+        <!-- Dropdown Member -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Harga Grosir"
+            android:text="Member"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <Spinner
+            android:id="@+id/spinnerMember"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Persentase Potongan -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Persentase Potongan"
             android:textSize="14sp"
             android:textStyle="bold"
             android:layout_marginBottom="4dp" />
 
         <EditText
-            android:id="@+id/editTextWholesalePrice"
+            android:id="@+id/editTextDiscountPercentage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Masukkan harga grosir"
+            android:hint="Masukkan persentase potongan"
             android:inputType="numberDecimal"
             android:padding="8dp"
             android:layout_marginBottom="4dp" />
 
         <TextView
-            android:id="@+id/textViewWholesalePriceFormatted"
+            android:id="@+id/textViewDiscountAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Rp 0"
             android:textSize="12sp"
             android:layout_marginBottom="16dp" />
 
-        <!-- Min Qty -->
+        <!-- Harga Khusus -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Minimum Quantity"
+            android:text="Harga Khusus"
             android:textSize="14sp"
             android:textStyle="bold"
             android:layout_marginBottom="4dp" />
 
-        <EditText
-            android:id="@+id/editTextMinQty"
+        <TextView
+            android:id="@+id/textViewSpecialPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Masukkan jumlah minimum"
-            android:inputType="number"
+            android:text="Rp 0"
             android:padding="8dp"
             android:layout_marginBottom="16dp" />
 
@@ -155,7 +170,7 @@
 
         <!-- Tombol Simpan -->
         <Button
-            android:id="@+id/buttonSaveHargaGrosir"
+            android:id="@+id/buttonSaveSpecialPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Simpan"

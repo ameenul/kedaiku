@@ -108,6 +108,7 @@ public class AddPurchaseDialogFragment extends DialogFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectedProduct =  (Product)parent.getAdapter().getItem(position);
+                productViewModel.setSelectedProduct(selectedProduct);
 
                 if (selectedProduct != null) {
                 editTextPrice.setText(String.valueOf(selectedProduct.getProduct_primary_price()));
@@ -116,6 +117,13 @@ public class AddPurchaseDialogFragment extends DialogFragment {
         });
 
 
+        productViewModel.getSelectedProduct().observe(getViewLifecycleOwner(), product -> {
+            if (product != null) {
+                selectedProduct = product;
+                autoCompleteProduct.setText(product.getProduct_name());
+                editTextPrice.setText(String.valueOf(product.getProduct_primary_price()));
+            }
+        });
 
 
 
@@ -177,6 +185,10 @@ public class AddPurchaseDialogFragment extends DialogFragment {
                 }
             }
         });
+
+
+
+
 
         return view;
     }

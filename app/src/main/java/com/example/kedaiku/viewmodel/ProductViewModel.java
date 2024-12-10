@@ -30,6 +30,8 @@ public class ProductViewModel extends AndroidViewModel {
     // LiveData hasil pencarian produk
     private final LiveData<List<Product>> searchResults ;
 
+    private final MutableLiveData<Product> selectedProduct = new MutableLiveData<>();
+
 
 
     public ProductViewModel(@NonNull Application application) {
@@ -126,5 +128,15 @@ public class ProductViewModel extends AndroidViewModel {
 
     public void deletePurchaseTransaction(Purchase purchase, ProductRepository.OnTransactionCompleteListener listener) {
         repository.deletePurchaseTransaction(purchase, listener);
+    }
+
+
+
+    public void setSelectedProduct(Product product) {
+        selectedProduct.setValue(product);
+    }
+
+    public MutableLiveData<Product> getSelectedProduct() {
+        return selectedProduct;
     }
 }

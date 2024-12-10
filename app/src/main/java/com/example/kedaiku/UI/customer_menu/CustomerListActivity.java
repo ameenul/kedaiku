@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -107,9 +108,23 @@ public class CustomerListActivity extends AppCompatActivity {
 
             @Override
             public void onDeleteClicked(Customer customer) {
-                // Hapus pelanggan
-                customerViewModel.delete(customer);
+                // Tampilkan AlertDialog untuk konfirmasi
+                new AlertDialog.Builder(CustomerListActivity.this)
+                        .setTitle("Konfirmasi Penghapusan")
+                        .setMessage("Apakah Anda yakin ingin menghapus pelanggan ini?")
+                        .setPositiveButton("Ya", (dialog, which) -> {
+                            // Jika pengguna memilih "Ya", hapus pelanggan
+                            customerViewModel.delete(customer);
+                            Toast.makeText(CustomerListActivity.this, "Pelanggan dihapus", Toast.LENGTH_SHORT).show();
+                        })
+                        .setNegativeButton("Tidak", (dialog, which) -> {
+                            // Jika pengguna memilih "Tidak", tutup dialog
+                            dialog.dismiss();
+                        })
+                        .create()
+                        .show();
             }
+
 
             @Override
             public void onItemClicked(Customer customer) {

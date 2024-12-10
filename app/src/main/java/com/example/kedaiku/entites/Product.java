@@ -2,9 +2,10 @@ package com.example.kedaiku.entites;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "table_product")
+@Entity(tableName = "table_product", indices = {@Index(value = "barcode", unique = true)})
 public class Product {
     @PrimaryKey(autoGenerate = true)
     private long id;
@@ -27,11 +28,20 @@ public class Product {
     private double product_qty;
 
     // Constructor, Getter dan Setter
+    // Tambahkan kolom barcode yang boleh null
+    private String barcode;
 
+    public String getBarcode() {
+        return barcode;
+    }
 
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
+    }
 
-
-    public Product(@NonNull String product_name, @NonNull String product_description, @NonNull String product_sku, double product_price, double product_primary_price, @NonNull String product_unit, double product_qty) {
+    public Product(@NonNull String product_name, @NonNull String product_description,
+                   @NonNull String product_sku, double product_price, double product_primary_price,
+                   @NonNull String product_unit, double product_qty) {
         this.product_name = product_name;
         this.product_description = product_description;
         this.product_sku = product_sku;

@@ -100,4 +100,12 @@ public class WholesaleWithProduct {
     private double product_primary_price;
 
     // Getter dan Setter untuk semua field
+    public Wholesale toWholeSale()
+    {
+
+        Wholesale curentItemWholesale=  new Wholesale(getProduct_id(), getName(),
+            getPrice(), getQty(), getStatus());
+        curentItemWholesale.set_id(get_id());
+        return curentItemWholesale;
+    }
 }

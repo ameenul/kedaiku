@@ -1,14 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinatorLayoutHargaKhusus"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
-    <!-- Contoh RecyclerView untuk daftar Harga Khusus -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewHargaKhusus"
+    <!-- LinearLayout untuk membungkus Search Bar dan RecyclerView -->
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</LinearLayout>
+        android:layout_height="match_parent">
+
+        <!-- LinearLayout untuk Search dan Export CSV -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:gravity="center_vertical"
+            android:elevation="4dp">
+
+            <!-- EditText Cari Produk -->
+            <EditText
+                android:id="@+id/editTextSearchHargaKhusus"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:hint="Cari Produk"
+                android:inputType="text"
+                android:padding="8dp" />
+
+            <!-- Tombol Export CSV -->
+            <ImageView
+                android:id="@+id/buttonExportCsvHargaKhusus"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:contentDescription="Export to CSV"
+                android:padding="8dp"
+                android:src="@drawable/ic_csv"
+                app:tint="@android:color/holo_blue_dark" />
+        </LinearLayout>
+
+        <!-- RecyclerView untuk daftar Harga Khusus -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewHargaKhusus"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="8dp"
+            android:paddingBottom="72dp"
+            android:clipToPadding="false" />
+    </LinearLayout>
+
+    <!-- FloatingActionButton untuk menambah Harga Khusus -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddHargaKhusus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add"
+        android:contentDescription="Tambah Harga Khusus"
+        app:layout_anchor="@id/recyclerViewHargaKhusus"
+        app:layout_anchorGravity="bottom|end"
+        android:layout_margin="16dp"
+        android:tint="@android:color/white"
+        app:backgroundTint="@android:color/holo_blue_dark" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

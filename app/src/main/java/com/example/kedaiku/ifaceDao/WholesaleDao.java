@@ -31,7 +31,7 @@ public interface WholesaleDao {
             "FROM table_wholesale w " +
             "JOIN table_product p ON w.product_id = p.id " +
             "WHERE p.product_name LIKE '%' || :searchKeyword || '%'")
-    List<WholesaleWithProduct> getWholesaleWithProductLike(String searchKeyword);
+    public LiveData<List<WholesaleWithProduct>> getWholesaleWithProductLike(String searchKeyword);
 
 
 

@@ -156,6 +156,7 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -167,10 +168,7 @@ import com.example.kedaiku.viewmodel.ProductViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.OutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class ProductListActivity extends AppCompatActivity {
 
@@ -238,9 +236,23 @@ public class ProductListActivity extends AppCompatActivity {
 
             @Override
             public void onDeleteClicked(Product product) {
-                productViewModel.delete(product);
-                Toast.makeText(ProductListActivity.this, "Produk dihapus", Toast.LENGTH_SHORT).show();
+                // Tampilkan AlertDialog untuk konfirmasi
+                new AlertDialog.Builder(ProductListActivity.this)
+                        .setTitle("Konfirmasi Penghapusan")
+                        .setMessage("Apakah Anda yakin ingin menghapus produk ini?")
+                        .setPositiveButton("Ya", (dialog, which) -> {
+                            // Jika pengguna memilih "Ya", hapus produk
+                            productViewModel.delete(product);
+                            Toast.makeText(ProductListActivity.this, "Produk dihapus", Toast.LENGTH_SHORT).show();
+                        })
+                        .setNegativeButton("Tidak", (dialog, which) -> {
+                            // Jika pengguna memilih "Tidak", tutup dialog
+                            dialog.dismiss();
+                        })
+                        .create()
+                        .show();
             }
+
 
             @Override
             public void onDuplicateClicked(Product product) {
