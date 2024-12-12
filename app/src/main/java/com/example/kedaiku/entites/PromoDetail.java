@@ -1,34 +1,37 @@
 package com.example.kedaiku.entites;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "table_promo_detail")
 public class PromoDetail {
     @PrimaryKey(autoGenerate = true)
-    private long _id;
-    private long detail;
+    private int _id;
 
-    public PromoDetail( long detail) {
+    @NonNull
+    private String detail;
 
+    // Constructor
+    public PromoDetail(@NonNull String detail) {
         this.detail = detail;
     }
 
-    public long get_id() {
+    // Getters and Setters
+    public int getId() {
         return _id;
     }
 
-    public void set_id(long _id) {
+    public void setId(int _id) {
         this._id = _id;
     }
 
-    public long getDetail() {
+    @NonNull
+    public String getDetail() {
         return detail;
     }
 
-    public void setDetail(long detail) {
+    public void setDetail(@NonNull String detail) {
         this.detail = detail;
     }
-// Getters and setters
 }
-

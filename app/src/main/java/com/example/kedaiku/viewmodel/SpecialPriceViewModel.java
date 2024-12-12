@@ -2,40 +2,70 @@ package com.example.kedaiku.viewmodel;
 
 import android.app.Application;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 
-import com.example.kedaiku.database.AppDatabase;
 import com.example.kedaiku.entites.SpecialPrice;
-import com.example.kedaiku.ifaceDao.SpecialPriceDao;
+import com.example.kedaiku.entites.SpecialPriceWithProduct;
+import com.example.kedaiku.repository.SpecialPriceRepository;
 
 import java.util.List;
 
 public class SpecialPriceViewModel extends AndroidViewModel {
-    private SpecialPriceDao specialPriceDao;
-    private LiveData<List<SpecialPrice>> allSpecialPrices;
 
-    public SpecialPriceViewModel(@NonNull Application application) {
+    private final SpecialPriceRepository repository;
+
+    // MutableLiveData to hold the search keyword
+    private final MutableLiveData<String> searchKeyword = new MutableLiveData<>();
+
+    // Transformed LiveData for search results
+    private final LiveData<List<SpecialPriceWithProduct>> filteredSpecialPrices;
+
+    // LiveData for all special prices
+    private final LiveData<List<SpecialPrice>> allSpecialPrices;
+
+    public SpecialPriceViewModel(Application application) {
         super(application);
-        AppDatabase db = AppDatabase.getDatabase(application);
-        specialPriceDao = db.specialPriceDao();
-        allSpecialPrices = specialPriceDao.getAllSpecialPrices();
+        repository = new SpecialPriceRepository(application);
+
+        // Get all special prices
+        allSpecialPrices = repository.getAllSpecialPrices();
+        searchKeyword.setValue("");
+
+        // Transform searchKeyword into search results
+        filteredSpecialPrices = Transformations.switchMap(searchKeyword, keyword ->
+                repository.getSpecialPriceWithProductLike(keyword));
     }
 
+    // Insert
+    public void insert(SpecialPrice specialPrice) {
+        repository.insert(specialPrice);
+    }
+
+    // Update
+    public void update(SpecialPrice specialPrice) {
+        repository.update(specialPrice);
+    }
+
+    // Delete
+    public void delete(SpecialPrice specialPrice) {
+        repository.delete(specialPrice);
+    }
+
+    // Get all special prices
     public LiveData<List<SpecialPrice>> getAllSpecialPrices() {
         return allSpecialPrices;
     }
 
-    public void insert(SpecialPrice specialPrice) {
-        AppDatabase.databaseWriteExecutor.execute(() -> specialPriceDao.insert(specialPrice));
+    // Set the search keyword
+    public void setSearchKeyword(String keyword) {
+        searchKeyword.setValue(keyword);
     }
 
-    public void update(SpecialPrice specialPrice) {
-        AppDatabase.databaseWriteExecutor.execute(() -> specialPriceDao.update(specialPrice));
-    }
-
-    public void delete(SpecialPrice specialPrice) {
-        AppDatabase.databaseWriteExecutor.execute(() -> specialPriceDao.delete(specialPrice));
+    // Get the filtered results
+    public LiveData<List<SpecialPriceWithProduct>> getFilteredSpecialPrices() {
+        return filteredSpecialPrices;
     }
 }

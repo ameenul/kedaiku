@@ -25,11 +25,12 @@
             <EditText
                 android:id="@+id/editTextSearchHargaKhusus"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:hint="Cari Produk"
                 android:inputType="text"
-                android:padding="8dp" />
+                android:padding="8dp"
+                android:textSize="24sp" />
 
             <!-- Tombol Export CSV -->
             <ImageView

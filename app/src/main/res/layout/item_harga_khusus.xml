@@ -1,6 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    android:background="@android:color/white">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:background="@android:color/white">
+
+        <!-- Header Row with Product Name and Menu -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <!-- Nama Produk -->
+            <TextView
+                android:id="@+id/textViewProductName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Nama Produk"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black" />
+
+            <!-- Menu Icon -->
+            <ImageView
+                android:id="@+id/imageViewMenu"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="Menu"
+                android:src="@android:drawable/ic_menu_more"
+                android:padding="4dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:tint="@color/black" />
+        </LinearLayout>
+
+        <!-- Nama Harga Khusus -->
+        <TextView
+            android:id="@+id/textViewSpecialPriceName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama Harga Khusus"
+            android:textColor="@android:color/black"
+            android:textStyle="italic" />
+
+        <!-- HPP -->
+        <TextView
+            android:id="@+id/textViewHpp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="HPP: 0"
+            android:textColor="@android:color/holo_red_dark" />
+
+        <!-- Status -->
+        <TextView
+            android:id="@+id/textViewStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="Status: Aktif"
+            android:textSize="14sp"
+            android:textColor="@android:color/black" />
+
+        <!-- Membership Status -->
+        <TextView
+            android:id="@+id/textViewMembershipStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Membership : Member"
+            android:textColor="@android:color/black"
+            android:textSize="14sp" />
+
+        <!-- Baris untuk Harga Normal, Persen Potongan, dan Harga Khusus -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <!-- Harga Normal -->
+            <TextView
+                android:id="@+id/textViewNormalPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Harga Normal: 0"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+
+            <!-- Persen Potongan -->
+            <TextView
+                android:id="@+id/textViewDiscountPercentage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Persen Potongan: 0%"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+
+            <!-- Harga Khusus -->
+            <TextView
+                android:id="@+id/textViewSpecialPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Harga Khusus: 0"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

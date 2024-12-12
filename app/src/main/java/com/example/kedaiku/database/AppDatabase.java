@@ -18,7 +18,7 @@ import java.util.concurrent.Executors;
 @Database(entities = {Product.class, Cash.class, CashFlow.class, Customer.class, CustomerGroup.class,
         ProductSold.class, Inventory.class, Sale.class, DetailSale.class, SpecialPrice.class,
         Wholesale.class, PromoDetail.class, Purchase.class, Expense.class, Creditor.class, Debt.class},
-        version = 2)
+        version = 3)
 public abstract class AppDatabase extends RoomDatabase {
     private static volatile AppDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
@@ -43,15 +43,23 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract WholesaleDao wholesaleDao();
 
 
-//    public static final Migration MIGRATION_1_2 = new Migration(1, 2) {
-//        @Override
-//        public void migrate(@NonNull SupportSQLiteDatabase database) {
-//            // Perintah SQL untuk menambah kolom barcode:
-//            database.execSQL("ALTER TABLE table_product ADD COLUMN barcode TEXT");
-//            // Buat indeks unik untuk kolom barcode
-//            database.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS index_table_product_barcode ON table_product(barcode)");
-//        }
-//    };
+    public static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("DROP TABLE IF EXISTS table_detail_sale");
+            // Dropping the old table
+            database.execSQL("DROP TABLE table_promo_detail");
+            database.execSQL("CREATE TABLE IF NOT EXISTS table_promo_detail(" +
+                    "_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                    "detail TEXT NOT NULL" +  // Correct type is TEXT
+                    ")");
+
+            database.execSQL("CREATE TABLE table_detail_sale (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                    "sale_detail TEXT NOT NULL, " +
+                    "sale_paid_history TEXT )");
+        }
+    };
 
 
 
@@ -60,33 +68,32 @@ public abstract class AppDatabase extends RoomDatabase {
 
     // Tambahkan DAO lainnya...
 
-   public static AppDatabase getDatabase(final Context context) {
-        if (INSTANCE == null) {
-            synchronized (AppDatabase.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                                    AppDatabase.class, "app_database")
-                            .fallbackToDestructiveMigration()
-                            .build();
-                }
-            }
-        }
-        return INSTANCE;
-    }
-
-//    public static AppDatabase getDatabase(final Context context) {
+//   public static AppDatabase getDatabase(final Context context) {
 //        if (INSTANCE == null) {
 //            synchronized (AppDatabase.class) {
 //                if (INSTANCE == null) {
 //                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
 //                                    AppDatabase.class, "app_database")
-//                            // Hapus fallbackToDestructiveMigration() agar data tidak hilang
-//                            .addMigrations(MIGRATION_1_2)
+//                            .fallbackToDestructiveMigration()
 //                            .build();
 //                }
 //            }
 //        }
 //        return INSTANCE;
 //    }
+
+    public static AppDatabase getDatabase(final Context context) {
+        if (INSTANCE == null) {
+            synchronized (AppDatabase.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                                    AppDatabase.class, "app_database")
+                            .addMigrations(MIGRATION_2_3)
+                            .build();
+                }
+            }
+        }
+        return INSTANCE;
+    }
 
 }

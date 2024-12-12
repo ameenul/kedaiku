@@ -11,13 +11,13 @@ public class DetailSale {
     @NonNull
     private String sale_detail;
 
-    @NonNull
+
     private String sale_paid_history;
 
     // Constructor
-    public DetailSale(@NonNull String sale_detail, @NonNull String sale_paid_history) {
+    public DetailSale(@NonNull String sale_detail) {
         this.sale_detail = sale_detail;
-        this.sale_paid_history = sale_paid_history;
+
     }
 
     // Getters and Setters
@@ -38,12 +38,12 @@ public class DetailSale {
         this.sale_detail = sale_detail;
     }
 
-    @NonNull
+
     public String getSale_paid_history() {
         return sale_paid_history;
     }
 
-    public void setSale_paid_history(@NonNull String sale_paid_history) {
+    public void setSale_paid_history( String sale_paid_history) {
         this.sale_paid_history = sale_paid_history;
     }
 }

@@ -22,6 +22,9 @@
         android:theme="@style/Base.Theme.Kedaiku"
         tools:targetApi="31">
         <activity
+            android:name=".UI.penjualan_menu.ListPenjualanActivity"
+            android:exported="false" />
+        <activity
             android:name=".UI.promo_menu.AddHargaGrosirActivity"
             android:exported="false" />
         <activity

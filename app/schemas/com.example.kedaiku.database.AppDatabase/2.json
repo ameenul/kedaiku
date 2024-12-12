@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "b100444248bf695ab6100ef8d2965ad9",
+    "identityHash": "3a84a2c73bdcd94f7a836d06d8b92329",
     "entities": [
       {
         "tableName": "table_product",
@@ -600,7 +600,7 @@
       },
       {
         "tableName": "table_promo_detail",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `detail` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `detail` TEXT)",
         "fields": [
           {
             "fieldPath": "_id",
@@ -611,8 +611,8 @@
           {
             "fieldPath": "detail",
             "columnName": "detail",
-            "affinity": "INTEGER",
-            "notNull": true
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -810,7 +810,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b100444248bf695ab6100ef8d2965ad9')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3a84a2c73bdcd94f7a836d06d8b92329')"
     ]
   }
 }

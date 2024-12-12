@@ -29,6 +29,8 @@ public class Sale {
 
     private double sale_paid;
 
+
+
     // Constructor
 
 
