@@ -8,7 +8,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -185,8 +184,8 @@ public class HargaKhususFragment extends Fragment {
             data.append(specialPrice.getName().replace(",", " ")).append(",");
             data.append(specialPriceWithProduct.getProduct_primary_price()).append(",");
             data.append(specialPriceWithProduct.getProduct_price()).append(",");
-            data.append(specialPrice.getPrecent()).append(",");
-            data.append(hitungDiskon(specialPrice.getPrecent(),specialPriceWithProduct.getProduct_price())).append(",");
+            data.append(specialPrice.getPercent()).append(",");
+            data.append(hitungDiskon(specialPrice.getPercent(),specialPriceWithProduct.getProduct_price())).append(",");
             data.append(specialPrice.getStatus() == 1 ? "Aktif" : "Tidak Aktif").append("\n");
         }
 

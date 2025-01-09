@@ -181,10 +181,7 @@ public interface ProductDao {
     )
     {
         // Fetch cash synchronously
-        Cash cash = cashDao.getCashByIdSync(purchase.getCash_id());
-        if (cash == null) {
-            throw new IllegalStateException("Kas tidak ditemukan.");
-        }
+
 
         // Parse purchase details
 
@@ -200,11 +197,15 @@ public interface ProductDao {
         }
 
 
-        // Update cash value and insert cash flow
-        cashDao.updateCashValue(purchase.getCash_id(), refundAmount);
-        String cashFlowDescription = "Pembatalan pembelian produk dengan purchase id: " + purchase.get_id()+ " saldo kembali : "+refundAmount;
-        CashFlow cashFlow = new CashFlow(purchase.getCash_id(), System.currentTimeMillis(), cashFlowDescription, refundAmount);
-        cashDao.insertCashFlow(cashFlow);
+        Cash cash = cashDao.getCashByIdSync(purchase.getCash_id());
+        if (cash != null) {
+            // Update cash value and insert cash flow
+            cashDao.updateCashValue(purchase.getCash_id(), refundAmount);
+            String cashFlowDescription = "Pembatalan pembelian produk dengan purchase id: " + purchase.get_id()+ " saldo kembali : "+refundAmount;
+            CashFlow cashFlow = new CashFlow(purchase.getCash_id(), System.currentTimeMillis(), cashFlowDescription, refundAmount);
+            cashDao.insertCashFlow(cashFlow);
+        }
+
 
         // Update product quantity and insert inventory flow
         Product product = productDao.getProductByIdSync(purchase.getProduct_id());

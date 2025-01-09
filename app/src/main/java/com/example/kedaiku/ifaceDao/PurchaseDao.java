@@ -30,17 +30,30 @@ public interface PurchaseDao {
     @Query("SELECT * FROM table_purchase WHERE date BETWEEN :startDate AND :endDate")
     LiveData<List<Purchase>> getFilteredPurchases(long startDate, long endDate);
 
+//    @Query("SELECT " +
+//            "p._id, " +
+//            "p.date, " +
+//            "p.product_id, " +
+//            "p.cash_id, " +
+//            "p.purchase_detail, " +
+//            "pr.product_name " +
+//            "FROM table_purchase p " +
+//            "JOIN table_product pr ON p.product_id = pr.id " +
+//            "WHERE p.date BETWEEN :startDate AND :endDate")
+//    LiveData<List<PurchaseWithProduct>> getFilteredPurchasesWithProductName(long startDate, long endDate);
+
     @Query("SELECT " +
             "p._id, " +
             "p.date, " +
             "p.product_id, " +
             "p.cash_id, " +
             "p.purchase_detail, " +
-            "pr.product_name " +
+            "IFNULL(pr.product_name, 'Produk Terhapus') AS product_name " +
             "FROM table_purchase p " +
-            "JOIN table_product pr ON p.product_id = pr.id " +
+            "LEFT JOIN table_product pr ON p.product_id = pr.id " +
             "WHERE p.date BETWEEN :startDate AND :endDate")
     LiveData<List<PurchaseWithProduct>> getFilteredPurchasesWithProductName(long startDate, long endDate);
+
 
 }
 

@@ -18,7 +18,7 @@ import java.util.concurrent.Executors;
 @Database(entities = {Product.class, Cash.class, CashFlow.class, Customer.class, CustomerGroup.class,
         ProductSold.class, Inventory.class, Sale.class, DetailSale.class, SpecialPrice.class,
         Wholesale.class, PromoDetail.class, Purchase.class, Expense.class, Creditor.class, Debt.class},
-        version = 3)
+        version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     private static volatile AppDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
@@ -43,21 +43,45 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract WholesaleDao wholesaleDao();
 
 
-    public static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+    public static final Migration MIGRATION_2_3 = new Migration(2, 1) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
-            database.execSQL("DROP TABLE IF EXISTS table_detail_sale");
-            // Dropping the old table
-            database.execSQL("DROP TABLE table_promo_detail");
-            database.execSQL("CREATE TABLE IF NOT EXISTS table_promo_detail(" +
-                    "_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                    "detail TEXT NOT NULL" +  // Correct type is TEXT
-                    ")");
+//            database.execSQL("CREATE TABLE IF NOT EXISTS `table_special_price_new` (" +
+//                    "`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+//                    "`name` TEXT NOT NULL, " +
+//                    "`product_id` INTEGER NOT NULL, " +
+//                    "`group_id` INTEGER NOT NULL, " +
+//                    "`percent` REAL NOT NULL, " + // Menggunakan 'percent' sebagai nama kolom
+//                    "`status` INTEGER NOT NULL)");
+//
+//            // Salin data dari tabel lama ke tabel baru
+//            database.execSQL("INSERT INTO table_special_price_new (`_id`, `name`, `product_id`, `group_id`, `percent`, `status`) " +
+//                    "SELECT `_id`, `name`, `product_id`, `group_id`, `precent`, `status` FROM table_special_price");
+//
+//            // Hapus tabel lama
+//            database.execSQL("DROP TABLE table_special_price");
+//
+//            // Ganti nama tabel baru menjadi nama tabel lama
+//            database.execSQL("ALTER TABLE table_special_price_new RENAME TO table_special_price");
 
-            database.execSQL("CREATE TABLE table_detail_sale (" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                    "sale_detail TEXT NOT NULL, " +
-                    "sale_paid_history TEXT )");
+            // Buat tabel baru dengan tipe data yang diperbarui
+            database.execSQL("CREATE TABLE new_table_wholesale (" +
+                    "_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                    "product_id INTEGER NOT NULL, " +
+                    "name TEXT NOT NULL, " +
+                    "price REAL NOT NULL, " +
+                    "qty REAL NOT NULL, " + // Ubah dari INTEGER menjadi REAL
+                    "status INTEGER NOT NULL)");
+
+            // Salin data dari tabel lama ke tabel baru
+            database.execSQL("INSERT INTO new_table_wholesale (product_id, name, price, qty, status) " +
+                    "SELECT product_id, name, price, qty, status FROM table_wholesale");
+
+            // Hapus tabel lama
+            database.execSQL("DROP TABLE table_wholesale");
+
+            // Ganti nama tabel baru menjadi nama tabel lama
+            database.execSQL("ALTER TABLE new_table_wholesale RENAME TO table_wholesale");
         }
     };
 
@@ -88,12 +112,25 @@ public abstract class AppDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                     AppDatabase.class, "app_database")
-                            .addMigrations(MIGRATION_2_3)
-                            .build();
+                                 .build();
                 }
             }
         }
         return INSTANCE;
     }
+
+//    public static AppDatabase getDatabase(final Context context) {
+//        if (INSTANCE == null) {
+//            synchronized (AppDatabase.class) {
+//                if (INSTANCE == null) {
+//                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+//                                    AppDatabase.class, "app_database")
+//                            .addMigrations(MIGRATION_2_3)
+//                            .build();
+//                }
+//            }
+//        }
+//        return INSTANCE;
+//    }
 
 }

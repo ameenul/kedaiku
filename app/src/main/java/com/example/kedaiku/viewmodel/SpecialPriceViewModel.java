@@ -68,4 +68,14 @@ public class SpecialPriceViewModel extends AndroidViewModel {
     public LiveData<List<SpecialPriceWithProduct>> getFilteredSpecialPrices() {
         return filteredSpecialPrices;
     }
+
+
+    public LiveData<SpecialPrice> getHighestSpecialPriceForProduct(long productId) {
+        return repository.getHighestSpecialPriceForProduct(productId);
+    }
+
+    public LiveData<SpecialPrice> getSpecialPriceByGroupIdAndProductId(long groupId, long productId) {
+        return repository.getSpecialPriceByGroupIdAndProductId(groupId, productId);
+    }
+
 }

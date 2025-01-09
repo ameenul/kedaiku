@@ -1,13 +1,16 @@
 package com.example.kedaiku.UI.promo_menu;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kedaiku.R;
@@ -65,6 +68,13 @@ public class HargaGrosirAdapter extends RecyclerView.Adapter<HargaGrosirAdapter.
         holder.textViewMinQty.setText("Min Qty: " + currentItemWholesaleWithProduct.getQty());
         String statusText = currentItemWholesaleWithProduct.getStatus() == 1 ? "Aktif" : "Tidak Aktif";
         holder.textViewStatus.setText("Status: " + statusText);
+        // Set background color based on status
+        // Set background color based on status
+        if (currentItemWholesaleWithProduct.getStatus() == 1) {
+            holder.cardView.setCardBackgroundColor(Color.WHITE); // Background normal
+        } else {
+            holder.cardView.setCardBackgroundColor(Color.RED); // Background merah untuk tidak aktif
+        }
 
         // Set item click listener to handle direct clicks
         holder.itemView.setOnClickListener(view -> {
@@ -114,6 +124,7 @@ public class HargaGrosirAdapter extends RecyclerView.Adapter<HargaGrosirAdapter.
 
         private final ImageView imageViewMenu;
         private final TextView textViewStatus;
+        private final CardView cardView;
 
         public HargaGrosirViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -125,6 +136,7 @@ public class HargaGrosirAdapter extends RecyclerView.Adapter<HargaGrosirAdapter.
             textViewMinQty = itemView.findViewById(R.id.textViewMinQty);
             textViewStatus = itemView.findViewById(R.id.textViewStatus);
             imageViewMenu = itemView.findViewById(R.id.imageViewMenu); // Add this in your XML
+            cardView = itemView.findViewById(R.id.cardView);
         }
     }
 

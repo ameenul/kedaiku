@@ -14,7 +14,7 @@ import java.util.List;
 @Dao
 public interface PromoDetailDao {
     @Insert
-    void insert(PromoDetail promoDetail);
+    long insert(PromoDetail promoDetail);
 
     @Update
     void update(PromoDetail promoDetail);
@@ -24,5 +24,9 @@ public interface PromoDetailDao {
 
     @Query("SELECT * FROM table_promo_detail")
     LiveData<List<PromoDetail>> getAllPromoDetails();
+
+    @Query("DELETE FROM table_promo_detail WHERE _id = :promoDetailId")
+    void deletePromoDetailById(long promoDetailId);
+
 }
 

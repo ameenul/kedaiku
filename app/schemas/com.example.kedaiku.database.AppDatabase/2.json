@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "3a84a2c73bdcd94f7a836d06d8b92329",
+    "identityHash": "86295c4b383846634b0c98fc96359322",
     "entities": [
       {
         "tableName": "table_product",
@@ -468,7 +468,7 @@
       },
       {
         "tableName": "table_detail_sale",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `sale_detail` TEXT NOT NULL, `sale_paid_history` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `sale_detail` TEXT NOT NULL, `sale_paid_history` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -486,7 +486,7 @@
             "fieldPath": "sale_paid_history",
             "columnName": "sale_paid_history",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -500,7 +500,7 @@
       },
       {
         "tableName": "table_special_price",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `product_id` INTEGER NOT NULL, `group_id` INTEGER NOT NULL, `precent` REAL NOT NULL, `status` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `product_id` INTEGER NOT NULL, `group_id` INTEGER NOT NULL, `percent` REAL NOT NULL, `status` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "_id",
@@ -527,8 +527,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "precent",
-            "columnName": "precent",
+            "fieldPath": "percent",
+            "columnName": "percent",
             "affinity": "REAL",
             "notNull": true
           },
@@ -550,7 +550,7 @@
       },
       {
         "tableName": "table_wholesale",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `product_id` INTEGER NOT NULL, `name` TEXT NOT NULL, `price` REAL NOT NULL, `qty` INTEGER NOT NULL, `status` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `product_id` INTEGER NOT NULL, `name` TEXT NOT NULL, `price` REAL NOT NULL, `qty` REAL NOT NULL, `status` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "_id",
@@ -579,7 +579,7 @@
           {
             "fieldPath": "qty",
             "columnName": "qty",
-            "affinity": "INTEGER",
+            "affinity": "REAL",
             "notNull": true
           },
           {
@@ -600,7 +600,7 @@
       },
       {
         "tableName": "table_promo_detail",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `detail` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `detail` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "_id",
@@ -612,7 +612,7 @@
             "fieldPath": "detail",
             "columnName": "detail",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -810,7 +810,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3a84a2c73bdcd94f7a836d06d8b92329')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '86295c4b383846634b0c98fc96359322')"
     ]
   }
 }

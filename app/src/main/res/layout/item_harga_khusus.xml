@@ -7,14 +7,14 @@
     android:layout_margin="8dp"
     app:cardCornerRadius="8dp"
     app:cardElevation="4dp"
-    android:background="@android:color/white">
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="8dp"
-        android:background="@android:color/white">
+        >
 
         <!-- Header Row with Product Name and Menu -->
         <LinearLayout
@@ -64,7 +64,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:text="HPP: 0"
-            android:textColor="@android:color/holo_red_dark" />
+            android:textColor="@android:color/black"
+            />
 
         <!-- Status -->
         <TextView
@@ -120,8 +121,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Harga Khusus: 0"
+                android:textColor="@android:color/black"
                 android:textSize="14sp"
-                android:textColor="@android:color/black" />
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

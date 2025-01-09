@@ -1,5 +1,6 @@
 package com.example.kedaiku.UI.promo_menu;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,6 +87,12 @@ public class HargaKhususAdapter extends RecyclerView.Adapter<HargaKhususAdapter.
         holder.textViewDiscountPercent.setText("Persen Potongan: " + currentItemSpecialPriceWithProduct.getPrecent() + "%");
         holder.textViewSpecialPrice.setText("Harga Khusus: " + formatToRupiah((100-currentItemSpecialPriceWithProduct.getPrecent())/100*currentItemSpecialPriceWithProduct.getProduct_price()));
         holder.textViewMembership.setText("Membership : "+getGroupNameByid(currentItemSpecialPriceWithProduct.getGroup_id()));
+
+        if (currentItemSpecialPriceWithProduct.getStatus() == 1) {
+            holder.itemView.setBackgroundColor(Color.WHITE); // Background normal
+        } else {
+            holder.itemView.setBackgroundColor(Color.RED); // Background merah untuk tidak aktif
+        }
 
         // Set item click listener to handle direct clicks
         holder.itemView.setOnClickListener(view -> {

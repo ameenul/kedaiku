@@ -43,4 +43,11 @@ public class WholesaleRepository {
     public LiveData<List<WholesaleWithProduct>> getWholesaleWithProductLike(String searchKeyword) {
         return wholesaleDao.getWholesaleWithProductLike(searchKeyword);
     }
+
+    public LiveData<Wholesale> getWholesalePriceForProduct(long productId, double quantity) {
+        return wholesaleDao.getWholesalePriceForProduct(productId, quantity);
+    }
+
+
+
 }

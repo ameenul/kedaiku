@@ -57,18 +57,7 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.Purcha
         void onDelete(Purchase purchase);
     }
 
-//    public void setPurchaseList(List<Purchase> purchases) {
-//        this.purchaseList = purchases;
-//        notifyDataSetChanged();
-//    }
-//
-//    public List<Purchase> getPurchaseList() {
-//        return purchaseList;
-//    }
-//
-//    public void setProductList(List<Product> products) {
-//        this.productList = products;
-//    }
+
 
     @NonNull
     @Override

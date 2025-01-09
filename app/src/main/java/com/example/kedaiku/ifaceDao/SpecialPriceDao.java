@@ -33,6 +33,24 @@ public interface SpecialPriceDao {
             "WHERE p.product_name LIKE '%' || :searchKeyword || '%'")
     LiveData<List<SpecialPriceWithProduct>> getSpecialPriceWithProductLike(String searchKeyword);
 
+    @Query("SELECT * FROM table_special_price WHERE product_id = :productId AND status = 1 ORDER BY percent DESC LIMIT 1")
+    LiveData<SpecialPrice> getHighestSpecialPriceForProduct(long productId);
+
+//    // Metode baru untuk mencari berdasarkan ID dan product_id
+//    @Query("SELECT * FROM table_special_price WHERE group_id= :groupId AND product_id = :productId AND status = 1 ORDER BY percent DESC LIMIT 1")
+//    LiveData<SpecialPrice> getSpecialPriceByGroupIdAndProductId(long groupId, long productId);
+
+
+    @Query("""
+    SELECT * FROM table_special_price
+    WHERE product_id = :productId
+      AND status = 1
+      AND (group_id = 0 OR group_id = :groupId)
+    ORDER BY percent DESC
+    LIMIT 1
+""")
+    LiveData<SpecialPrice> getSpecialPriceByGroupIdAndProductId(long groupId, long productId);
+
 
 }
 

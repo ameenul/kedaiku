@@ -12,15 +12,15 @@ public class SpecialPrice {
     private String name;
     private long product_id;
     private long group_id;
-    private double precent;
+    private double percent;
     private int status;
 
-    public SpecialPrice( @NonNull String name, long product_id, long group_id, double precent, int status) {
+    public SpecialPrice( @NonNull String name, long product_id, long group_id, double percent, int status) {
 
         this.name = name;
         this.product_id = product_id;
         this.group_id = group_id;
-        this.precent = precent;
+        this.percent = percent;
         this.status = status;
     }
 
@@ -59,12 +59,12 @@ public class SpecialPrice {
         this.group_id = group_id;
     }
 
-    public double getPrecent() {
-        return precent;
+    public double getPercent() {
+        return percent;
     }
 
-    public void setPrecent(double precent) {
-        this.precent = precent;
+    public void setPercent(double percent) {
+        this.percent = percent;
     }
 
     public int getStatus() {

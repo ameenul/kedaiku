@@ -184,7 +184,7 @@ public class UpdateHargaKhususDialog extends DialogFragment {
             @Override
             public void afterTextChanged(Editable s) {}
         });
-
+//        showKeyboard(autoCompleteProductName);
         return view;
     }
 
@@ -209,6 +209,7 @@ public class UpdateHargaKhususDialog extends DialogFragment {
         idGroup = specialPriceWithProduct.getGroup_id();
     }
 
+    @NonNull
     private String formatToRupiah(double value) {
         NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
         return format.format(value);
@@ -236,9 +237,14 @@ public class UpdateHargaKhususDialog extends DialogFragment {
                 }
             });
         });
+
+
     }
 
-    private Product getProductByName(String name, List<Product> products) {
+
+
+    @Nullable
+    private Product getProductByName(String name, @NonNull List<Product> products) {
         for (Product product : products) {
             if (product.getProduct_name().equals(name)) {
                 return product;
@@ -280,13 +286,11 @@ public class UpdateHargaKhususDialog extends DialogFragment {
 //        double productPrice = product.getProduct_price();
         double discount = discountStr.isEmpty() ? 0 : Double.parseDouble(discountStr);
          long id= getGroupIdByName(spinnerMember.getSelectedItem().toString());
-       //  double discountAmount = productPrice * (discount / 100);
-       //  double specialPriceValue = productPrice - discountAmount;
 
         // Update SpecialPrice object
         SpecialPrice specialPrice = specialPriceWithProduct.getSpecialPrice();
         specialPrice.setName(specialPriceName);
-        specialPrice.setPrecent(discount);
+        specialPrice.setPercent(discount);
         specialPrice.setStatus(status);
         specialPrice.setGroup_id(id);
 
@@ -312,7 +316,7 @@ public class UpdateHargaKhususDialog extends DialogFragment {
 
             outState.putLong("specialPrice_id", specialPrice.get_id());
             outState.putString("name", specialPrice.getName());
-            outState.putDouble("discount", specialPrice.getPrecent());
+            outState.putDouble("discount", specialPrice.getPercent());
             outState.putInt("status", specialPrice.getStatus());
             outState.putLong("group_id", specialPrice.getGroup_id());
             outState.putLong("product_id", product.getId());
@@ -327,36 +331,6 @@ public class UpdateHargaKhususDialog extends DialogFragment {
         }
     }
 
-
-//    @Override
-//    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-//        super.onViewStateRestored(savedInstanceState);
-//        if (savedInstanceState != null) {
-//            SpecialPrice specialPrice = new SpecialPrice(
-//                    savedInstanceState.getString("name"),
-//                    savedInstanceState.getLong("product_id"),
-//                    savedInstanceState.getLong("group_id"),
-//                    savedInstanceState.getDouble("discount"),
-//                    savedInstanceState.getInt("status")
-//            );
-//            specialPrice.set_id(savedInstanceState.getLong("specialPrice_id"));
-//
-//            Product product = new Product(
-//                    savedInstanceState.getString("product_name"),
-//                    savedInstanceState.getString("product_description"),
-//                    savedInstanceState.getString("product_sku"),
-//                    savedInstanceState.getDouble("product_price"),
-//                    savedInstanceState.getDouble("product_primary_price"),
-//                    savedInstanceState.getString("product_unit"),
-//                    savedInstanceState.getDouble("product_qty")
-//            );
-//            product.setId(savedInstanceState.getLong("product_id"));
-//            product.setBarcode(savedInstanceState.getString("barcode"));
-//
-//            specialPriceWithProduct = new SpecialPriceWithProduct(specialPrice, product);
-//            populateFields();
-//        }
-//    }
 
 
     double hitungDiskon(double diskon,double harganormal)
@@ -377,6 +351,7 @@ public class UpdateHargaKhususDialog extends DialogFragment {
     }
 
 
+    @NonNull
     private String getGroupNameByid(long id) {
         for (CustomerGroup group : customerGroups) {
             if (group.getId()==id) {
@@ -387,4 +362,16 @@ public class UpdateHargaKhususDialog extends DialogFragment {
         }
         return "";  // Return -1 if no matching group is found
     }
+
+
+//    public void showKeyboard(@NonNull AutoCompleteTextView autoCompleteTextView) {
+//        autoCompleteTextView.setOnFocusChangeListener((v, hasFocus) -> {
+//            if (hasFocus) {
+//                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+//                imm.showSoftInput(autoCompleteTextView, InputMethodManager.SHOW_IMPLICIT);
+//            }
+//        });
+//    }
+
+
 }

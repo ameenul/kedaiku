@@ -14,7 +14,7 @@ import java.util.List;
 @Dao
 public interface DetailSaleDao {
     @Insert
-    void insert(DetailSale detailSale);
+    long insert(DetailSale detailSale);
 
     @Update
     void update(DetailSale detailSale);
@@ -24,4 +24,10 @@ public interface DetailSaleDao {
 
     @Query("SELECT * FROM table_detail_sale")
     LiveData<List<DetailSale>> getAllDetailSales();
+
+    @Query("DELETE FROM table_detail_sale WHERE id = :detailSaleId")
+    void deleteDetailSaleById(long detailSaleId);
+
+
+
 }

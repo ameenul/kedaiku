@@ -34,7 +34,8 @@ public interface WholesaleDao {
     LiveData<List<WholesaleWithProduct>> getWholesaleWithProductLike(String searchKeyword);
 
 
-
+    @Query("SELECT * FROM table_wholesale WHERE product_id = :productId AND qty <= :quantity ORDER BY qty DESC LIMIT 1")
+    LiveData<Wholesale> getWholesalePriceForProduct(long productId, double quantity);
 
 
 }

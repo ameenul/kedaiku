@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nama Transaksi"
+            android:textStyle="bold"
+            android:padding="8dp"/>
+
+        <TextView
+            android:id="@+id/textViewTransactionName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Penjualan : Tgl 01/01/2025 10:00:00"
+            android:padding="8dp"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tanggal"
+            android:textStyle="bold"
+            android:padding="8dp"/>
+
+        <TextView
+            android:id="@+id/textViewDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="01 Jan 2025"
+            android:padding="8dp"/>
+
+        <!-- Nama Pelanggan -->
+        <TextView
+            android:id="@+id/textViewSelectedCustomer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nama Pelanggan: Umum"
+            android:textStyle="bold"
+            android:padding="8dp"/>
+
+        <!-- Detail Penjualan -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Detail Penjualan"
+            android:textStyle="bold"
+            android:padding="8dp"/>
+
+        <!-- Container for dynamically added items -->
+        <LinearLayout
+            android:id="@+id/itemsContainer"
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+
+        <!-- Subtotal -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="start">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Subtotal:"
+                android:padding="8dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/textViewSubtotal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:padding="8dp"
+                android:text="Rp 0"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <!-- Garis Pemisah -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginVertical="8dp"/>
+
+        <!-- Ongkos Kirim -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="start">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ongkos Kirim:"
+                android:padding="8dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/textViewShippingCost"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:padding="8dp"
+                android:text="Rp 0"
+                android:textSize="20sp"/>
+        </LinearLayout>
+
+        <!-- Potongan -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="start">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Potongan:"
+                android:padding="8dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/textViewDiscount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:padding="8dp"
+                android:text="Rp 0"
+                android:textSize="20sp"/>
+        </LinearLayout>
+
+        <!-- Garis Pemisah -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginVertical="8dp"/>
+
+        <!-- Total -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="start">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total:"
+                android:textStyle="bold"
+                android:padding="8dp"/>
+
+            <TextView
+                android:id="@+id/textViewTotal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:text="Rp 0"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="end"/>
+        </LinearLayout>
+
+        <!-- Informasi Pembayaran -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="start"
+            android:paddingTop="16dp">
+
+            <TextView
+                android:id="@+id/textViewChangeAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kembalian"
+                android:padding="8dp"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/textViewChange"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:padding="8dp"
+                android:text="Rp 0"
+                android:textSize="20sp"/>
+        </LinearLayout>
+
+        <!-- Kas Dropdown dengan label -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pilih Kas"
+            android:padding="8dp"
+            android:textStyle="bold"/>
+
+        <Spinner
+            android:id="@+id/spinnerKas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"/>
+
+        <!-- Tombol Cetak PDF -->
+        <Button
+            android:id="@+id/buttonPrintPdf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cetak PDF"
+            android:padding="8dp"
+            android:layout_marginTop="16dp"/>
+
+    </LinearLayout>
+</ScrollView>

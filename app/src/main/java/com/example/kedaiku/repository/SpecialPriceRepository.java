@@ -48,4 +48,12 @@ public class SpecialPriceRepository {
     public LiveData<List<SpecialPriceWithProduct>> getSpecialPriceWithProductLike(String searchKeyword) {
         return specialPriceDao.getSpecialPriceWithProductLike(searchKeyword);
     }
+
+    public LiveData<SpecialPrice> getHighestSpecialPriceForProduct(long productId) {
+        return specialPriceDao.getHighestSpecialPriceForProduct(productId);}
+
+
+    public LiveData<SpecialPrice> getSpecialPriceByGroupIdAndProductId(long id, long productId) {
+        return specialPriceDao.getSpecialPriceByGroupIdAndProductId(id, productId);
+    }
 }

@@ -16,7 +16,7 @@ public class SaleWithDetails {
 
     @Relation(
             parentColumn = "promo_id",
-            entityColumn = "id"
+            entityColumn = "_id"
     )
     private PromoDetail promo;
 
@@ -105,6 +105,15 @@ public class SaleWithDetails {
     }
 
     public String getCustomerName() {
+
+        if(customer==null)
+        {
+            if(getSale().getSale_customer_id()==0)
+            return "Umum";
+            else {
+                return "Pelanggan Terhapus";
+            }
+        }
         return customer.getCustomer_name();
     }
 

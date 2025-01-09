@@ -34,4 +34,7 @@ public class PromoDetail {
     public void setDetail(@NonNull String detail) {
         this.detail = detail;
     }
+
+
+
 }

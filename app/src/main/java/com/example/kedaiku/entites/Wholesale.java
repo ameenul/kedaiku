@@ -12,12 +12,12 @@ public class Wholesale {
     @NonNull
     private String name;
     private double price;
-    private int qty;
+    private double qty;
     private int status;
 
 
 
-    public Wholesale(long product_id, @NonNull String name, double price, int qty, int status) {
+    public Wholesale(long product_id, @NonNull String name, double price, double qty, int status) {
 
         this.product_id = product_id;
         this.name = name;
@@ -59,11 +59,11 @@ public class Wholesale {
         this.price = price;
     }
 
-    public int getQty() {
+    public double getQty() {
         return qty;
     }
 
-    public void setQty(int qty) {
+    public void setQty(double qty) {
         this.qty = qty;
     }
 

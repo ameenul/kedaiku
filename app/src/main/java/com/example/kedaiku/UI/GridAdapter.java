@@ -15,19 +15,20 @@ import com.example.kedaiku.R;
 import com.example.kedaiku.UI.cash_menu.CashListActivity;
 import com.example.kedaiku.UI.customer_menu.CustomerListActivity;
 import com.example.kedaiku.UI.inventory_menu.InventoryActivity;
+import com.example.kedaiku.UI.penjualan_menu.ListPenjualanActivity;
 import com.example.kedaiku.UI.product_menu.ProductListActivity;
 import com.example.kedaiku.UI.promo_menu.PromoActivity;
 
 public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
     private String[] titles = {
-            "Kas", "Pelanggan", "Produk", "Inventory", "Penjualan",
-            "Piutang", "Hutang", "Laporan", "Promo", "About Us", "Data"
+            "Kas", "Pelanggan", "Produk", "Inventory","Promo", "Penjualan",
+            "Piutang", "Hutang", "Laporan", "About Us", "Data"
     };
 
     private int[] images = {
             R.drawable.ic_cash, R.drawable.ic_pelanggan, R.drawable.ic_produk,
-            R.drawable.ic_inventory, R.drawable.ic_penjualan, R.drawable.ic_piutang,
-            R.drawable.ic_hutang, R.drawable.ic_laporan, R.drawable.ic_promo,
+            R.drawable.ic_inventory,R.drawable.ic_promo, R.drawable.ic_penjualan, R.drawable.ic_piutang,
+            R.drawable.ic_hutang, R.drawable.ic_laporan,
             R.drawable.ic_about_us, R.drawable.ic_data
     };
     private Context context;
@@ -71,8 +72,12 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
                     context.startActivity(intent);
                 }
 
-                else if (currentPosition==8) { // Assuming 0 is the position of the cash icon
+                else if (currentPosition==4) { // Assuming 0 is the position of the cash icon
                     Intent intent = new Intent(context, PromoActivity.class);
+                    context.startActivity(intent);
+                }
+                else if (currentPosition==5) { // Assuming 0 is the position of the cash icon
+                    Intent intent = new Intent(context, ListPenjualanActivity.class);
                     context.startActivity(intent);
                 }
 

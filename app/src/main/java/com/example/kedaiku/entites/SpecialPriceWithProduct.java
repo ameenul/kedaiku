@@ -52,7 +52,7 @@ public class SpecialPriceWithProduct {
     }
 
     public double getPrecent() {
-        return specialPrice.getPrecent();
+        return specialPrice.getPercent();
     }
 
     public int getStatus() {
@@ -111,7 +111,7 @@ public class SpecialPriceWithProduct {
                 this.specialPrice.getName(),
                 this.specialPrice.getProduct_id(),
                 this.specialPrice.getGroup_id(),
-                this.specialPrice.getPrecent(),
+                this.specialPrice.getPercent(),
                 this.specialPrice.getStatus()
         );
         specialPrice.set_id(this.specialPrice.get_id());

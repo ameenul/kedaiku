@@ -7,8 +7,7 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
 
     <application
         android:allowBackup="true"
@@ -22,11 +21,21 @@
         android:theme="@style/Base.Theme.Kedaiku"
         tools:targetApi="31">
         <activity
-            android:name=".UI.penjualan_menu.ListPenjualanActivity"
+            android:name=".UI.penjualan_menu.DetailPenjualanActivity"
             android:exported="false" />
         <activity
-            android:name=".UI.promo_menu.AddHargaGrosirActivity"
+            android:name=".UI.penjualan_menu.PilihProdukActivity"
             android:exported="false" />
+        <activity
+            android:name=".UI.penjualan_menu.CustomerSelectActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.penjualan_menu.PenjualanKasirActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.penjualan_menu.ListPenjualanActivity"
+            android:exported="false" />
+
         <activity
             android:name=".UI.promo_menu.PromoActivity"
             android:exported="false" />

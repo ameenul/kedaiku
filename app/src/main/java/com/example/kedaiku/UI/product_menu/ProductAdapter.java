@@ -35,7 +35,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         void onDeleteClicked(Product product);
         void onDuplicateClicked(Product product);
         void onAddStockClicked(Product product);
-        void onItemClicked(Product product);
+        void onItemClicked(Product product,int idx);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -103,7 +103,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         });
 
         // Klik pada Item
-        holder.itemView.setOnClickListener(v -> listener.onItemClicked(product));
+        holder.itemView.setOnClickListener(v -> listener.onItemClicked(product,position));
     }
 
     @Override

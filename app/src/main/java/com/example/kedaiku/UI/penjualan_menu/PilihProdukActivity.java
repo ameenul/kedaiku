@@ -1,6 +1,4 @@
-
-
-package com.example.kedaiku.UI.product_menu;
+package com.example.kedaiku.UI.penjualan_menu;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -21,23 +19,32 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kedaiku.R;
+import com.example.kedaiku.UI.product_menu.AddProductActivity;
+import com.example.kedaiku.UI.product_menu.DuplicateProductActivity;
+import com.example.kedaiku.UI.product_menu.ProductAdapter;
+import com.example.kedaiku.UI.product_menu.UpdateProductActivity;
 import com.example.kedaiku.entites.Product;
 import com.example.kedaiku.viewmodel.ProductViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class ProductListActivity extends AppCompatActivity {
+public class PilihProdukActivity extends AppCompatActivity implements SelectProdukDialog.SelectProdukDialogListener {
 
     private ProductViewModel productViewModel;
     private ProductAdapter adapter;
+    private List<Product> productsAsli;
     private EditText editTextSearch;
     private String csvData;
     ImageView expCsv;
-    private  ActivityResultLauncher<Intent> createFileLauncher;
-
-
+    private ActivityResultLauncher<Intent> createFileLauncher;
+    Map<Long, Double> productQuantityMap = new HashMap<>();
+    Intent intent;
+    int idxSelected=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +55,37 @@ public class ProductListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         adapter = new ProductAdapter(this);
+        productsAsli = new ArrayList<>();
         recyclerView.setAdapter(adapter);
 
         productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
 
+
+
+        intent = getIntent();
+        ArrayList<String> productIdsAndQuantities = intent.getStringArrayListExtra("productIdsAndQuantities");
+
+
+        if (productIdsAndQuantities != null) {
+
+            for (String entry : productIdsAndQuantities) {
+                String[] parts = entry.split(":");
+                Long productId = Long.parseLong(parts[0]);
+                Double quantity = Double.parseDouble(parts[1]);
+                productQuantityMap.put(productId, quantity);
+            }
+
+
+        }
+
         // Observe searchResults instead of getAllProducts
         productViewModel.getSearchResults().observe(this, products -> {
             if (products != null) {
+                productsAsli=products;
+                reduceStockBasedOnItems(products, productQuantityMap);
                 adapter.setProductList(products);
             } else {
+                productsAsli=new ArrayList<>();
                 adapter.setProductList(null);
                 Toast.makeText(this, "No products found", Toast.LENGTH_SHORT).show();
             }
@@ -74,20 +103,19 @@ public class ProductListActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 String query = s.toString();
                 productViewModel.setSearchQuery(query);
-                // No need to observe here, as we already observe searchResults above
             }
         });
 
         FloatingActionButton fabAddProduct = findViewById(R.id.fabAddProduct);
         fabAddProduct.setOnClickListener(v -> {
-            Intent intent = new Intent(ProductListActivity.this, AddProductActivity.class);
+            intent = new Intent(PilihProdukActivity.this, AddProductActivity.class);
             startActivity(intent);
         });
 
         adapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener() {
             @Override
             public void onEditClicked(Product product) {
-                Intent intent = new Intent(ProductListActivity.this, UpdateProductActivity.class);
+                Intent intent = new Intent(PilihProdukActivity.this, UpdateProductActivity.class);
                 intent.putExtra("product_id", product.getId());
                 startActivity(intent);
             }
@@ -95,13 +123,13 @@ public class ProductListActivity extends AppCompatActivity {
             @Override
             public void onDeleteClicked(Product product) {
                 // Tampilkan AlertDialog untuk konfirmasi
-                new AlertDialog.Builder(ProductListActivity.this)
+                new AlertDialog.Builder(PilihProdukActivity.this)
                         .setTitle("Konfirmasi Penghapusan")
                         .setMessage("Apakah Anda yakin ingin menghapus produk ini?")
                         .setPositiveButton("Ya", (dialog, which) -> {
                             // Jika pengguna memilih "Ya", hapus produk
                             productViewModel.delete(product);
-                            Toast.makeText(ProductListActivity.this, "Produk dihapus", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PilihProdukActivity.this, "Produk dihapus", Toast.LENGTH_SHORT).show();
                         })
                         .setNegativeButton("Tidak", (dialog, which) -> {
                             // Jika pengguna memilih "Tidak", tutup dialog
@@ -111,10 +139,9 @@ public class ProductListActivity extends AppCompatActivity {
                         .show();
             }
 
-
             @Override
             public void onDuplicateClicked(Product product) {
-                Intent intent = new Intent(ProductListActivity.this, DuplicateProductActivity.class);
+                Intent intent = new Intent(PilihProdukActivity.this, DuplicateProductActivity.class);
                 intent.putExtra("product_id", product.getId());
                 startActivity(intent);
             }
@@ -126,9 +153,16 @@ public class ProductListActivity extends AppCompatActivity {
 
             @Override
             public void onItemClicked(Product product,int idx) {
-                Intent intent = new Intent(ProductListActivity.this, UpdateProductActivity.class);
-                intent.putExtra("product_id", product.getId());
-                startActivity(intent);
+                idxSelected=idx;
+                SelectProdukDialog dialog = SelectProdukDialog.newInstance(
+                        product.getId(),
+                        product.getProduct_name(),
+                        product.getProduct_price(),
+                        product.getProduct_qty(),
+                        product.getProduct_primary_price(),
+                        product.getProduct_unit()
+                );
+                dialog.show(getSupportFragmentManager(), "SelectProdukDialog");
             }
         });
 
@@ -150,8 +184,11 @@ public class ProductListActivity extends AppCompatActivity {
                     }
                 }
         );
+
         expCsv = findViewById(R.id.imageViewExportCsv);
         expCsv.setOnClickListener(v -> exportProductDataToCsv());
+
+
 
     }
 
@@ -178,11 +215,10 @@ public class ProductListActivity extends AppCompatActivity {
         dialog.show();
     }
 
-
     // Tambahkan metode untuk export CSV
     private void exportProductDataToCsv() {
         // Dapatkan data produk dari adapter
-        List<Product> productsToExport = adapter.getProductList();
+        List<Product> productsToExport = productsAsli;
 
         if (productsToExport == null || productsToExport.isEmpty()) {
             Toast.makeText(this, "Tidak ada data produk untuk diekspor", Toast.LENGTH_SHORT).show();
@@ -220,6 +256,9 @@ public class ProductListActivity extends AppCompatActivity {
         intent.setType("text/csv");
         intent.putExtra(Intent.EXTRA_TITLE, "Daftar_Produk.csv");
         createFileLauncher.launch(intent);
+
+
+
     }
 
     private void writeCsvDataToUri(Uri uri) {
@@ -233,4 +272,32 @@ public class ProductListActivity extends AppCompatActivity {
             Toast.makeText(this, "Gagal menyimpan data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
+
+    @Override
+    public void onProductSelected(long productId, String productName, double productPrice, double quantity,double productHPP,String productUnit) {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("product_id", productId);
+        resultIntent.putExtra("product_name", productName);
+        resultIntent.putExtra("product_unit", productUnit);
+        resultIntent.putExtra("product_price", productPrice);
+        resultIntent.putExtra("product_stock", productsAsli.get(idxSelected).getProduct_qty());
+        resultIntent.putExtra("product_HPP", productHPP);
+        resultIntent.putExtra("quantity", quantity);
+
+        setResult(RESULT_OK, resultIntent);
+        finish();
+    }
+
+
+    private void reduceStockBasedOnItems(List<Product> products, Map<Long, Double> productQuantityMap) {
+        for (Product product : products) {
+            if (productQuantityMap.containsKey(product.getId())) {
+                double reducedStock = product.getProduct_qty() - productQuantityMap.get(product.getId());
+                product.setProduct_qty(reducedStock);
+
+            }
+        }
+    }
+
+
 }
