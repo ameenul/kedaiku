@@ -154,6 +154,11 @@ public class SaleRepository {
     public LiveData<SaleWithDetails> getSaleWithDetailsByIdLive(long saleId) {
         return saleDao.getSaleWithDetailsByIdLive(saleId);
     }
+    public LiveData<List<SaleWithDetails>> getFilteredSalesForPaymentType2WithSearch(
+            long startDate, long endDate, String searchString, boolean filterByCustomer) {
+        return saleDao.getFilteredSalesForPaymentType2WithSearch(startDate, endDate, searchString, filterByCustomer);
+    }
+
 
 
 

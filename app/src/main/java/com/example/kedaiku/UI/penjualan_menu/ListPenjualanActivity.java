@@ -1,7 +1,9 @@
 package com.example.kedaiku.UI.penjualan_menu;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,6 +16,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -26,12 +30,16 @@ import com.example.kedaiku.entites.DetailSale;
 import com.example.kedaiku.entites.PromoDetail;
 import com.example.kedaiku.entites.Sale;
 import com.example.kedaiku.entites.SaleWithDetails;
+import com.example.kedaiku.helper.CsvHelper;
+import com.example.kedaiku.helper.DateHelper;
 import com.example.kedaiku.helper.FormatHelper;
 import com.example.kedaiku.viewmodel.SaleViewModel;
 
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -46,9 +54,13 @@ public class ListPenjualanActivity extends AppCompatActivity {
     private TextView textViewTotalHpp;      // Baru
     private TextView textViewNetProfit;
     private TextView textViewSelectedDates;
-    private String filter;
-    private String lastFilter;
-    private String dateRange;
+    private Button buttonExportCsv ;
+    StringBuilder dateRange;
+    private DateHelper dateHelper;
+    private ActivityResultLauncher<Intent> createFileLauncher;
+    private String csvData;
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +68,8 @@ public class ListPenjualanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_penjualan);
 
         // Initialize UI elements
+        dateHelper = new DateHelper();
+        dateRange = new StringBuilder();
         editTextSearch = findViewById(R.id.editTextSearch);
         spinnerFilter = findViewById(R.id.spinnerFilter);
         textTotalSales = findViewById(R.id.textTotalSales);
@@ -65,7 +79,7 @@ public class ListPenjualanActivity extends AppCompatActivity {
         textViewTotalHpp = findViewById(R.id.textViewTotalHpp);
         textViewNetProfit = findViewById(R.id.textViewNetProfit);
         RecyclerView recyclerViewSales = findViewById(R.id.recyclerViewSales);
-        Button buttonExportCsv = findViewById(R.id.buttonExportCsv);
+        buttonExportCsv = findViewById(R.id.buttonExportCsv);
         textViewSelectedDates = findViewById(R.id.textViewSelectedDates);
 
         // Initialize RecyclerView and Adapter
@@ -158,41 +172,36 @@ public class ListPenjualanActivity extends AppCompatActivity {
 
         // Set up filter spinner
         
-        spinnerFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                 filter = parent.getItemAtPosition(position).toString();
-//                 Toast.makeText(ListPenjualanActivity.this,filter+ position,Toast.LENGTH_SHORT).show();
-                if ("Pilih Tanggal".equals(filter)) {
-                    lastFilter = filter;
-                    showDateRangePicker();
+        spinnerFilter.setOnItemSelectedListener(dateHelper.spinnerSelectedListener(ListPenjualanActivity.this
 
-                }
-                else if(!getResources().getStringArray(R.array.filter_options)[0].equals(filter)) {
-                    saleViewModel.setFilter(filter);
-                    textViewSelectedDates.setText("Tanggal Terpilih: " + filter );
-                    lastFilter = filter;
-                    spinnerFilter.setSelection(0);
-                }
-                 
-                
-            }
+        , saleViewModel, dateRange, textViewSelectedDates, spinnerFilter));
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
 
-        // Set up Export CSV button
-        buttonExportCsv.setOnClickListener(v -> {
-            // Implement export CSV functionality
-        });
 
         // Floating action button to add new sale
         findViewById(R.id.fabAddSale).setOnClickListener(v -> {
             Intent intent = new Intent(ListPenjualanActivity.this, PenjualanKasirActivity.class);
             startActivity(intent);
         });
-        
+
+        // Inisialisasi ActivityResultLauncher
+        createFileLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        if (data != null) {
+                            Uri uri = data.getData();
+                            writeCsvDataToUri(uri);
+                        }
+                    }
+                }
+        );
+
+        buttonExportCsv.setOnClickListener(v -> exportDataToCsv());
+
+
+
     }
 
     private void updateUI(List<SaleWithDetails> salesWithDetails) {
@@ -245,59 +254,72 @@ public class ListPenjualanActivity extends AppCompatActivity {
         textViewNetProfit.setText("Total Laba Bersih: " + FormatHelper.formatCurrency(totalNetProfit));
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
-    private void showDateRangePicker() {
-        Calendar calendar = Calendar.getInstance();
-
-        DatePickerDialog startDatePicker = new DatePickerDialog(
-                this,
-                (DatePicker view, int year, int month, int dayOfMonth) -> {
-                    Calendar startCalendar = Calendar.getInstance();
-                    startCalendar.set(year, month, dayOfMonth);
-                    startCalendar.set(Calendar.HOUR_OF_DAY, 0);
-                    startCalendar.set(Calendar.MINUTE, 0);
-                    startCalendar.set(Calendar.SECOND, 0);
-                    startCalendar.set(Calendar.MILLISECOND, 0);
-                    long startDate = startCalendar.getTimeInMillis();
-
-                    DatePickerDialog endDatePicker = new DatePickerDialog(
-                            this,
-                            (DatePicker endView, int endYear, int endMonth, int endDayOfMonth) -> {
-                                Calendar endCalendar = Calendar.getInstance();
-                                endCalendar.set(endYear, endMonth, endDayOfMonth);
-                                endCalendar.set(Calendar.HOUR_OF_DAY, 23);
-                                endCalendar.set(Calendar.MINUTE, 59);
-                                endCalendar.set(Calendar.SECOND, 59);
-                                endCalendar.set(Calendar.MILLISECOND, 999);
-                                long endDate = endCalendar.getTimeInMillis();
-
-                                
-                                saleViewModel.setDateRangeFilter(startDate, endDate);
-
-                                // Format the selected dates
-                                SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm:ss", Locale.getDefault());
-                                String dateRangeText = "Tanggal Terpilih: " +
-                                        dateFormat.format(startCalendar.getTime()) + " - " +
-                                        dateFormat.format(endCalendar.getTime());
-                                dateRange = dateFormat.format(startCalendar.getTime()) + " - " +
-                                        dateFormat.format(endCalendar.getTime());
-                                textViewSelectedDates.setText(dateRangeText);
-                                spinnerFilter.setSelection(0);
+        // Lepas listener untuk spinnerFilter
+        spinnerFilter.setOnItemSelectedListener(null);
 
 
-                            },
-                            calendar.get(Calendar.YEAR),
-                            calendar.get(Calendar.MONTH),
-                            calendar.get(Calendar.DAY_OF_MONTH)
-                    );
-                    endDatePicker.show();
-                },
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH)
-        );
-
-        startDatePicker.show();
     }
-    
+
+    private void exportDataToCsv() {
+        List<SaleWithDetails> currentSales = adapter.getSalesList();
+        if (currentSales == null || currentSales.isEmpty()) {
+            Toast.makeText(this, "Tidak ada data untuk diekspor", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Tentukan header dan baris data untuk CSV
+        String[] headers = {"Sale ID", "Transaction Name", "Date", "Total", "Paid", "Payment Type", "Customer Name"};
+        List<String[]> rows = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+
+        for (SaleWithDetails sale : currentSales) {
+            String saleId = String.valueOf(sale.getSaleId());
+            String transactionName = sale.getSaleTransactionName();
+            String dateStr = sdf.format(new Date(sale.getSaleDate()));
+            String total = String.valueOf(sale.getSaleTotal());
+            String paid = String.valueOf(sale.getSalePaid());
+            String paymentType = sale.getSale().getSale_payment_type() == 1 ? "Cash" : "Piutang";
+            String customerName = sale.getCustomerName();
+
+            String[] row = { saleId, transactionName, dateStr, total, paid, paymentType, customerName };
+            rows.add(row);
+        }
+
+        String judul = "Export Data Penjualan";
+        if(!dateHelper.lastFilter.equals("Pilih Tanggal")) {
+            judul = ("List Penjualan_search = " +editTextSearch.getText()+" "+ DateHelper.getDescStartEndDate(DateHelper.calculateDateRange(dateHelper.lastFilter)) + " \n");
+
+        }
+        else{
+            judul = ("List Penjualan_search = " +editTextSearch.getText()+" "+ dateRange.toString()+ " \n");
+
+        }
+        csvData = CsvHelper.convertToCsv(headers, rows, judul);
+
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("text/csv");
+        intent.putExtra(Intent.EXTRA_TITLE, "penjualan_export.csv");
+        createFileLauncher.launch(intent);
+    }
+
+    private void writeCsvDataToUri(Uri uri) {
+        try {
+            OutputStream outputStream = getContentResolver().openOutputStream(uri);
+            outputStream.write(csvData.getBytes());
+            outputStream.close();
+            Toast.makeText(this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Gagal menyimpan data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
+
 }

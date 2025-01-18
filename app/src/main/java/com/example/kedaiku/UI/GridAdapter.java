@@ -16,6 +16,7 @@ import com.example.kedaiku.UI.cash_menu.CashListActivity;
 import com.example.kedaiku.UI.customer_menu.CustomerListActivity;
 import com.example.kedaiku.UI.inventory_menu.InventoryActivity;
 import com.example.kedaiku.UI.penjualan_menu.ListPenjualanActivity;
+import com.example.kedaiku.UI.piutang_menu.PiutangListActivity;
 import com.example.kedaiku.UI.product_menu.ProductListActivity;
 import com.example.kedaiku.UI.promo_menu.PromoActivity;
 
@@ -78,6 +79,10 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
                 }
                 else if (currentPosition==5) { // Assuming 0 is the position of the cash icon
                     Intent intent = new Intent(context, ListPenjualanActivity.class);
+                    context.startActivity(intent);
+                }
+                else if (currentPosition==6) { // Assuming 0 is the position of the cash icon
+                    Intent intent = new Intent(context, PiutangListActivity.class);
                     context.startActivity(intent);
                 }
 

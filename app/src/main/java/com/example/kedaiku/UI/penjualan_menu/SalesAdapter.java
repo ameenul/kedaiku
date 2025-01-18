@@ -29,11 +29,7 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.SalesViewHol
     private List<SaleWithDetails> salesListFull;
     private OnItemClickListener onItemClickListener;
 
-//    public SalesAdapter(Context context, List<SaleWithDetails> salesList) {
-//        this.context = context;
-//        this.salesList = salesList;
-//        this.salesListFull = new ArrayList<>(salesList);
-//    }
+
 
     public SalesAdapter(Context context, List<SaleWithDetails> salesList, OnItemClickListener listener) {
         this.context = context;
@@ -170,4 +166,11 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.SalesViewHol
         void onDeleteClicked(SaleWithDetails saleWithDetails);
         void onItemClicked(SaleWithDetails saleWithDetails); // Tambahkan ini
     }
+
+    public List<SaleWithDetails> getSalesList() {
+        return salesList;
+    }
+
+
+
 }

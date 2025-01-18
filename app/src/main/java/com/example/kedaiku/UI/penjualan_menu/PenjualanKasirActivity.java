@@ -2,6 +2,7 @@ package com.example.kedaiku.UI.penjualan_menu;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,6 +19,7 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
@@ -37,6 +39,7 @@ import com.example.kedaiku.entites.Wholesale;
 import com.example.kedaiku.entites.SpecialPrice;
 import com.example.kedaiku.entites.Cash; // Import Cash entity
 import com.example.kedaiku.helper.FormatHelper;
+import com.example.kedaiku.helper.PdfHelper;
 import com.example.kedaiku.repository.SaleRepository;
 import com.example.kedaiku.viewmodel.CartViewModel;
 import com.example.kedaiku.viewmodel.SaleViewModel;
@@ -58,6 +61,7 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 public class PenjualanKasirActivity extends AppCompatActivity {
+
 
     private LinearLayout itemsContainer;
     private TextView textViewSelectedCustomer;
@@ -116,6 +120,10 @@ public class PenjualanKasirActivity extends AppCompatActivity {
 
     private long saleId,promoId,detailSaleId;
     private EditText editTextDate;
+
+    private ActivityResultLauncher<Intent> createPdfLauncher;
+    // Launcher untuk proses "Share PDF"
+    private ActivityResultLauncher<Intent> sharePdfLauncher;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -374,6 +382,57 @@ public class PenjualanKasirActivity extends AppCompatActivity {
 
         }
 
+        createPdfLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    List<CartItem> cartItemList = new ArrayList<>(cartItemsMap.values());
+                    if (result.getResultCode() == RESULT_OK) {
+                        Intent dataResult = result.getData();
+                        if (dataResult != null) {
+                            Uri uri = dataResult.getData();
+                            if (uri != null) {
+                                //Log.d(TAG, "URI dipilih: " + uri.toString());
+                                // Membuat PDF menggunakan PdfHelper
+                                boolean success = PdfHelper.createPdf(this,
+                                        uri,
+                                        editTextTransactionName.getText().toString(),
+                                        editTextDate.getText().toString(),
+                                        textViewSelectedCustomer.getText().toString(),
+                                        textViewSubTotal.getText().toString(),
+                                        textViewShippingCost.getText().toString(),
+                                        textViewDiscount.getText().toString(),
+                                        textViewTotal.getText().toString(),
+                                        textViewLabelChange.getText().toString(),
+                                        textViewChange.getText().toString(),
+                                        cartItemList
+                                );
+
+                                if (success) {
+                                    // Setelah berhasil membuat PDF, bagikan PDF
+                                    sharePdf(uri);
+                                }
+                            } else {
+                              //  Log.e(TAG, "URI kosong");
+                                Toast.makeText(this, "Gagal mendapatkan lokasi penyimpanan PDF.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    } else {
+                       // Log.e(TAG, "Hasil dari pembuatan dokumen dibatalkan");
+                        Toast.makeText(this, "Pembuatan PDF dibatalkan.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+
+
+        // 2. Buat launcher untuk proses "Share PDF"
+        sharePdfLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    // Setelah proses share (atau user batal), kita tutup Activity
+                    finish();
+                }
+        );
+
     }//onCreate
 
     private void fillFormWithOldData(SaleWithDetails saleWithDetails) {
@@ -539,7 +598,19 @@ public class PenjualanKasirActivity extends AppCompatActivity {
                 public void onSuccess(boolean status) {
 
                         Toast.makeText(PenjualanKasirActivity.this, "Transaksi berhasil!", Toast.LENGTH_SHORT).show();
-                        finish(); // Menutup activity
+                    //createPdfWithSAF();
+                    //finish(); // Menutup activity
+                    new AlertDialog.Builder(PenjualanKasirActivity.this)
+                            .setMessage("Apakah ingin mencetak dan share nota?")
+                            .setPositiveButton("Ya", (dialog, which) -> {
+                                // User ingin mencetak & share nota -> kita panggil createPdfWithSAF()
+                                createPdfWithSAF();
+                            })
+                            .setNegativeButton("Tidak", (dialog, which) -> {
+                                // User menolak -> kita langsung tutup Activity
+                                finish();
+                            })
+                            .show();
 
                 }
 
@@ -558,6 +629,7 @@ public class PenjualanKasirActivity extends AppCompatActivity {
                 saleViewModel.updateSaleTransaction(sale,ds.getSale_detail(),pd.getDetail(),items,new SaleViewModel.OnTransactionCompleteListener() {
                     @Override
                     public void onSuccess(boolean status) {
+
 
                         Toast.makeText(PenjualanKasirActivity.this, "Transaksi Update berhasil!", Toast.LENGTH_SHORT).show();
                         finish(); // Menutup activity
@@ -614,9 +686,9 @@ public class PenjualanKasirActivity extends AppCompatActivity {
 
 
 
-            Toast.makeText(this,
-                    "spesial : "+cartItem.getSpecialPrice()
-                    +" , wholes : "+cartItem.getWholeSalePrice()+" , price = "+cartItem.getPrice(),Toast.LENGTH_LONG).show();
+//            Toast.makeText(this,
+//                    "spesial : "+cartItem.getSpecialPrice()
+//                    +" , wholes : "+cartItem.getWholeSalePrice()+" , price = "+cartItem.getPrice(),Toast.LENGTH_LONG).show();
 
             String TipeHarga="";
             long promoId=0,promotype=0;
@@ -1043,6 +1115,38 @@ public class PenjualanKasirActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void createPdfWithSAF() {
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("application/pdf");
+        intent.putExtra(Intent.EXTRA_TITLE, "Nota_Penjualan_" + editTextDate.getText().toString() + ".pdf");
+        createPdfLauncher.launch(intent);
+    }
+
+    // Metode untuk berbagi PDF
+    private void sharePdf(Uri uri) {
+//        Log.d(TAG, "Membagikan PDF dengan URI: " + uri.toString());
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("application/pdf");
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+//            Log.d(TAG, "Membuka chooser untuk membagikan PDF.");
+//            startActivity(Intent.createChooser(intent, "Bagikan Nota"));
+//            startActivityForResult(Intent.createChooser(intent, "Bagikan Nota"), SHARE_PDF_REQUEST_CODE);
+            Intent chooser = Intent.createChooser(intent, "Bagikan Nota");
+            sharePdfLauncher.launch(chooser);
+        } else {
+//            Log.e(TAG, "Tidak ada aplikasi yang dapat menangani intent ini.");
+            Toast.makeText(this, "Tidak ada aplikasi yang dapat membagikan PDF.", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+    }
+
+
+
 
     // Listener untuk mendapatkan harga
     interface OnPriceRetrievedListener {

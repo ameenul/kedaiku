@@ -41,17 +41,8 @@ public class FormatHelper {
         return descDate;
 
     }
-//
-//    public static String parseCustomerNameFromDetailSale(String jsonDetail) {
-//        try {
-//            JSONObject root = new JSONObject(jsonDetail);
-//        } catch (JSONException e) {
-//            throw new RuntimeException(e);
-//        }
-//        ;
-//
-//
-//    }
+
+
 
     public static List<CartItem> parseCartItemsFromDetailSale(String jsonDetail) {
         List<CartItem> cartItems = new ArrayList<>();
@@ -90,10 +81,11 @@ public class FormatHelper {
                         name,                // productName
                         qty,                 // quantity terjual
                         0,                   // productQty (stok di DB) tidak kita simpan di JSON ini
-                        sellPrice,           // final price
+                        normalPrice,           //normal price
                         primaryPrice,        // HPP
                         unit
                 );
+                cartItem.setFinalPrice(sellPrice); // final price
 
                 cartItems.add(cartItem);
             }
@@ -135,6 +127,7 @@ public class FormatHelper {
                 long productId     = itemObj.optLong("product_id", -1);
                 String name        = itemObj.optString("name", "");
                 double primaryPrice= itemObj.optDouble("primary_price", 0.0);  // HPP
+                double normalPrice = itemObj.optDouble("normal_price", 0.0);
                 double sellPrice   = itemObj.optDouble("sell_price", 0.0);
                 double qty         = itemObj.optDouble("qty", 0.0);
                 String unit        = itemObj.optString("unit", "");
@@ -160,7 +153,7 @@ public class FormatHelper {
                         name,                // productName
                         qty,                 // quantity terjual
                         0,                   // productQty (stok di DB) tidak kita simpan di JSON ini
-                        Double.MAX_VALUE,           // normal price
+                        normalPrice,           // normal price
                         primaryPrice,        // HPP
                         unit
                 );

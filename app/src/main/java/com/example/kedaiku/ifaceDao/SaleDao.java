@@ -41,6 +41,27 @@ public interface SaleDao {
     LiveData<List<SaleWithDetails>> getSalesWithDetailsFiltered(long startDate, long endDate, String transactionName);
 
     @Transaction
+    @Query("""
+    SELECT table_sale.* FROM table_sale
+    INNER JOIN table_customer ON table_sale.sale_customer_id = table_customer.id
+    WHERE sale_date >= :startDate 
+      AND sale_date <= :endDate 
+      AND sale_payment_type = 2
+      AND (
+          (:filterByCustomer = 0 AND sale_transaction_name LIKE '%' || :searchString || '%')
+          OR 
+          (:filterByCustomer = 1 AND customer_name LIKE '%' || :searchString || '%')
+      )
+""")
+    LiveData<List<SaleWithDetails>> getFilteredSalesForPaymentType2WithSearch(
+            long startDate,
+            long endDate,
+            String searchString,
+            boolean filterByCustomer
+    );
+
+
+    @Transaction
     default boolean completeTransaction(Sale sale, DetailSale detailSales,
                                         PromoDetail promoDetail, List<CartItem> cartItems,
                                         DetailSaleDao detailSaleDao, PromoDetailDao promoDetailDao,

@@ -11,9 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import com.example.kedaiku.UI.penjualan_menu.CartItem;
-import com.example.kedaiku.entites.CashFlow;
 import com.example.kedaiku.entites.DetailSale;
-import com.example.kedaiku.entites.Inventory;
 import com.example.kedaiku.entites.PromoDetail;
 import com.example.kedaiku.entites.Sale;
 import com.example.kedaiku.entites.SaleWithDetails;
@@ -22,63 +20,75 @@ import com.example.kedaiku.repository.SaleRepository;
 
 import java.util.List;
 
-public class SaleViewModel extends AndroidViewModel implements DateRangeFilter {
+public class PiutangViewModel extends AndroidViewModel implements DateRangeFilter {
 
     private final SaleRepository repository;
+
+    private final MutableLiveData<FilterParams> currentFilterParamsPiutang = new MutableLiveData<>();
+    private final LiveData<List<SaleWithDetails>> filteredSalesWithDetailsPiutang;
+
 
     // Kelas untuk menampung parameter filter
     private static class FilterParams {
         String filterName;
         Long startDate;
         Long endDate;
-        String transactionName;
+        String name;
+
+
+        boolean isFilterByCustomer;
+
 
         FilterParams() {}
 
-        FilterParams(String filterName, Long startDate, Long endDate, String transactionName) {
+        FilterParams(String filterName, Long startDate, Long endDate, String Name, boolean isFilterByCustomer) {
             this.filterName = filterName;
             this.startDate = startDate;
             this.endDate = endDate;
-            this.transactionName = transactionName;
+            this.name = name;
+            this.isFilterByCustomer = isFilterByCustomer;
+
         }
     }
 
-    private final MutableLiveData<FilterParams> currentFilterParams = new MutableLiveData<>();
-    private final LiveData<List<SaleWithDetails>> filteredSalesWithDetails;
-
-    public SaleViewModel(@NonNull Application application) {
+    public PiutangViewModel(@NonNull Application application) {
         super(application);
         repository = new SaleRepository(application);
 
-        // Inisialisasi filter default ke "Semua Waktu"
-        currentFilterParams.setValue(new FilterParams("Semua Waktu", null, null, ""));
 
-        filteredSalesWithDetails = Transformations.switchMap(currentFilterParams, params -> {
+        // Inisialisasi untuk filter piutang
+        currentFilterParamsPiutang.setValue(new FilterParams("Semua Waktu", null, null, null, false));
+        filteredSalesWithDetailsPiutang = Transformations.switchMap(currentFilterParamsPiutang, params -> {
             if (params == null) {
-                return repository.getSalesWithDetailsFiltered(0, System.currentTimeMillis(), "");
+                return repository.getFilteredSalesForPaymentType2WithSearch(
+                        0,
+                        System.currentTimeMillis(),
+                        "",
+                        false
+                );
             }
 
             long startDate, endDate;
-            String transactionName = params.transactionName != null ? params.transactionName : "";
+            String transactionName = params.name != null ? params.name : "";
+            boolean isFilterByCustomer=params.isFilterByCustomer;
 
             if (params.startDate != null && params.endDate != null) {
-                // Jika filter adalah rentang tanggal khusus
                 startDate = params.startDate;
                 endDate = params.endDate;
             } else if (params.filterName != null) {
-                // Jika filter berdasarkan nama (misalnya "Hari Ini", "Bulan Ini", dll.)
                 long[] dateRange = DateHelper.calculateDateRange(params.filterName);
                 startDate = dateRange[0];
                 endDate = dateRange[1];
             } else {
-                // Default ke "Semua Waktu"
                 startDate = 0;
                 endDate = System.currentTimeMillis();
             }
 
-            return repository.getSalesWithDetailsFiltered(startDate, endDate, transactionName);
+            // Memanggil repository dengan filter payment_type = 2
+            return repository.getFilteredSalesForPaymentType2WithSearch(startDate, endDate, transactionName, isFilterByCustomer);
         });
     }
+
 
     // Callback di level ViewModel
     public interface OnTransactionCompleteListener {
@@ -86,46 +96,7 @@ public class SaleViewModel extends AndroidViewModel implements DateRangeFilter {
         void onFailure(boolean status);
     }
 
-    // Getter untuk hasil filter
-    public LiveData<List<SaleWithDetails>> getFilteredSalesWithDetails() {
-        return filteredSalesWithDetails;
-    }
 
-
-
-    // Setter untuk filter berdasarkan nama filter
-    public void setFilter(String filterName) {
-        FilterParams params = currentFilterParams.getValue();
-        if (params == null) {
-            params = new FilterParams();
-        }
-        params.filterName = filterName;
-        params.startDate = null;
-        params.endDate = null;
-        currentFilterParams.setValue(params);
-    }
-
-    // Setter untuk filter berdasarkan rentang tanggal spesifik
-    public void setDateRangeFilter(long startDate, long endDate) {
-        FilterParams params = currentFilterParams.getValue();
-        if (params == null) {
-            params = new FilterParams();
-        }
-        params.filterName = null;
-        params.startDate = startDate;
-        params.endDate = endDate;
-        currentFilterParams.setValue(params);
-    }
-
-    // Setter untuk filter berdasarkan nama transaksi
-    public void setTransactionNameFilter(String transactionName) {
-        FilterParams params = currentFilterParams.getValue();
-        if (params == null) {
-            params = new FilterParams();
-        }
-        params.transactionName = transactionName;
-        currentFilterParams.setValue(params);
-    }
 
     // Metode untuk memproses transaksi penjualan
     public void processSale(Sale sale, DetailSale detailSale, PromoDetail promoDetail, List<CartItem> cartItems,OnTransactionCompleteListener listener) {
@@ -191,36 +162,6 @@ public class SaleViewModel extends AndroidViewModel implements DateRangeFilter {
     }
 
 
-    public void updateSaleTransaction(Sale newSale,
-                                      String newDetailSale,
-                                      String newPromoDetail,
-                                      List<CartItem> newCartItems,
-                                      OnTransactionCompleteListener listener) {
-        // Panggil repository di background thread
-        repository.updateSaleTransactionAsync(newSale, newDetailSale, newPromoDetail, newCartItems,
-                new SaleRepository.OnTransactionCompleteListener() {
-                    @Override
-                    public void onSuccess(boolean status) {
-                        // Kembali ke main thread untuk update UI
-                        if (listener != null) {
-                            new Handler(Looper.getMainLooper()).post(() -> {
-                                listener.onSuccess(status);
-                            });
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(boolean status) {
-                        if (listener != null) {
-                            new Handler(Looper.getMainLooper()).post(() -> {
-                                listener.onFailure(status);
-                            });
-                        }
-                    }
-                }
-        );
-    }
-
 
     public SaleWithDetails getSaleWithDetailsById(long saleId) {
         return repository.getSaleWithDetailsByIdSync(saleId);
@@ -230,7 +171,51 @@ public class SaleViewModel extends AndroidViewModel implements DateRangeFilter {
         return repository.getSaleWithDetailsByIdLive(saleId);
     }
 
+    public void setFilter(String filterName) {
+        FilterParams params = currentFilterParamsPiutang.getValue();
+        if (params == null) {
+            params = new FilterParams();
+        }
+        params.filterName = filterName;
+        params.startDate = null;
+        params.endDate = null;
+        currentFilterParamsPiutang.setValue(params);
+    }
 
+    public void setIsFilterByCustomer(boolean isFilterByCustomer) {
+        FilterParams params = currentFilterParamsPiutang.getValue();
+        if (params == null) {
+            params = new FilterParams();
+        }
+        params.isFilterByCustomer = isFilterByCustomer;
+
+        currentFilterParamsPiutang.setValue(params);
+    }
+
+    public void setDateRangeFilter(long startDate, long endDate) {
+        FilterParams params = currentFilterParamsPiutang.getValue();
+        if (params == null) {
+            params = new FilterParams();
+        }
+        params.filterName = null;
+        params.startDate = startDate;
+        params.endDate = endDate;
+        currentFilterParamsPiutang.setValue(params);
+    }
+
+    public LiveData<List<SaleWithDetails>> getFilteredSalesWithDetailsPiutang() {
+        return filteredSalesWithDetailsPiutang;
+    }
+
+
+    public void setTransactionNameFilter(String name) {
+        FilterParams params = currentFilterParamsPiutang.getValue();
+        if (params == null) {
+            params = new FilterParams();
+        }
+        params.name = name;
+        currentFilterParamsPiutang.setValue(params);
+    }
 
 
 }

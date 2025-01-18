@@ -23,11 +23,11 @@ public class PdfHelper {
 
     private static final String TAG = "PdfHelper";
 
-    private Context context;
-
-    public PdfHelper(Context context) {
-        this.context = context; // Gunakan context Activity
-    }
+//    private Context context;
+//
+//    public PdfHelper(Context context) {
+//        this.context = context; // Gunakan context Activity
+//    }
 
     /**
      * Membuat dan menulis PDF ke URI yang diberikan.
@@ -44,7 +44,7 @@ public class PdfHelper {
      * @param change     Jumlah perubahan.
      * @param items      Daftar item penjualan.
      */
-    public boolean createPdf(Uri uri, String saleName, String date, String customer,
+    public static boolean createPdf(Context context,Uri uri, String saleName, String date, String customer,
                              String subtotal, String shipping, String discount, String total,
                              String changeDesc, String change, List<CartItem> items) {
         try {

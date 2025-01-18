@@ -1,0 +1,6 @@
+<resources>
+    <string-array name="search_type_options">
+        <item>Nama Pelanggan</item>
+        <item>Nama Transaksi</item>
+    </string-array>
+</resources>
