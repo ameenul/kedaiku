@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
+
+    <!-- Konten Utama (LinearLayout) -->
+    <LinearLayout
+        android:id="@+id/container_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Bagian atas: Filter & Export CSV -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <!-- Baris 1: Spinner Search + EditText Search + Export CSV -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <!-- Spinner: by Nama Pelanggan / by ID Pelanggan -->
+                <Spinner
+                    android:id="@+id/spinnerSearchType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/search_type_hutang_options"
+                    android:spinnerMode="dropdown"
+                    android:layout_marginEnd="4dp" />
+
+                <!-- EditText: query pencarian -->
+                <EditText
+                    android:id="@+id/editTextSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:hint="Cari..."
+                    android:inputType="text"
+                    android:padding="8dp"
+                    android:paddingStart="4dp"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/darker_gray" />
+
+                <!-- Tombol Export CSV -->
+                <Button
+                    android:id="@+id/buttonExportCsv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:background="?attr/colorPrimaryDark"
+                    android:padding="6dp"
+                    android:text="Export CSV"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+
+            <!-- Baris 2: Filter Waktu -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Filter:"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/spinnerFilter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:entries="@array/filter_options"
+                    android:spinnerMode="dropdown"
+                    android:padding="8dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Ringkasan Hutang -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/textViewSelectedDates"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tanggal Terpilih: Semua Waktu"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:paddingBottom="8dp" />
+
+            <TextView
+                android:id="@+id/textViewTotaH"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Hutang : 0"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewTotalUnpaid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Belum Terbayar : 0"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Baris 3: Daftar Kreditur + Tombol Tambah Hutang -->
+        <LinearLayout
+            android:id="@+id/layout_creditors"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="8dp">
+
+            <!-- Tombol: Daftar Kreditur -->
+            <Button
+                android:id="@+id/buttonDaftarKreditur"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="?attr/colorPrimaryDark"
+                android:padding="8dp"
+                android:text="Daftar Kreditur"
+                android:textColor="@android:color/white" />
+
+            <!-- Tombol: Tambah Hutang -->
+            <Button
+                android:id="@+id/buttonAddDebt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="?attr/colorPrimaryDark"
+                android:padding="8dp"
+                android:text="Tambah Hutang"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
+        <!-- RecyclerView Hutang -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewPiutang"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingBottom="72dp"
+            android:scrollbars="vertical" />
+
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -9,13 +9,13 @@ public class Expense {
     @PrimaryKey(autoGenerate = true)
     private long _id;
     @NonNull
-    private String expense_date;
+    private long expense_date;
     @NonNull
     private String expense_name;
-    private int expense_cash_id;
+    private long expense_cash_id;
     private double expense_amount;
 
-    public Expense( @NonNull String expense_date, @NonNull String expense_name, int expense_cash_id, double expense_amount) {
+    public Expense( @NonNull long expense_date, @NonNull String expense_name, long expense_cash_id, double expense_amount) {
 
         this.expense_date = expense_date;
         this.expense_name = expense_name;
@@ -32,11 +32,11 @@ public class Expense {
     }
 
     @NonNull
-    public String getExpense_date() {
+    public long getExpense_date() {
         return expense_date;
     }
 
-    public void setExpense_date(@NonNull String expense_date) {
+    public void setExpense_date(@NonNull long expense_date) {
         this.expense_date = expense_date;
     }
 
@@ -49,11 +49,11 @@ public class Expense {
         this.expense_name = expense_name;
     }
 
-    public int getExpense_cash_id() {
+    public long getExpense_cash_id() {
         return expense_cash_id;
     }
 
-    public void setExpense_cash_id(int expense_cash_id) {
+    public void setExpense_cash_id(long expense_cash_id) {
         this.expense_cash_id = expense_cash_id;
     }
 

@@ -24,7 +24,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textViewSaleIdLabel"
+                android:id="@+id/textViewTransactionIdLabel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -34,7 +34,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textViewSaleId"
+                android:id="@+id/textViewTransactionId"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.7"
@@ -113,7 +113,7 @@
             android:layout_marginTop="4dp">
 
             <TextView
-                android:id="@+id/textViewSaleTotalLabel"
+                android:id="@+id/textViewHutangTotalLabel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -123,7 +123,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textViewSaleTotal"
+                android:id="@+id/textViewHutangTotal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -140,7 +140,7 @@
             android:layout_marginTop="4dp">
 
             <TextView
-                android:id="@+id/textViewSalePaidLabel"
+                android:id="@+id/textViewHutangPaidLabel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -150,7 +150,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textViewSalePaid"
+                android:id="@+id/textViewHutangPaid"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:id="@+id/container_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Filter Section: Spinner untuk filter waktu -->
+        <Spinner
+            android:id="@+id/spinnerTimeFilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/filter_options"
+            android:spinnerMode="dropdown" />
+        <TextView
+            android:id="@+id/textViewSelectedDates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:text="Tanggal Terpilih: Semua Waktu"
+            android:textStyle="bold"
+            android:textSize="14sp" />
+
+        <!-- Summary Section -->
+        <TextView
+            android:id="@+id/textViewTransactionName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Transaction: "
+            android:textStyle="bold"
+            android:paddingTop="8dp" />
+
+        <TextView
+            android:id="@+id/textViewCreditor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Creditor: "
+            android:textStyle="bold"
+            android:paddingTop="4dp" />
+
+        <TextView
+            android:id="@+id/textViewHutang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jumlah Hutang: "
+            android:textStyle="bold"
+            android:paddingTop="4dp" />
+
+        <TextView
+            android:id="@+id/textViewPaid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jumlah Terbayar: "
+            android:textStyle="bold"
+            android:paddingTop="4dp" />
+
+        <TextView
+            android:id="@+id/textViewUnpaid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jumlah Belum Terbayar: "
+            android:textStyle="bold"
+            android:paddingTop="4dp"
+            android:paddingBottom="8dp" />
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+
+            android:layout_marginVertical="8dp" />
+
+        <!-- RecyclerView untuk daftar riwayat pembayaran -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewPaymentHistory"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingBottom="16dp" />
+
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

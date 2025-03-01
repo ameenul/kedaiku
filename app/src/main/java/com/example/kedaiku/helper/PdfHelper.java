@@ -45,7 +45,7 @@ public class PdfHelper {
      * @param items      Daftar item penjualan.
      */
     public static boolean createPdf(Context context,Uri uri, String saleName, String date, String customer,
-                             String subtotal, String shipping, String discount, String total,
+                             String subtotal, String shipping, String discount, String total,String paid,
                              String changeDesc, String change, List<CartItem> items) {
         try {
             PdfDocument document = new PdfDocument();
@@ -135,6 +135,8 @@ public class PdfHelper {
             canvas.drawText("Potongan: " + discount, 50, y, paint);
             y += 20;
             canvas.drawText("Total: " + total, 50, y, paint);
+            y += 20;
+            canvas.drawText("Terbayar: " + paid, 50, y, paint);
             y += 20;
             canvas.drawText(changeDesc + ": " + change, 50, y, paint);
             y += 25;

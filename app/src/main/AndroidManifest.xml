@@ -20,6 +20,36 @@
         android:theme="@style/Base.Theme.Kedaiku"
         tools:targetApi="31">
         <activity
+            android:name=".UI.pengeluaran_menu.ExpenseListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.laporan_menu.LaporanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.utang_menu.RiwayatPembayaranHutangActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.utang_menu.CekErrorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.utang_menu.AddHutangActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.utang_menu.CreditorDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.utang_menu.CreditorListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.utang_menu.AddKrediturActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.utang_menu.DaftarHutangActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.piutang_menu.RiwayatPembayaranActivity"
+            android:exported="false" />
+        <activity
             android:name=".UI.piutang_menu.PiutangListActivity"
             android:exported="false" />
         <activity

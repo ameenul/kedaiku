@@ -98,6 +98,15 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/textTotalShipping"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Ongkir : 0"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
                 android:id="@+id/textTotalPaid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

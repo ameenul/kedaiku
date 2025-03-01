@@ -29,6 +29,16 @@ android {
         sourceCompatibility JavaVersion.VERSION_21
         targetCompatibility JavaVersion.VERSION_21
     }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def buildTypeName = variant.buildType.name
+            def versionName = variant.versionName
+            def newApkName = "Kedaiku-${buildTypeName}-${versionName}.apk"
+            outputFileName = newApkName
+        }
+    }
+
 }
 
 dependencies {
@@ -44,6 +54,9 @@ dependencies {
     androidTestImplementation libs.espresso.core
     kapt libs.room.compiler
     implementation 'androidx.core:core-splashscreen:1.0.1'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+
 
 
 }

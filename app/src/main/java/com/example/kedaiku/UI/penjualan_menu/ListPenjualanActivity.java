@@ -33,6 +33,7 @@ import com.example.kedaiku.entites.SaleWithDetails;
 import com.example.kedaiku.helper.CsvHelper;
 import com.example.kedaiku.helper.DateHelper;
 import com.example.kedaiku.helper.FormatHelper;
+import com.example.kedaiku.repository.OnTransactionCompleteListener;
 import com.example.kedaiku.viewmodel.SaleViewModel;
 
 import java.io.OutputStream;
@@ -49,7 +50,7 @@ public class ListPenjualanActivity extends AppCompatActivity {
     private SalesAdapter adapter;
     private EditText editTextSearch;
     private Spinner spinnerFilter;
-    private TextView textTotalSales, textTotalPaid, textTotalUnpaid;
+    private TextView textTotalSales, textTotalPaid, textTotalUnpaid, textTotalOngkir;
     private TextView  textViewProfit;
     private TextView textViewTotalHpp;      // Baru
     private TextView textViewNetProfit;
@@ -78,6 +79,7 @@ public class ListPenjualanActivity extends AppCompatActivity {
         textViewProfit = findViewById(R.id.textViewProfit);
         textViewTotalHpp = findViewById(R.id.textViewTotalHpp);
         textViewNetProfit = findViewById(R.id.textViewNetProfit);
+        textTotalOngkir = findViewById(R.id.textTotalShipping);
         RecyclerView recyclerViewSales = findViewById(R.id.recyclerViewSales);
         buttonExportCsv = findViewById(R.id.buttonExportCsv);
         textViewSelectedDates = findViewById(R.id.textViewSelectedDates);
@@ -112,7 +114,7 @@ public class ListPenjualanActivity extends AppCompatActivity {
                     public void onDeleteClicked(SaleWithDetails saleWithDetails) {
                         // Panggil fungsi di ViewModel untuk menghapus data penjualan
                         long saleId = saleWithDetails.getSaleId();
-                        saleViewModel.deleteSaleTransaction(saleId, new SaleViewModel.OnTransactionCompleteListener() {
+                        saleViewModel.deleteSaleTransaction(saleId, new OnTransactionCompleteListener() {
                             @Override
                             public void onSuccess(boolean status) {
                                 // status = true -> sukses
@@ -211,15 +213,16 @@ public class ListPenjualanActivity extends AppCompatActivity {
         double totalPaid = 0;
         double totalUnpaid = 0;
         double totalProfit = 0;
-        double totalHpp = 0;       // Baru
-        double totalNetProfit = 0; // Baru (jika ada
+        double totalHpp = 0;
+        double totalNetProfit = 0;
+        double totalShippingCost = 0;
 
         for (SaleWithDetails saleWithDetails : salesWithDetails) {
 
 
-            totalSales += saleWithDetails.getSaleTotal();
 
-            double realPaid=0;
+
+            double realPaid=0; //tanpa kembalian
             if(saleWithDetails.getSaleTotal()<saleWithDetails.getSalePaid())
             {
                 realPaid=saleWithDetails.getSaleTotal();
@@ -229,11 +232,13 @@ public class ListPenjualanActivity extends AppCompatActivity {
                 realPaid = saleWithDetails.getSalePaid();
             }
 
+            totalSales += saleWithDetails.getSaleTotal();
             totalPaid += realPaid;
             totalUnpaid += saleWithDetails.getSaleTotal() - realPaid;
-            double saleHpp = saleWithDetails.getSale().getSale_hpp();
-            double saleProfit = saleWithDetails.getSaleTotal() - saleHpp;
+            totalShippingCost += saleWithDetails.getSale().getSale_ship();
 
+            double saleHpp = saleWithDetails.getSale().getSale_hpp();
+            double saleProfit = saleWithDetails.getSaleTotal() - saleHpp - saleWithDetails.getSale().getSale_ship();
             totalProfit += saleProfit;
 
 
@@ -248,6 +253,7 @@ public class ListPenjualanActivity extends AppCompatActivity {
         textTotalSales.setText("Total Penjualan: " + FormatHelper.formatCurrency(totalSales) );
         textTotalPaid.setText("Total Terbayar: " + FormatHelper.formatCurrency(totalPaid));
         textTotalUnpaid.setText("Total Belum Terbayar: " + FormatHelper.formatCurrency(totalUnpaid));
+        textTotalOngkir.setText("Total Ongkir : "+totalShippingCost);
         
         textViewProfit.setText("Total Laba Kotor: " + FormatHelper.formatCurrency(totalProfit));
         textViewTotalHpp.setText("Total HPP: " + FormatHelper.formatCurrency(totalHpp));

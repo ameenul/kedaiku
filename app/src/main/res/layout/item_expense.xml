@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:foreground="?attr/selectableItemBackground"
+
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+    <!-- Tanggal transaksi dan ID -->
+    <TextView
+        android:id="@+id/tvExpenseDateId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tanggal - ID"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <!-- Deskripsi pengeluaran -->
+    <TextView
+        android:id="@+id/tvExpenseDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:text="Deskripsi" />
+
+    <!-- Baris untuk jumlah pengeluaran -->
+    <TextView
+        android:id="@+id/tvExpenseAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:text="Jumlah: 0" />
+
+    <!-- Baris untuk nama kas dan tombol opsi, dengan ikon menu di kanan -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- TextView untuk nama kas menggunakan layout_weight agar memenuhi ruang yang tersisa -->
+        <TextView
+            android:id="@+id/tvExpenseCashName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:layout_weight="1"
+            android:text="Kas: -" />
+
+        <!-- ImageButton untuk menu opsi, ditempatkan di sisi kanan -->
+        <ImageButton
+            android:id="@+id/btnExpenseOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Menu Opsi"
+            android:src="@android:drawable/ic_menu_more" />
+    </LinearLayout>
+
+</LinearLayout>
+</androidx.cardview.widget.CardView>

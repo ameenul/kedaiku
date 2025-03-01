@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,10 +21,17 @@ import java.util.Locale;
 
 public class PiutangAdapter extends RecyclerView.Adapter<PiutangAdapter.PiutangViewHolder> {
     private List<SaleWithDetails> salesList = new ArrayList<>();
+    private OnMoreMenuClickListener menuClickListener;
 
     public void setSalesList(List<SaleWithDetails> list) {
         this.salesList = list;
         notifyDataSetChanged();
+    }
+
+
+
+    public void setOnMoreMenuClickListener(OnMoreMenuClickListener listener) {
+        this.menuClickListener = listener;
     }
 
     @NonNull
@@ -49,6 +57,50 @@ public class PiutangAdapter extends RecyclerView.Adapter<PiutangAdapter.PiutangV
         holder.textViewSalePaid.setText(String.valueOf(sale.getSalePaid()));
         holder.textViewSalePaymentType.setText(sale.getSale().getSale_payment_type() == 1 ? "Cash" : "Piutang");
         holder.textViewCustomerName.setText(sale.getCustomerName());
+
+        // Tangani klik ImageViewMore untuk menampilkan PopupMenu
+        holder.imageViewMore.setOnClickListener(v -> {
+            PopupMenu popup = new PopupMenu(v.getContext(), v);
+            popup.inflate(R.menu.menu_piutang_item_options); // Pastikan file menu sesuai
+
+            // Tangani klik item menu menggunakan if-else
+            popup.setOnMenuItemClickListener(menuItem -> {
+                if (menuClickListener == null) {
+                    return false;
+                }
+
+                int itemId = menuItem.getItemId();
+
+                if (itemId == R.id.menuHubungi) {
+                    menuClickListener.onHubungiPelanggan(sale);
+                    return true;
+                } else if (itemId == R.id.menuDetail) {
+                    menuClickListener.onDetailPenjualan(sale);
+                    return true;
+                } else if (itemId == R.id.menuRiwayat) {
+                    menuClickListener.onRiwayatPembayaran(sale);
+                    return true;
+                }
+                else if (itemId == R.id.menuBayar) { // Tambahkan ini
+                    menuClickListener.onBayar(sale);
+                    return true;
+                }
+                else if (itemId == R.id.menuHapus) {
+                    menuClickListener.onHapus(sale);
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+
+            popup.show();
+        });
+
+        holder.itemView.setOnClickListener(v -> {
+            menuClickListener.onBayar(sale);
+
+        });
+
     }
 
     @Override
@@ -69,16 +121,28 @@ public class PiutangAdapter extends RecyclerView.Adapter<PiutangAdapter.PiutangV
         TextView textViewSalePaid;
         TextView textViewSalePaymentType;
         TextView textViewCustomerName;
+        ImageView imageViewMore;
 
         public PiutangViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewSaleId = itemView.findViewById(R.id.textViewSaleId);
+            textViewSaleId = itemView.findViewById(R.id.textViewTransactionId);
             textViewSaleTransactionName = itemView.findViewById(R.id.textViewSaleTransactionName);
             textViewSaleDate = itemView.findViewById(R.id.textViewSaleDate);
-            textViewSaleTotal = itemView.findViewById(R.id.textViewSaleTotal);
-            textViewSalePaid = itemView.findViewById(R.id.textViewSalePaid);
+            textViewSaleTotal = itemView.findViewById(R.id.textViewHutangTotal);
+            textViewSalePaid = itemView.findViewById(R.id.textViewHutangPaid);
             textViewSalePaymentType = itemView.findViewById(R.id.textViewSalePaymentType);
             textViewCustomerName = itemView.findViewById(R.id.textViewCustomerName);
+            imageViewMore = itemView.findViewById(R.id.imageViewMore);
         }
     }
+
+    public interface OnMoreMenuClickListener {
+        void onHubungiPelanggan(SaleWithDetails sale);
+        void onDetailPenjualan(SaleWithDetails sale);
+        void onRiwayatPembayaran(SaleWithDetails sale);
+        void onHapus(SaleWithDetails sale);
+        void onBayar(SaleWithDetails sale);
+    }
+
+
 }

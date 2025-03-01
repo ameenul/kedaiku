@@ -36,6 +36,20 @@ public interface SaleDao {
     @Query("SELECT * FROM table_sale")
     LiveData<List<Sale>> getAllSales();
 
+    @Update
+    void updateSale(Sale sale);
+
+    /**
+     * Metode untuk memperbarui sale_paid di tabel_sale
+     *
+     * @param saleId   ID dari Sale yang ingin diperbarui
+     * @param salePaid Nilai baru untuk sale_paid
+     */
+    @Query("UPDATE table_sale SET sale_paid = :salePaid WHERE id = :saleId")
+    void updateSalePaid(long saleId, double salePaid);
+
+
+
     @Transaction
     @Query("SELECT * FROM table_sale WHERE sale_date >= :startDate AND sale_date <= :endDate AND sale_transaction_name LIKE '%' || :transactionName || '%'")
     LiveData<List<SaleWithDetails>> getSalesWithDetailsFiltered(long startDate, long endDate, String transactionName);
@@ -111,9 +125,17 @@ public interface SaleDao {
 
 
     // Contoh query untuk mengambil SaleWithDetails berdasar saleId
+    /**
+     * Metode untuk mengambil SaleWithDetails yang menggabungkan Sale dan DetailSale
+     *
+     * @param saleId ID dari Sale yang ingin diambil
+     * @return SaleWithDetails
+     */
     @Transaction
     @Query("SELECT * FROM table_sale WHERE id = :saleId LIMIT 1")
     SaleWithDetails getSaleWithDetailsById(long saleId);
+
+
 
 
     @Transaction

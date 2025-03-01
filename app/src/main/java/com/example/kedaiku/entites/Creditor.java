@@ -69,5 +69,10 @@ public class Creditor {
         this.creditor_phone = creditor_phone;
     }
 
+    @NonNull
+    @Override
+    public String toString() {
+        return creditor_name;
+    }
     // Getters and setters
 }

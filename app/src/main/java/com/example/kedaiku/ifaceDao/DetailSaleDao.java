@@ -28,6 +28,8 @@ public interface DetailSaleDao {
     @Query("DELETE FROM table_detail_sale WHERE id = :detailSaleId")
     void deleteDetailSaleById(long detailSaleId);
 
+    @Query("SELECT * FROM table_detail_sale WHERE id = :detailSaleId LIMIT 1")
+    DetailSale getDetailSaleById(long detailSaleId);
 
 
 }

@@ -1,9 +1,6 @@
 package com.example.kedaiku.UI.penjualan_menu;
 
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,8 +27,6 @@ import com.example.kedaiku.helper.PdfHelper;
 import com.example.kedaiku.viewmodel.CashViewModel;
 import com.example.kedaiku.viewmodel.SaleViewModel;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -43,7 +38,8 @@ public class DetailPenjualanActivity extends AppCompatActivity {
 
     private TextView textViewTransactionName, textViewDate, textViewSelectedCustomer;
     private TextView textViewSubtotal, textViewShippingCost, textViewDiscount, textViewTotal;
-    private TextView textViewChangeAmount, textViewChange;
+    private TextView textViewChangeLabel, textViewChange;
+    private TextView textViewTerbayar;
     private Spinner spinnerKas;
     private LinearLayout itemsContainer;
     private Button buttonPrintPdf;
@@ -79,11 +75,12 @@ public class DetailPenjualanActivity extends AppCompatActivity {
         textViewShippingCost = findViewById(R.id.textViewShippingCost);
         textViewDiscount = findViewById(R.id.textViewDiscount);
         textViewTotal = findViewById(R.id.textViewTotal);
-        textViewChangeAmount = findViewById(R.id.textViewChangeAmount);
+        textViewChangeLabel = findViewById(R.id.textViewChangeLabel);
         textViewChange = findViewById(R.id.textViewChange);
         spinnerKas = findViewById(R.id.spinnerKas);
         itemsContainer = findViewById(R.id.itemsContainer);
         buttonPrintPdf = findViewById(R.id.buttonPrintPdf);
+        textViewTerbayar = findViewById(R.id.textViewTerbayar);
 
         // Mendapatkan sale_id dari Intent
         Intent intent = getIntent();
@@ -127,7 +124,8 @@ public class DetailPenjualanActivity extends AppCompatActivity {
                                         textViewShippingCost.getText().toString(),
                                         textViewDiscount.getText().toString(),
                                         textViewTotal.getText().toString(),
-                                        textViewChangeAmount.getText().toString(),
+                                        textViewTerbayar.getText().toString(),
+                                        textViewChangeLabel.getText().toString(),
                                         textViewChange.getText().toString(),
                                         currentItems
                                 );
@@ -197,11 +195,12 @@ public class DetailPenjualanActivity extends AppCompatActivity {
         double change = paidAmount - total;
 
         if (change < 0) {
-            textViewChangeAmount.setText("Piutang");
+            textViewChangeLabel.setText("Piutang");
         } else {
-            textViewChangeAmount.setText("Kembalian");
+            textViewChangeLabel.setText("Kembalian");
         }
         textViewChange.setText(formatRupiah(change));
+        textViewTerbayar.setText(formatRupiah(paidAmount));
 
         // 6. Mengisi Spinner Kas
         populateKasSpinner(saleWithDetails.getSale().getSale_cash_id());
@@ -309,130 +308,4 @@ public class DetailPenjualanActivity extends AppCompatActivity {
         }
     }
 
-    //    private void writePdfToUri(Uri uri) {
-//        Log.d(TAG, "Menulis PDF ke URI: " + uri.toString());
-//        try {
-//            PdfDocument document = new PdfDocument();
-//
-//            // Membuat halaman PDF dengan ukuran B5 (176 mm × 250 mm ≈ 499 pt × 708 pt)
-//            int width = (int) (176 * 2.83465); // ≈ 499 pt
-//            int height = (int) (250 * 2.83465); // ≈ 708 pt
-//            PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(width, height, 1).create();
-//            PdfDocument.Page page = document.startPage(pageInfo);
-//
-//            Canvas canvas = page.getCanvas();
-//            Paint paint = new Paint();
-//            paint.setTextSize(12);
-//            paint.setAntiAlias(true);
-//
-//            int y = 25;
-//
-//            // Header Nota
-//            paint.setTextSize(18);
-//            paint.setFakeBoldText(true);
-//            canvas.drawText("===== Nota Penjualan =====", 50, y, paint);
-//            paint.setFakeBoldText(false);
-//            y += 25;
-//
-//            // Nama Transaksi
-//            paint.setTextSize(12);
-//            canvas.drawText("Nama Transaksi: " + textViewTransactionName.getText().toString(), 50, y, paint);
-//            y += 20;
-//
-//            // Tanggal
-//            canvas.drawText("Tanggal: " + textViewDate.getText().toString(), 50, y, paint);
-//            y += 20;
-//
-//            // Nama Pelanggan
-//            canvas.drawText(textViewSelectedCustomer.getText().toString(), 50, y, paint);
-//            y += 25;
-//
-//            // Garis Pemisah
-//            canvas.drawLine(50, y, width - 50, y, paint);
-//            y += 20;
-//
-//            // **Detail Item tanpa HPP**
-//            for (CartItem item : currentItems) {
-//                String tipeHarga;
-//                if (item.getFinalPrice() == item.getPrice()) {
-//                    tipeHarga = "harga normal";
-//                } else if (item.getFinalPrice() == item.getSpecialPrice()) {
-//                    tipeHarga = "harga spesial";
-//                } else {
-//                    tipeHarga = "harga wholesale";
-//                }
-//
-//                String leftText = item.getProductName()
-//                        + " " + item.getQuantity() + " " + item.getUnit() + " x " + formatRupiah(item.getFinalPrice())
-//                        + " (" + tipeHarga + ")";
-//                String rightText = formatRupiah(item.getQuantity() * item.getFinalPrice());
-//
-//                // Menggambar teks di sisi kiri
-//                canvas.drawText(leftText, 50, y, paint);
-//
-//                // Menggambar teks di sisi kanan
-//                float rightTextWidth = paint.measureText(rightText);
-//                canvas.drawText(rightText, width - 50 - rightTextWidth, y, paint);
-//
-//                y += 25;
-//
-//                // Cek apakah masih ada ruang di halaman, jika tidak, buat halaman baru
-//                if (y > height - 100) { // Batas bawah halaman
-//                    document.finishPage(page);
-//                    pageInfo = new PdfDocument.PageInfo.Builder(width, height, document.getPages().size() + 1).create();
-//                    page = document.startPage(pageInfo);
-//                    canvas = page.getCanvas();
-//                    y = 25;
-//                }
-//            }
-//
-//            // Garis Pemisah
-//            canvas.drawLine(50, y, width - 50, y, paint);
-//            y += 20;
-//
-//            // Ringkasan Transaksi
-//            canvas.drawText("Subtotal: " + textViewSubtotal.getText().toString(), 50, y, paint);
-//            y += 20;
-//            canvas.drawText("Ongkos Kirim: " + textViewShippingCost.getText().toString(), 50, y, paint);
-//            y += 20;
-//            canvas.drawText("Potongan: " + textViewDiscount.getText().toString(), 50, y, paint);
-//            y += 20;
-//            canvas.drawText("Total: " + textViewTotal.getText().toString(), 50, y, paint);
-//            y += 20;
-//            canvas.drawText(textViewChangeAmount.getText().toString() + ": " + textViewChange.getText().toString(), 50, y, paint);
-//            y += 25;
-//
-//            // Garis Pemisah
-//            canvas.drawLine(50, y, width - 50, y, paint);
-//            y += 20;
-//
-//            // Footer Nota
-//            canvas.drawText("Terima kasih!", 50, y, paint);
-//
-//            // Selesai membuat halaman
-//            document.finishPage(page);
-//
-//            // Menulis PDF ke URI yang dipilih pengguna
-//            try (OutputStream outputStream = getContentResolver().openOutputStream(uri)) {
-//                document.writeTo(outputStream);
-//                Toast.makeText(this, "PDF berhasil dibuat dan disimpan!", Toast.LENGTH_SHORT).show();
-//                Log.d(TAG, "PDF berhasil ditulis ke URI.");
-//
-//                // Membagikan PDF
-//                sharePdf(uri);
-//
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//                Toast.makeText(this, "Gagal menyimpan PDF", Toast.LENGTH_SHORT).show();
-//                Log.e(TAG, "IOException saat menulis PDF: " + e.getMessage());
-//            }
-//
-//            // Menutup dokumen
-//            document.close();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            Toast.makeText(this, "Gagal membuat PDF", Toast.LENGTH_SHORT).show();
-//            Log.e(TAG, "Exception saat membuat PDF: " + e.getMessage());
-//        }
-//    }
 }

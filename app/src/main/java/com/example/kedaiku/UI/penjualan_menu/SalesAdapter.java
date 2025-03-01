@@ -148,11 +148,11 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.SalesViewHol
 
         public SalesViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewSaleId = itemView.findViewById(R.id.textViewSaleId);
+            textViewSaleId = itemView.findViewById(R.id.textViewTransactionId);
             textViewSaleTransactionName = itemView.findViewById(R.id.textViewSaleTransactionName);
             textViewSaleDate = itemView.findViewById(R.id.textViewSaleDate);
-            textViewSaleTotal = itemView.findViewById(R.id.textViewSaleTotal);
-            textViewSalePaid = itemView.findViewById(R.id.textViewSalePaid);
+            textViewSaleTotal = itemView.findViewById(R.id.textViewHutangTotal);
+            textViewSalePaid = itemView.findViewById(R.id.textViewHutangPaid);
             textViewSalePaymentType = itemView.findViewById(R.id.textViewSalePaymentType);
             textViewCustomerName = itemView.findViewById(R.id.textViewCustomerName);
 

@@ -65,6 +65,7 @@ public class StockProductFragment extends Fragment {
     String currentFilterDate;
     String currentFilterSearch;
     private String dateRange;
+    boolean isFirst=true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -130,27 +131,40 @@ public class StockProductFragment extends Fragment {
                 android.R.layout.simple_spinner_item
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         spinnerFilter.setAdapter(adapter);
+        isFirst=true;
 
         spinnerFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view,int position,long id) {
+            public void onItemSelected(AdapterView<?> parent, View view,int position,long id)
+            {
+
+//                Toast.makeText(getContext(), "Filter: " + position, Toast.LENGTH_SHORT).show();
                 currentFilterDate = getResources().getStringArray(R.array.filter_options)[position];
                 if ("Pilih Tanggal".equals(currentFilterDate)) {
                     showDateRangePicker();
                 }
                 else if(position==0) {
+                    if(isFirst)
+                    {
+//                        Toast.makeText(getContext(), "masuk: " + position, Toast.LENGTH_SHORT).show();
+                        isFirst=false;
+                        currentFilterDate = "Semua Waktu";
+                        productInventoryViewModel.setFilter(currentFilterDate,currentFilterSearch);
+                        textViewSelectedDates.setText("Tanggal Terpilih: " + currentFilterDate + " (Klik Tiap Item Untuk Detail)");
+                    }
 
                 }
                 else {
                     productInventoryViewModel.setFilter(currentFilterDate,currentFilterSearch);
                     textViewSelectedDates.setText("Tanggal Terpilih: " + currentFilterDate + " (Klik Tiap Item Untuk Detail)");
-
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+                Toast.makeText(getContext(), "nothing", Toast.LENGTH_SHORT).show();
                 currentFilterDate = "Semua Waktu";
                 currentFilterSearch = "";
                 productInventoryViewModel.setFilter(currentFilterDate,currentFilterSearch);
@@ -179,8 +193,6 @@ public class StockProductFragment extends Fragment {
             }
         });
     }
-
-
 
     private void observeFilteredProductInventory() {
         productInventoryViewModel.getFilteredProductInventory().observe(getViewLifecycleOwner(), inventoryItems -> {

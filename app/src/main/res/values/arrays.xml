@@ -3,4 +3,23 @@
         <item>Nama Pelanggan</item>
         <item>Nama Transaksi</item>
     </string-array>
+
+    <string-array name="search_type_hutang_options">
+        <item>Nama Kreditur</item>
+        <item>Nama Transaksi</item>
+    </string-array>
+
+    <string-array name="filter_options_bulan">
+        <item>Pilih Bulan :</item>
+        <item>Bulan ini</item>
+        <item>Custom</item>
+
+    </string-array>
+    <string-array name="filter_options_tahun">
+        <item>Pilih Tahun :</item>
+        <item>Tahun ini</item>
+        <item>Custom</item>
+
+    </string-array>
+
 </resources>

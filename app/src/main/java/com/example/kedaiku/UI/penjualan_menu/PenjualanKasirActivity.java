@@ -31,7 +31,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.kedaiku.R;
 import com.example.kedaiku.entites.Customer;
 import com.example.kedaiku.entites.DetailSale;
-import com.example.kedaiku.entites.Inventory;
 import com.example.kedaiku.entites.PromoDetail;
 import com.example.kedaiku.entites.Sale;
 import com.example.kedaiku.entites.SaleWithDetails;
@@ -40,7 +39,7 @@ import com.example.kedaiku.entites.SpecialPrice;
 import com.example.kedaiku.entites.Cash; // Import Cash entity
 import com.example.kedaiku.helper.FormatHelper;
 import com.example.kedaiku.helper.PdfHelper;
-import com.example.kedaiku.repository.SaleRepository;
+import com.example.kedaiku.repository.OnTransactionCompleteListener;
 import com.example.kedaiku.viewmodel.CartViewModel;
 import com.example.kedaiku.viewmodel.SaleViewModel;
 import com.example.kedaiku.viewmodel.WholesaleViewModel;
@@ -153,7 +152,7 @@ public class PenjualanKasirActivity extends AppCompatActivity {
         textViewSubTotal = findViewById(R.id.textViewSubtotal);
         textViewPaidFormatted = findViewById(R.id.textViewPaidFormatted);
         textViewChange = findViewById(R.id.textViewChange);
-        textViewLabelChange = findViewById(R.id.textViewChangeAmount);
+        textViewLabelChange = findViewById(R.id.textViewChangeLabel);
         spinnerKas = findViewById(R.id.spinnerKas);
         itemsContainer = findViewById(R.id.itemsContainer);
         textViewSelectedCustomer = findViewById(R.id.textViewSelectedCustomer);
@@ -401,7 +400,7 @@ public class PenjualanKasirActivity extends AppCompatActivity {
                                         textViewSubTotal.getText().toString(),
                                         textViewShippingCost.getText().toString(),
                                         textViewDiscount.getText().toString(),
-                                        textViewTotal.getText().toString(),
+                                        textViewTotal.getText().toString(),textViewPaidFormatted.getText().toString(),
                                         textViewLabelChange.getText().toString(),
                                         textViewChange.getText().toString(),
                                         cartItemList
@@ -593,7 +592,7 @@ public class PenjualanKasirActivity extends AppCompatActivity {
             if(!isEditMode){
 
             // Panggil metode completeTransaction di ViewModel dengan listener
-            saleViewModel.processSale(sale, ds, pd, items, new SaleViewModel.OnTransactionCompleteListener() {
+            saleViewModel.processSale(sale, ds, pd, items, new OnTransactionCompleteListener() {
                 @Override
                 public void onSuccess(boolean status) {
 
@@ -626,7 +625,7 @@ public class PenjualanKasirActivity extends AppCompatActivity {
                 sale.setId(saleId);
                 sale.setPromo_id(promoId);
                 sale.setSale_detail_id(detailSaleId);
-                saleViewModel.updateSaleTransaction(sale,ds.getSale_detail(),pd.getDetail(),items,new SaleViewModel.OnTransactionCompleteListener() {
+                saleViewModel.updateSaleTransaction(sale,ds.getSale_detail(),pd.getDetail(),items,new OnTransactionCompleteListener() {
                     @Override
                     public void onSuccess(boolean status) {
 

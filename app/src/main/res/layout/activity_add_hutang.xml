@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+   >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <!-- Nama Kreditor (AutoCompleteTextView) -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:text="Nama Kreditor"
+            android:textStyle="bold" />
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteCreditor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Masukkan nama kreditor"
+            android:padding="8dp" />
+
+        <!-- Jumlah Hutang -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:text="Jumlah Hutang"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editTextJumlahHutang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="0"
+            android:inputType="numberDecimal"
+            android:padding="8dp" />
+        <TextView
+            android:id="@+id/TextViewFormatRupiah"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:text="Rp. 0"
+            android:textStyle="bold" />
+
+        <!-- Spinner Kas -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:text="Pilih Kas"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spinnerKas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp" />
+
+        <!-- Checkbox Tambahkan ke Kas -->
+        <CheckBox
+            android:id="@+id/checkBoxTambahkanKas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="Tambahkan ke Kas (Uang Masuk)" />
+
+        <!-- Nama Transaksi -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:text="Nama Transaksi"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editTextTransactionName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Misal: Pinjaman dari ... / Hutang dagang"
+            android:padding="8dp" />
+
+        <!-- Tombol Simpan -->
+        <Button
+            android:id="@+id/buttonSimpanHutang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="16dp"
+
+            android:padding="8dp"
+            android:text="Simpan"
+            />
+
+    </LinearLayout>
+
+</ScrollView>

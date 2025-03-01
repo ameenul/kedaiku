@@ -17,6 +17,16 @@ public class CartItem implements Cloneable {
     private String productName;
     private double quantity;
 
+    public String getPriceType() {
+        return priceType;
+    }
+
+    public void setPriceType(String priceType) {
+        this.priceType = priceType;
+    }
+
+    private String priceType;
+
 
 
     private double productQuantity;

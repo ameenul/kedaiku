@@ -13,6 +13,9 @@ public class Debt {
     private String debt_history_paid;
     private String debt_note;
 
+
+    private long debt_date;
+
     public long get_id() {
         return _id;
     }
@@ -61,13 +64,23 @@ public class Debt {
         this.debt_note = debt_note;
     }
 
-    public Debt( long creditor_id, double debt_quantity, double debt_paid, String debt_history_paid, String debt_note) {
+    public long getDebt_date() {
+        return debt_date;
+    }
 
+    public void setDebt_date(long debt_date) {
+        this.debt_date = debt_date;
+    }
+
+
+    // Constructor lengkap (sesuaikan jika Anda ingin membuat overload)
+    public Debt(long creditor_id, double debt_quantity, double debt_paid, String debt_history_paid, String debt_note, long debt_date) {
         this.creditor_id = creditor_id;
         this.debt_quantity = debt_quantity;
         this.debt_paid = debt_paid;
         this.debt_history_paid = debt_history_paid;
         this.debt_note = debt_note;
+        this.debt_date = debt_date;
     }
 
 // Getters and setters

@@ -16,6 +16,7 @@ import com.example.kedaiku.entites.PromoDetail;
 import com.example.kedaiku.entites.Sale;
 import com.example.kedaiku.entites.SaleWithDetails;
 import com.example.kedaiku.helper.DateHelper;
+import com.example.kedaiku.repository.OnTransactionCompleteListener;
 import com.example.kedaiku.repository.SaleRepository;
 
 import java.util.List;
@@ -90,19 +91,14 @@ public class PiutangViewModel extends AndroidViewModel implements DateRangeFilte
     }
 
 
-    // Callback di level ViewModel
-    public interface OnTransactionCompleteListener {
-        void onSuccess(boolean status);
-        void onFailure(boolean status);
-    }
 
 
 
     // Metode untuk memproses transaksi penjualan
-    public void processSale(Sale sale, DetailSale detailSale, PromoDetail promoDetail, List<CartItem> cartItems,OnTransactionCompleteListener listener) {
+    public void processSale(Sale sale, DetailSale detailSale, PromoDetail promoDetail, List<CartItem> cartItems, OnTransactionCompleteListener listener) {
         boolean isSuccess=false;
 
-        repository.completeTransaction(sale, detailSale, promoDetail, cartItems, new SaleRepository.OnTransactionCompleteListener() {
+        repository.completeTransaction(sale, detailSale, promoDetail, cartItems, new OnTransactionCompleteListener() {
             @Override
             public void onSuccess(boolean status) {
                 // Kembali ke main thread supaya UI bisa di-update
@@ -126,7 +122,7 @@ public class PiutangViewModel extends AndroidViewModel implements DateRangeFilte
     }
 
     public void deleteSaleTransaction(long saleId, OnTransactionCompleteListener listener) {
-        repository.deleteSaleTransactionAsync(saleId, new SaleRepository.OnTransactionCompleteListener() {
+        repository.deleteSaleTransactionAsync(saleId, new OnTransactionCompleteListener() {
             @Override
             public void onSuccess(boolean status) {
                 // Kembali ke main thread supaya UI bisa di-update
@@ -217,5 +213,15 @@ public class PiutangViewModel extends AndroidViewModel implements DateRangeFilte
         currentFilterParamsPiutang.setValue(params);
     }
 
+    /**
+     * Memperbarui sale_paid dan sale_paid_history dalam satu transaksi
+     *
+     * @param saleId        ID dari Sale yang ingin diperbarui
+     * @param paymentAmount Jumlah pembayaran yang ingin ditambahkan
+     * @param listener      Listener untuk menangani hasil transaksi
+     */
+    public void payPiutang(long saleId, double paymentAmount, OnTransactionCompleteListener listener) {
+        repository.payPiutang(saleId, paymentAmount, listener);
+    }
 
 }

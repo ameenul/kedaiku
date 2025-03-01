@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Baris untuk Label, Spinner, dan Button Export CSV -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:padding="8dp"
+                android:text="Tampilkan :"
+                android:textSize="16sp" />
+
+            <Spinner
+                android:id="@+id/spinnerFilterDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:entries="@array/filter_options" />
+
+            <Button
+                android:id="@+id/btnExportCsv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Export CSV"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+        <!-- TextView Selected Date -->
+        <TextView
+            android:id="@+id/selectedDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selected Date: "
+            android:layout_marginTop="8dp"/>
+
+        <!-- Informasi Laporan Penjualan -->
+        <TextView
+            android:id="@+id/tvTotalPenjualan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total Penjualan: Rp 0"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/tvTotalBiayaKirim"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total Biaya Kirim: Rp 0"
+            android:layout_marginTop="4dp"/>
+
+        <TextView
+            android:id="@+id/tvTotalPotonganPenjualan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total Potongan Penjualan: Rp 0"
+            android:layout_marginTop="4dp"/>
+
+        <TextView
+            android:id="@+id/tvTotalProdukTerjual"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total Produk Terjual: 0"
+            android:layout_marginTop="4dp"/>
+
+        <TextView
+            android:id="@+id/tvHppTotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="HPP Total: Rp 0"
+            android:layout_marginTop="4dp"/>
+
+        <TextView
+            android:id="@+id/tvLabaKotorPenjualanProduk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Laba Kotor Penjualan Produk: Rp 0"
+            android:layout_marginTop="4dp"/>
+
+        <TextView
+            android:id="@+id/tvLabaBersihPenjualanProduk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Laba Bersih Penjualan Produk: Rp 0"
+            android:layout_marginTop="4dp"/>
+
+        <!-- RecyclerView untuk daftar produk terjual -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPenjualan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:layout_marginTop="8dp"/>
+
+        <!-- Judul Grafik Penjualan -->
+        <TextView
+            android:id="@+id/tvGrafikPenjualan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Grafik Penjualan"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginTop="16dp"/>
+
+        <Button
+            android:id="@+id/btnExportLaporanCsv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Export Laporan CSV" />
+
+        <!-- RadioGroup untuk memilih filter Grafik (Bulan atau Tahun) -->
+        <RadioGroup
+            android:id="@+id/rgFilterGrafik"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp">
+
+            <RadioButton
+                android:id="@+id/rbBulan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bulan"
+                android:checked="true"/>
+
+            <RadioButton
+                android:id="@+id/rbTahun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tahun"
+                android:layout_marginStart="16dp"/>
+        </RadioGroup>
+
+        <!-- Spinner untuk pilihan filter grafik dinamis -->
+        <Spinner
+            android:id="@+id/spinnerFilterOption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:entries="@array/filter_options_bulan" />
+
+        <!-- Bar Chart -->
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/chartPenjualan"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="16dp"/>
+
+        <!-- Pie Chart -->
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pieChartPiutang"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="16dp"/>
+
+        <!-- Baris untuk Total Terbayar dan Total Belum Terbayar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:id="@+id/tvTotalTerbayar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Total Terbayar: Rp 0"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tvTotalBelumTerbayar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Total Belum Terbayar: Rp 0"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <!-- RecyclerView untuk Tanggal dan Jumlah Penjualan -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTanggalJumlahPenjualan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"/>
+
+    </LinearLayout>
+</ScrollView>

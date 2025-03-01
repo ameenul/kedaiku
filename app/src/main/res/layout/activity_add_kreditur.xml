@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_add_creditor"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Input Nama -->
+        <EditText
+            android:id="@+id/editTextName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nama"
+            android:inputType="textPersonName"
+            android:textSize="20sp" />
+
+        <!-- Input Alamat -->
+        <EditText
+            android:id="@+id/editTextAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Alamat"
+            android:inputType="textPostalAddress"
+            android:textSize="20sp" />
+
+        <!-- Input Nomor Telepon -->
+        <EditText
+            android:id="@+id/editTextPhoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Nomor Telepon"
+            android:inputType="phone"
+            android:textSize="20sp" />
+
+        <!-- Input Email (Opsional) -->
+        <EditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Email (Opsional)"
+            android:inputType="textEmailAddress"
+            android:textSize="20sp" />
+
+        <!-- Tombol Simpan -->
+        <Button
+            android:id="@+id/buttonSaveCreditor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Simpan"
+            android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+</ScrollView>

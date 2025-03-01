@@ -1,0 +1,56 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_creditor_list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- EditText untuk Pencarian -->
+    <EditText
+        android:id="@+id/editTextSearchCreditor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_toStartOf="@id/csv"
+        android:layout_alignParentStart="true"
+        android:hint="Cari pelanggan..."
+        android:padding="8dp"
+        android:textSize="24sp" />
+
+    <!-- Icon untuk Export CSV -->
+    <ImageView
+        android:id="@+id/csv"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="8dp"
+        android:contentDescription="Export CSV"
+        android:padding="8dp"
+        android:src="@drawable/ic_csv"
+        app:tint="@color/white"
+        android:background="@color/purple_material"
+        />
+
+    <!-- RecyclerView untuk menampilkan daftar pelanggan -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewCreditor"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/editTextSearchCreditor"
+        android:clipToPadding="false"
+        android:paddingBottom="80dp"
+        android:scrollbars="vertical" />
+
+    <!-- FloatingActionButton untuk menambah pelanggan -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddCreditor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:contentDescription="Tambah Pelanggan"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/purple_material" />
+
+
+</RelativeLayout>

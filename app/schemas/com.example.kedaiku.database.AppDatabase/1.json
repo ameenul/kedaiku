@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "86295c4b383846634b0c98fc96359322",
+    "identityHash": "4d9216286dcaa80a787c42ced3fd4158",
     "entities": [
       {
         "tableName": "table_product",
@@ -670,7 +670,7 @@
       },
       {
         "tableName": "table_expense",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `expense_date` TEXT NOT NULL, `expense_name` TEXT NOT NULL, `expense_cash_id` INTEGER NOT NULL, `expense_amount` REAL NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `expense_date` INTEGER NOT NULL, `expense_name` TEXT NOT NULL, `expense_cash_id` INTEGER NOT NULL, `expense_amount` REAL NOT NULL)",
         "fields": [
           {
             "fieldPath": "_id",
@@ -681,7 +681,7 @@
           {
             "fieldPath": "expense_date",
             "columnName": "expense_date",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -758,7 +758,7 @@
       },
       {
         "tableName": "table_debt",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `creditor_id` INTEGER NOT NULL, `debt_quantity` REAL NOT NULL, `debt_paid` REAL NOT NULL, `debt_history_paid` TEXT, `debt_note` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `creditor_id` INTEGER NOT NULL, `debt_quantity` REAL NOT NULL, `debt_paid` REAL NOT NULL, `debt_history_paid` TEXT, `debt_note` TEXT, `debt_date` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "_id",
@@ -795,6 +795,12 @@
             "columnName": "debt_note",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "debt_date",
+            "columnName": "debt_date",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -810,7 +816,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '86295c4b383846634b0c98fc96359322')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4d9216286dcaa80a787c42ced3fd4158')"
     ]
   }
 }

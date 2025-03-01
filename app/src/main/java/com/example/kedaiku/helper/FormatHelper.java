@@ -4,15 +4,18 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
 import com.example.kedaiku.UI.penjualan_menu.CartItem;
-import com.example.kedaiku.entites.PromoDetail;
+import com.example.kedaiku.entites.ParsingHistory;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -27,10 +30,39 @@ public class FormatHelper {
 
     public static String getDescDate(long date)
     {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String descDate = dateFormat.format(date);
         return descDate;
 
+    }
+
+    /**
+     * Mengonversi string tanggal dengan format "dd/MM/yyyy" menjadi objek Date.
+     *
+     * @param dateStr String tanggal, misalnya "03/01/2025"
+     * @return Objek Date jika parsing berhasil, atau null jika terjadi error.
+     */
+    public static Date parseDate(String dateStr) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        try {
+            return sdf.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+
+    /**
+     * Mengonversi string tanggal dengan format "dd/MM/yyyy" menjadi timestamp (milidetik).
+     *
+     * @param dateStr String tanggal, misalnya "03/01/2025"
+     * @return Timestamp dalam milidetik jika parsing berhasil, atau -1 jika terjadi error.
+     */
+    public static long parseTimestamp(String dateStr) {
+        Date date = parseDate(dateStr);
+        return (date != null) ? date.getTime() : -1;
     }
 
 
@@ -68,6 +100,7 @@ public class FormatHelper {
                 double normalPrice   = itemObj.optDouble("normal_price", 0.0);
                 double qty         = itemObj.optDouble("qty", 0.0);
                 String unit        = itemObj.optString("unit", "");
+
 
                 // Buat CartItem sesuai konstruktor
                 // Constructor CartItem:
@@ -131,6 +164,7 @@ public class FormatHelper {
                 double sellPrice   = itemObj.optDouble("sell_price", 0.0);
                 double qty         = itemObj.optDouble("qty", 0.0);
                 String unit        = itemObj.optString("unit", "");
+                String priceType        = itemObj.optString("price_type", "");
 
 
                 JSONObject promoObj = promoArray.getJSONObject(i);
@@ -197,6 +231,7 @@ public class FormatHelper {
 
                 }
                 cartItem.setFinalPrice(sellPrice);
+                cartItem.setPriceType(priceType);
 
 
                 cartItems.add(cartItem);
@@ -218,6 +253,84 @@ public class FormatHelper {
                 liveData.removeObserver(this);
             }
         });
+    }
+
+    /**
+     * Mengonversi daftar ParsingHistory menjadi string JSON
+     *
+     * @param paidHistories Daftar riwayat pembayaran
+     * @return String JSON yang berisi paid_history
+     */
+    public static String convertPaidHistoriesToJson(List<ParsingHistory> paidHistories) {
+        JSONObject root = new JSONObject();
+        JSONArray paidHistoryArray = new JSONArray();
+
+        try {
+            for (ParsingHistory history : paidHistories) {
+                JSONObject historyObj = new JSONObject();
+                historyObj.put("date", history.getDate());
+                historyObj.put("paid", history.getPaid());
+                paidHistoryArray.put(historyObj);
+            }
+            root.put("paid_history", paidHistoryArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return root.toString();
+    }
+
+    /**
+     * Metode untuk mem-parsing string JSON sale_paid_history menjadi daftar ParsingHistory
+     *
+     * @param jsonPaidHistory String JSON yang berisi paid_history
+     * @return List<ParsingHistory> daftar riwayat pembayaran
+     */
+    public static List<ParsingHistory> parsePaidHistory(String jsonPaidHistory) {
+        if (jsonPaidHistory == null || jsonPaidHistory.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        List<ParsingHistory> parsingHistories = new ArrayList<>();
+
+        try {
+            // Membuat objek JSON dari string
+            JSONObject root = new JSONObject(jsonPaidHistory);
+
+            // Mengambil array "paid_history"
+            JSONArray paidHistoryArray = root.optJSONArray("paid_history");
+            if (paidHistoryArray == null) {
+                return parsingHistories; // Jika "paid_history" tidak ada, kembalikan list kosong
+            }
+
+            // Loop setiap objek di array
+            for (int i = 0; i < paidHistoryArray.length(); i++) {
+                JSONObject historyObj = paidHistoryArray.getJSONObject(i);
+
+                long date = historyObj.optLong("date", 0);
+                double paid = historyObj.optDouble("paid", 0.0);
+
+                ParsingHistory parsingHistory = new ParsingHistory(date, paid);
+                parsingHistories.add(parsingHistory);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            // Anda bisa menambahkan penanganan error lebih lanjut jika diperlukan
+        }
+
+        return parsingHistories;
+    }
+
+    // Metode untuk memfilter daftar ParsingHistory berdasarkan rentang tanggal
+    public static List<ParsingHistory> filterPaidHistoryByDateRange(List<ParsingHistory> historyList, long startDate, long endDate) {
+        List<ParsingHistory> filtered = new ArrayList<>();
+        for (ParsingHistory history : historyList) {
+            if (history.getDate() >= startDate && history.getDate() <= endDate) {
+                filtered.add(history);
+            }
+        }
+        return filtered;
     }
 
 

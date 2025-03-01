@@ -181,6 +181,37 @@
         </LinearLayout>
 
         <!-- Informasi Pembayaran -->
+
+        <!-- Baris Terbayar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="start"
+            android:paddingTop="16dp"
+            >
+
+            <TextView
+                android:id="@+id/textViewTerbayarLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Terbayar"
+                android:textStyle="bold"
+                android:padding="8dp"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/textViewTerbayar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:padding="8dp"
+                android:textStyle="bold"
+                android:text="Rp 0"
+                android:textSize="20sp"/>
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -189,7 +220,7 @@
             android:paddingTop="16dp">
 
             <TextView
-                android:id="@+id/textViewChangeAmount"
+                android:id="@+id/textViewChangeLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Kembalian"
@@ -204,6 +235,7 @@
                 android:layout_weight="1"
                 android:gravity="end"
                 android:padding="8dp"
+                android:textStyle="bold"
                 android:text="Rp 0"
                 android:textSize="20sp"/>
         </LinearLayout>
@@ -212,12 +244,13 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pilih Kas"
+            android:text="Masuk Kas"
             android:padding="8dp"
             android:textStyle="bold"/>
 
         <Spinner
             android:id="@+id/spinnerKas"
+            android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"/>

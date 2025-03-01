@@ -13,6 +13,8 @@
     <color name="purple_fab">#6200EE</color> <!-- Warna utama FAB -->
     <color name="purple_fab_dark">#3700B3</color> <!-- Warna gelap -->
     <color name="purple_fab_light">#BB86FC</color> <!-- Warna terang -->
+    <color name="colorError">#D32F2F</color> <!-- Warna merah untuk pesan error -->
+
 
 
 </resources>

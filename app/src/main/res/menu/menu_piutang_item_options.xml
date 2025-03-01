@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menuHubungi"
+        android:title="Hubungi Pelanggan"
+        android:icon="@android:drawable/ic_menu_call" />
+
+    <item
+        android:id="@+id/menuDetail"
+        android:title="Detail Penjualan"
+        android:icon="@android:drawable/ic_menu_info_details" />
+
+    <item
+        android:id="@+id/menuRiwayat"
+        android:title="Riwayat Pembayaran"
+        android:icon="@android:drawable/ic_menu_recent_history" />
+
+    <item
+        android:id="@+id/menuBayar"
+        android:title="Bayar"
+        android:icon="@android:drawable/ic_menu_send" />
+
+    <item
+        android:id="@+id/menuHapus"
+        android:title="Hapus"
+        android:icon="@android:drawable/ic_menu_delete" />
+
+</menu>
