@@ -76,7 +76,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.textViewProfit.setText("Laba: " + profit);
 
         // Set Jumlah Stok
-        holder.textViewStock.setText("Stok: " + product.getProduct_qty());
+        holder.textViewStock.setText("Stok: " + product.getProduct_qty()+" "+product.getProduct_unit());
 
         // Menu Opsi
         holder.imageViewOptions.setOnClickListener(v -> {

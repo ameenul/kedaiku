@@ -87,9 +87,13 @@ public class AddProductActivity extends AppCompatActivity {
             String qtyString = editTextProductQty.getText().toString().trim();
             String productUnit = editTextProductUnit.getText().toString().trim();
 
+            if(TextUtils.isEmpty(productSKU))
+            {
+                productSKU="-";
+            }
             // Validasi input
             if (TextUtils.isEmpty(productName) || TextUtils.isEmpty(productDescription)
-                    || TextUtils.isEmpty(productSKU) || TextUtils.isEmpty(primaryPriceString)
+                     || TextUtils.isEmpty(primaryPriceString)
                     || TextUtils.isEmpty(priceString) || TextUtils.isEmpty(qtyString)
                     || TextUtils.isEmpty(productUnit)) {
                 Toast.makeText(this, "Semua field harus diisi", Toast.LENGTH_SHORT).show();

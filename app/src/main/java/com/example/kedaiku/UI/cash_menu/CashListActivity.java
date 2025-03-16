@@ -108,10 +108,11 @@ public class CashListActivity extends AppCompatActivity implements CashListAdapt
 
             @Override
             public void afterTextChanged(Editable s) {
-                String input = s.toString().replaceAll("[^\\d]", "");
+//                String input = s.toString().replaceAll("[^\\d]", "");
+                String input = s.toString();
                 if (!input.isEmpty()) {
                     try {
-                        long parsed = Long.parseLong(input);
+                        double parsed = Double.parseDouble(input);
                         String formatted = NumberFormat.getCurrencyInstance(new Locale("id", "ID")).format(parsed);
                         textViewFormattedCashValue.setText(formatted);
                     } catch (NumberFormatException e) {
@@ -133,7 +134,8 @@ public class CashListActivity extends AppCompatActivity implements CashListAdapt
             Button buttonAdd = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
             buttonAdd.setOnClickListener(v -> {
                 String cashName = editTextCashName.getText().toString().trim();
-                String cashValueStr = editTextCashValue.getText().toString().replaceAll("[Rp.,\\s]", "");
+                String cashValueStr = editTextCashValue.getText().toString();
+                //String cashValueStr = editTextCashValue.getText().toString().replaceAllreplaceAll("[Rp.,\\s]", "");
 
                 if (cashName.isEmpty()) {
                     editTextCashName.setError("Nama kas tidak boleh kosong");
@@ -145,7 +147,7 @@ public class CashListActivity extends AppCompatActivity implements CashListAdapt
                     return;
                 }
 
-                int cashValue = Integer.parseInt(cashValueStr);
+                double cashValue = Double.parseDouble(cashValueStr);
                 Cash newCash = new Cash(cashName, cashValue);
                 cashViewModel.insert(newCash);
                 dialog.dismiss();
@@ -211,6 +213,8 @@ public class CashListActivity extends AppCompatActivity implements CashListAdapt
         builder.setView(dialogView);
 
         EditText editTextAmount = dialogView.findViewById(R.id.editTextAmount);
+        editTextAmount.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
+       
         TextView textViewFormattedAmount = dialogView.findViewById(R.id.textViewFormattedAmount);
         EditText editTextDescription = dialogView.findViewById(R.id.editTextDescription);
 
@@ -222,7 +226,8 @@ public class CashListActivity extends AppCompatActivity implements CashListAdapt
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
             @Override
             public void afterTextChanged(Editable s) {
-                String input = s.toString().replaceAll("[^\\d]", "");
+               // String input = s.toString().replaceAll("[^\\d]", "");
+                String input = s.toString();
                 if (!input.isEmpty()) {
                     try {
                         long parsed = Long.parseLong(input);
@@ -246,7 +251,8 @@ public class CashListActivity extends AppCompatActivity implements CashListAdapt
         dialog.setOnShowListener(dialogInterface -> {
             Button buttonSave = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
             buttonSave.setOnClickListener(v -> {
-                String amountStr = editTextAmount.getText().toString().replaceAll("[Rp.,\\s]", "");
+                //String amountStr = editTextAmount.getText().toString().replaceAll("[Rp.,\\s]", "");
+                String amountStr = editTextAmount.getText().toString();
                 String description = editTextDescription.getText().toString().trim();
 
                 if (amountStr.isEmpty()) {
@@ -259,7 +265,7 @@ public class CashListActivity extends AppCompatActivity implements CashListAdapt
                     return;
                 }
 
-                double amount = Integer.parseInt(amountStr);
+                double amount = Double.parseDouble(amountStr);
                 if (!isIncrease) {
                     amount = -amount;
                 }
@@ -305,6 +311,8 @@ public class CashListActivity extends AppCompatActivity implements CashListAdapt
 
         Spinner spinnerTargetCash = dialogView.findViewById(R.id.spinnerTargetCash);
         EditText editTextAmount = dialogView.findViewById(R.id.editTextAmount);
+        editTextAmount.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        //editTextAmount.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
         TextView textViewFormattedAmount = dialogView.findViewById(R.id.textViewFormattedAmount);
         EditText editTextDescription = dialogView.findViewById(R.id.editTextDescription);
 
@@ -324,10 +332,11 @@ public class CashListActivity extends AppCompatActivity implements CashListAdapt
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
             @Override
             public void afterTextChanged(Editable s) {
-                String input = s.toString().replaceAll("[^\\d]", "");
+               // String input = s.toString().replaceAll("[^\\d]", "");
+                String input = s.toString();
                 if (!input.isEmpty()) {
                     try {
-                        long parsed = Long.parseLong(input);
+                        double parsed = Double.parseDouble(input);
                         String formatted = NumberFormat.getCurrencyInstance(new Locale("id", "ID")).format(parsed);
                         textViewFormattedAmount.setText(formatted);
                     } catch (NumberFormatException e) {
@@ -350,7 +359,8 @@ public class CashListActivity extends AppCompatActivity implements CashListAdapt
         dialog.setOnShowListener(dialogInterface -> {
             Button buttonTransfer = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
             buttonTransfer.setOnClickListener(v -> {
-                String amountStr = editTextAmount.getText().toString().replaceAll("[Rp.,\\s]", "");
+                //String amountStr = editTextAmount.getText().toString().replaceAll("[Rp.,\\s]", "");
+                String amountStr = editTextAmount.getText().toString();
                 String description = editTextDescription.getText().toString().trim();
                 Cash targetCash = (Cash) spinnerTargetCash.getSelectedItem();
 
@@ -369,7 +379,7 @@ public class CashListActivity extends AppCompatActivity implements CashListAdapt
                     return;
                 }
 
-                double amount = Integer.parseInt(amountStr);
+                double amount = Double.parseDouble(amountStr);
 
                 // Transfer kas antara sumber dan tujuan, update cash_flow dalam satu transaksi
                 cashViewModel.transferCash(sourceCash, targetCash, amount, description);

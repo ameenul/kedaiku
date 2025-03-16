@@ -252,8 +252,10 @@ public class CashFlowActivity extends AppCompatActivity {
             data.append("CashFlow_" + cashName + "\n");
         }
         String formattedSaldo = NumberFormat.getCurrencyInstance(new Locale("id", "ID")).format(saldo);
-        data.append("Saldo : " +formattedSaldo + "\n");
-        data.append("\n");
+       // data.append("Saldo : " +formattedSaldo + "\n");
+        data.append("Saldo : Rp. ").append(",");
+        data.append(saldo);
+                data.append("\n");
 
         // Header kolom
         data.append("ID,Tanggal,Deskripsi,Jumlah\n");
