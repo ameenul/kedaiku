@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kedaiku.R;
 import com.example.kedaiku.entites.Product;
+import com.example.kedaiku.helper.FormatHelper;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -76,7 +77,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.textViewProfit.setText("Laba: " + profit);
 
         // Set Jumlah Stok
-        holder.textViewStock.setText("Stok: " + product.getProduct_qty()+" "+product.getProduct_unit());
+        holder.textViewStock.setText("Stok: " + FormatHelper.roundToDecimalPlaces(product.getProduct_qty(),2) +" "+product.getProduct_unit());
 
         // Menu Opsi
         holder.imageViewOptions.setOnClickListener(v -> {

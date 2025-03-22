@@ -30,11 +30,13 @@ import com.example.kedaiku.R;
 import com.example.kedaiku.entites.Inventory;
 import com.example.kedaiku.entites.Product;
 import com.example.kedaiku.helper.DateHelper;
+import com.example.kedaiku.helper.FormatHelper;
 import com.example.kedaiku.viewmodel.InventoryViewModel;
 import com.example.kedaiku.viewmodel.ProductViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.OutputStream;
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -98,7 +100,7 @@ public class InventoryListActivity extends AppCompatActivity {
                 productSKU.setText("SKU: " + product.getProduct_sku());
                 primaryPrice.setText("Harga Pokok: " + product.getProduct_primary_price());
                 productPrice.setText("Harga Jual: " + product.getProduct_price());
-                productQty.setText("Stok: " + product.getProduct_qty());
+                productQty.setText("Stok: " + FormatHelper.roundToDecimalPlaces(product.getProduct_qty(), 2));// product.getProduct_qty());
                 productUnit.setText("Satuan: " + product.getProduct_unit());
             }
         });
@@ -298,6 +300,8 @@ public class InventoryListActivity extends AppCompatActivity {
 
         }
             data.append("\n");
+        data.append("Saldo : ").append(",").append(currentProduct.getProduct_qty());
+        data.append("\n");
 
         data.append("Tanggal,Deskripsi,Masuk,Keluar,Saldo\n");
 
